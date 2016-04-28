@@ -86,7 +86,7 @@ int _tmain(int argc, LPTSTR argv[]) {
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	DWORD n;
 	BOOL ret, value;
-	int i;
+	int i, flag = 0;
 	TCHAR buf[256];
 	int aux;
 	HANDLE client = (HANDLE)param;
@@ -96,6 +96,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	LPCTSTR pStr;
 	string Comando = "";
 	string TipoComando = "";
+
+
 	
 	do{
 		sub1 = TEXT("");
@@ -109,7 +111,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
-			if (value == true) {
+			if (value == true ){
 				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
 			}
 		}
@@ -122,10 +124,12 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		}
 		
 		ret = ReadFile(client, buf, sizeof(buf), &n, NULL);
-		if (!ret || !n)
+		if (!ret || !n) {
+			_tprintf(TEXT("[Servidor] O cliente desligou-se\n\n"));
 			break;
+		}
 		buf[n / sizeof(TCHAR)] = '\0';
-		_tprintf(TEXT("[Servidor] O cliente mandou -%s\n\n"), buf);
+		_tprintf(TEXT("[Servidor] O cliente mandou: %s\n\n"), buf);
 
 		pStr = buf;
 		tstring str(pStr);
@@ -136,7 +140,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		for (int i = 0; i < sub2.length(); i++)
 			TipoComando += sub2.at(i);
 
-		GameStatus();
 
 		/*
 		res.JogoCriado = e.getJogoCriadoEstado();
@@ -159,7 +162,14 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			system("cls");
 			_tprintf(TEXT("Espera dos restantes players.\n"));
 
+		}
+		
+		for (int i = 0; i < MAXCLIENTES; i++) {
+			if (!ret)
+				_tprintf(TEXT("[Servidor] O cliente desligou-se\n\n"));
+				
 		}*/
+
 	} while (_tcsncmp(buf, TEXT("FIM"), 3));
 
 }

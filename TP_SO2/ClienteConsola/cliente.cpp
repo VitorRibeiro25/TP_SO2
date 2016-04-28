@@ -69,6 +69,7 @@ DWORD WINAPI Consola(LPVOID param) {
 
 	HANDLE hpipelocal = (HANDLE)param;
 	DWORD n;
+	BOOL ret;
 	int i = 0;
 	TCHAR buf[256];
 	
@@ -84,13 +85,18 @@ DWORD WINAPI Consola(LPVOID param) {
 
 	while (1) {
 
-		ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
+
+		ret = ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
+
+		if (!ret || !n) {
+			_tprintf(TEXT("[Cliente] O servidor desligou-se\n\n"));
+			break;
+		}
 
 		if (ID_Cliente == 0) {
 			ID_Cliente = res.ID_Cliente;
 		}
 		if (res.JogoCriado == true && res.JogoIniciado == true) {
-			//system("cls");
 			_tprintf(TEXT("[Comando]: "));
 			fflush(stdin);
 			_fgetts(Comando, 256, stdin);
@@ -101,5 +107,6 @@ DWORD WINAPI Consola(LPVOID param) {
 
 		}
 	}
+
 
 }

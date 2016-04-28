@@ -1,12 +1,4 @@
-﻿  pch.cpp
-  dllmain.cpp
-  JogoDll.cpp
-c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.cpp(14): warning C4273: 'PlayersActive': inconsistent dll linkage
-  c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.h(26): note: see previous definition of 'PlayersActive' (compiling source file JogoDll.cpp)
-c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.cpp(16): warning C4273: 'ShowPlayersActive': inconsistent dll linkage
-  c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.h(28): note: see previous definition of 'ShowPlayersActive' (compiling source file JogoDll.cpp)
-c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.cpp(20): warning C4273: 'RemovePlayer': inconsistent dll linkage
-  c:\users\vitor ribeiro\documents\visual studio 2015\projects\tp_so2\jogodll\jogodll.h(27): note: see previous definition of 'RemovePlayer' (compiling source file JogoDll.cpp)
-     Creating library C:\Users\Vitor Ribeiro\documents\visual studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.lib and object C:\Users\Vitor Ribeiro\documents\visual studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.exp
-  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\documents\visual studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.dll
-  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\documents\visual studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.pdb (Partial PDB)
+﻿  dllmain.cpp
+     Creating library C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.lib and object C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.exp
+  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.dll
+  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.pdb (Partial PDB)

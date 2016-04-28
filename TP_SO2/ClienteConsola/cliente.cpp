@@ -39,6 +39,7 @@ int _tmain(int argc, LPTSTR argv[]) {
 #endif
 
 	//Menu();
+	
 
 
 	if (!WaitNamedPipe(PIPENOME, NMPWAIT_WAIT_FOREVER)) {
@@ -71,12 +72,15 @@ DWORD WINAPI Consola(LPVOID param) {
 	int i = 0;
 	TCHAR buf[256];
 	
+	
+
 	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
 	buf[n / sizeof(TCHAR)] = '\0';
 
 	_tprintf(TEXT("%s"), buf);
-
 	_tprintf(TEXT("[Cliente] Bem vindo ao jogo\n"));
+	
+	
 
 	while (1) {
 
@@ -86,7 +90,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			ID_Cliente = res.ID_Cliente;
 		}
 		if (res.JogoCriado == true && res.JogoIniciado == true) {
-			system("cls");
+			//system("cls");
 			_tprintf(TEXT("[Comando]: "));
 			fflush(stdin);
 			_fgetts(Comando, 256, stdin);

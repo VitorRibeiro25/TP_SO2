@@ -48,14 +48,12 @@ int _tmain(int argc, LPTSTR argv[]) {
 		// duplex
 
 		hpipe = CreateNamedPipe(PIPENOME, PIPE_ACCESS_DUPLEX | FILE_FLAG_OVERLAPPED, PIPE_WAIT | PIPE_TYPE_MESSAGE
-			| PIPE_READMODE_MESSAGE, MAXCLIENTES, 256, 256,
-			1000, NULL);
+			| PIPE_READMODE_MESSAGE, MAXCLIENTES, 256, 256, 1000, NULL);
 
 		// generic 
 
 		clientes[i] = CreateNamedPipe(PIPE2NOME, PIPE_ACCESS_OUTBOUND | FILE_FLAG_OVERLAPPED, PIPE_WAIT | PIPE_TYPE_MESSAGE
-			| PIPE_READMODE_MESSAGE, MAXCLIENTES, 256, 256,
-			1000, NULL);
+			| PIPE_READMODE_MESSAGE, MAXCLIENTES, 256, 256, 1000, NULL);
 
 		if (clientes[i] == INVALID_HANDLE_VALUE) {
 			_tprintf(TEXT("Erro ao conectar o cliente\n"));
@@ -127,6 +125,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (!ret || !n)
 			break;
 		buf[n / sizeof(TCHAR)] = '\0';
+		_tprintf(TEXT("[Servidor] O cliente mandou -%s\n\n"), buf);
 
 		pStr = buf;
 		tstring str(pStr);

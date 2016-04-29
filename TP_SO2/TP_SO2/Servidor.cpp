@@ -1,5 +1,6 @@
 #include "util.h"
 
+
 #define MAXCLIENTES 5
 
 #define PIPENOME TEXT("\\\\.\\pipe\\teste")
@@ -10,7 +11,7 @@ HANDLE clientes[MAXCLIENTES], hEvent;
 BOOL fim = FALSE;
 
 struct resposta
-{
+{	
 	int ID_Cliente;
 	bool JogoCriado;
 	bool JogoIniciado;
@@ -19,6 +20,7 @@ struct resposta
 };
 
 typedef struct {
+
 	TCHAR nome[35];
 }utilizador;
 
@@ -95,6 +97,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	BOOL ret, value;
 	int i, flag = 0;
 	TCHAR buf[256];
+	TCHAR buf2[256];
 	int aux;
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
@@ -103,7 +106,12 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	LPCTSTR pStr;
 	string Comando = "";
 	string TipoComando = "";
+	_tcscpy_s(buf2, 256, (TEXT("")));
 
+	ret = ReadFile(client, buf2, sizeof(buf2), &n, NULL);
+	buf2[n / sizeof(TCHAR)] = '\0';
+	wcscpy_s(utili[numero].nome, buf2);
+	_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
 
 	
 	do{
@@ -120,16 +128,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			if (value == true ){
 				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
-				ret = ReadFile(client, buf, sizeof(buf), &n, NULL);
-				buf[n / sizeof(TCHAR)] = '\0';
-				wcscpy_s(utili[numero].nome, buf);
-				_tprintf(TEXT("[Servidor] O cliente tem o nome como -%s\n\n"), utili[numero].nome);
-				numero++;
-				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
-				for (int y = 0; y < MAXCLIENTES; y++) {
-
-
-				}
 			}
 		}
 

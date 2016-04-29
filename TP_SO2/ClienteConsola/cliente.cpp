@@ -73,15 +73,9 @@ DWORD WINAPI Consola(LPVOID param) {
 	BOOL ret;
 	int i = 0;
 	TCHAR buf[256];
-	
-	
 
-	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
-	buf[n / sizeof(TCHAR)] = '\0';
-
-	_tprintf(TEXT("%s"), buf);
-	_tprintf(TEXT("[Cliente] Bem vindo ao jogo\n"));
 	//autenticação do utilizador
+	
 	_tprintf(TEXT("[Autenticação- coloque o nome]: "));
 	fflush(stdin);
 	_fgetts(Comando, 256, stdin);
@@ -89,6 +83,13 @@ DWORD WINAPI Consola(LPVOID param) {
 	res.ID_Cliente = ID_Cliente;
 	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 	
+
+
+	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
+	buf[n / sizeof(TCHAR)] = '\0';
+
+	_tprintf(TEXT("%s"), buf);
+	_tprintf(TEXT("[Cliente] Bem vindo ao jogo\n"));
 
 	while (1) {
 
@@ -98,7 +99,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			_tprintf(TEXT("[Cliente] O servidor desligou-se\n\n"));
 			break;
 		}
-
+		
 		if (ID_Cliente == 0) {
 			ID_Cliente = res.ID_Cliente;
 		}

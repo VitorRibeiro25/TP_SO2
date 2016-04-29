@@ -23,6 +23,7 @@ struct resposta
 	bool JogoCriado;
 	bool JogoIniciado;
 	int EsperaPlayers;
+	TCHAR nome[30];
 };
 
 struct resposta res;
@@ -80,14 +81,19 @@ DWORD WINAPI Consola(LPVOID param) {
 
 	_tprintf(TEXT("%s"), buf);
 	_tprintf(TEXT("[Cliente] Bem vindo ao jogo\n"));
-	
+	//autenticação do utilizador
+	_tprintf(TEXT("[Autenticação- coloque o nome]: "));
+	fflush(stdin);
+	_fgetts(Comando, 256, stdin);
+	Comando[_tcslen(Comando) - 1] = '\0';
+	res.ID_Cliente = ID_Cliente;
+	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 	
 
 	while (1) {
 
 
 		ret = ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
-
 		if (!ret || !n) {
 			_tprintf(TEXT("[Cliente] O servidor desligou-se\n\n"));
 			break;

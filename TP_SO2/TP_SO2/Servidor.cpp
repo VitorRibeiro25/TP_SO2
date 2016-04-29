@@ -15,11 +15,18 @@ struct resposta
 	bool JogoCriado;
 	bool JogoIniciado;
 	int EsperaPlayers;
+	char nome[50];
 };
 
+typedef struct {
+	TCHAR nome[35];
+}utilizador;
+
+int numero = 0;
 struct resposta res;
 static int ID_Cliente = 0;
 static TCHAR Comando[256];
+utilizador utili[MAXCLIENTES];
 
 
 void GameStatus() {
@@ -113,6 +120,16 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			if (value == true ){
 				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
+				ret = ReadFile(client, buf, sizeof(buf), &n, NULL);
+				buf[n / sizeof(TCHAR)] = '\0';
+				wcscpy_s(utili[numero].nome, buf);
+				_tprintf(TEXT("[Servidor] O cliente tem o nome como -%s\n\n"), utili[numero].nome);
+				numero++;
+				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
+				for (int y = 0; y < MAXCLIENTES; y++) {
+
+
+				}
 			}
 		}
 

@@ -8,6 +8,7 @@
 #include <windows.h>
 #include <io.h>
 #include <fcntl.h>
+#include <wchar.h>
 
 
 using namespace std;
@@ -44,5 +45,7 @@ class Objeto {
 class Monstro {
 
 };
+
+
 
 #endif

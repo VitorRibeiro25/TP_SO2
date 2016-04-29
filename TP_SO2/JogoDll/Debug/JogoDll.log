@@ -1,4 +1,8 @@
-﻿  dllmain.cpp
-     Creating library C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.lib and object C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.exp
-  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.dll
-  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\Visual Studio 2015\Projects\TP_SO2\Debug\JogoDll\JogoDll.pdb (Partial PDB)
+﻿Build started 28/04/2016 20:10:09.
+     1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\JogoDll\JogoDll.vcxproj" on node 3 (Rebuild target(s)).
+     1>C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(2048,5): error MSB3774: Could not find SDK "Microsoft.VCLibs, Version=14.0".
+     1>Done Building Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\JogoDll\JogoDll.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.03

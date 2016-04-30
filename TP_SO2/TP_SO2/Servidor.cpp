@@ -20,8 +20,8 @@ struct resposta
 };
 
 typedef struct {
-
 	TCHAR nome[35];
+	HANDLE pipe;
 }utilizador;
 
 int numero = 0;
@@ -111,7 +111,9 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	ret = ReadFile(client, buf2, sizeof(buf2), &n, NULL);
 	buf2[n / sizeof(TCHAR)] = '\0';
 	wcscpy_s(utili[numero].nome, buf2);
+	utili[numero].pipe = client;
 	_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
+	numero++;
 
 	
 	do{
@@ -127,10 +129,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			if (value == true ){
-				_tprintf(TEXT("[Servidor] O cliente ficou agora logado\n\n"));
+				_tprintf(TEXT("[Servidor] O cliente %d ficou agora logado e chama-se %s\n"), i, utili[i].nome);
 			}
 		}
-
+		_tprintf(TEXT("\n\n"));
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			res.JogoCriado = true;
@@ -140,11 +142,23 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		
 		ret = ReadFile(client, buf, sizeof(buf), &n, NULL);
 		if (!ret || !n) {
-			_tprintf(TEXT("[Servidor] O cliente desligou-se\n\n"));
+			for (int c = 0; c < MAXCLIENTES; c++) {
+				if (client == utili[c].pipe) {
+					_tprintf(TEXT("[Servidor] O cliente %d, o %s desligou-se\n\n"), c, utili[c].nome);
+						for(int k = c; k < MAXCLIENTES; k++) {
+							wcscpy_s(utili[k].nome, utili[k + 1].nome);
+							utili[k].pipe = utili[k + 1].pipe;
+						}
+				}
+			}
 			break;
 		}
 		buf[n / sizeof(TCHAR)] = '\0';
-		_tprintf(TEXT("[Servidor] O cliente mandou: %s\n\n"), buf);
+		for (int y = 0; y < MAXCLIENTES; y++) {
+			if (client == utili[y].pipe) {
+				_tprintf(TEXT("[Servidor] O cliente %d, o %s mandou o comando: %s\n\n"), y, utili[y].nome, buf);
+			}
+		}
 
 		pStr = buf;
 		tstring str(pStr);

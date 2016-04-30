@@ -73,13 +73,15 @@ DWORD WINAPI Consola(LPVOID param) {
 	BOOL ret;
 	int i = 0;
 	TCHAR buf[256];
+	TCHAR Nome[25];
 
 	//autenticação do utilizador
 	
-	_tprintf(TEXT("[Autenticação- coloque o nome]: "));
+	_tprintf(TEXT("[Autenticação - coloque o nome]: "));
 	fflush(stdin);
 	_fgetts(Comando, 256, stdin);
 	Comando[_tcslen(Comando) - 1] = '\0';
+	wcscpy_s(Nome, Comando);
 	res.ID_Cliente = ID_Cliente;
 	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 	
@@ -89,14 +91,14 @@ DWORD WINAPI Consola(LPVOID param) {
 	buf[n / sizeof(TCHAR)] = '\0';
 
 	_tprintf(TEXT("%s"), buf);
-	_tprintf(TEXT("[Cliente] Bem vindo ao jogo\n"));
+	_tprintf(TEXT("[Cliente %s] Seja bem vindo ao jogo\n"), Nome);
 
 	while (1) {
 
 
 		ret = ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
 		if (!ret || !n) {
-			_tprintf(TEXT("[Cliente] O servidor desligou-se\n\n"));
+			_tprintf(TEXT("[Cliente -%s] O servidor desligou-se\n\n"), Nome);
 			break;
 		}
 		
@@ -104,7 +106,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			ID_Cliente = res.ID_Cliente;
 		}
 		if (res.JogoCriado == true && res.JogoIniciado == true) {
-			_tprintf(TEXT("[Comando]: "));
+			_tprintf(TEXT("[%s -Comandos]: "), Nome);
 			fflush(stdin);
 			_fgetts(Comando, 256, stdin);
 			Comando[_tcslen(Comando) - 1] = '\0';

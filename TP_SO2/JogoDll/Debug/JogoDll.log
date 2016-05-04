@@ -1,8 +1,12 @@
-﻿Build started 30/04/2016 21:34:37.
-     1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\JogoDll\JogoDll.vcxproj" on node 3 (Rebuild target(s)).
-     1>C:\Program Files (x86)\MSBuild\14.0\bin\Microsoft.Common.CurrentVersion.targets(2048,5): error MSB3774: Could not find SDK "Microsoft.VCLibs, Version=14.0".
-     1>Done Building Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\JogoDll\JogoDll.vcxproj" (Rebuild target(s)) -- FAILED.
-
-Build FAILED.
-
-Time Elapsed 00:00:00.03
+﻿  pch.cpp
+  dllmain.cpp
+  JogoDll.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.cpp(14): warning C4273: 'PlayersActive': inconsistent dll linkage
+  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.h(26): note: see previous definition of 'PlayersActive' (compiling source file JogoDll.cpp)
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.cpp(16): warning C4273: 'ShowPlayersActive': inconsistent dll linkage
+  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.h(28): note: see previous definition of 'ShowPlayersActive' (compiling source file JogoDll.cpp)
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.cpp(20): warning C4273: 'RemovePlayer': inconsistent dll linkage
+  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\jogodll\jogodll.h(27): note: see previous definition of 'RemovePlayer' (compiling source file JogoDll.cpp)
+     Creating library C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\JogoDll\JogoDll.lib and object C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\JogoDll\JogoDll.exp
+  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\JogoDll\JogoDll.dll
+  JogoDll.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\JogoDll\JogoDll.pdb (Partial PDB)

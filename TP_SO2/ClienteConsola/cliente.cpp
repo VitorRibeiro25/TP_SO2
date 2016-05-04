@@ -84,7 +84,14 @@ DWORD WINAPI Consola(LPVOID param) {
 	wcscpy_s(Nome, Comando);
 	res.ID_Cliente = ID_Cliente;
 	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
-	
+
+	_tprintf(TEXT("[Autenticação - coloque a passe]: "));
+	fflush(stdin);
+	_fgetts(Comando, 256, stdin);
+	Comando[_tcslen(Comando) - 1] = '\0';
+	wcscpy_s(Nome, Comando);
+	res.ID_Cliente = ID_Cliente;
+	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 
 
 	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);

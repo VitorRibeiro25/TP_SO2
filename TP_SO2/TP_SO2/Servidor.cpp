@@ -5,6 +5,9 @@
 
 #define PIPENOME TEXT("\\\\.\\pipe\\teste")
 #define PIPE2NOME TEXT("\\\\.\\pipe\\teste2")
+
+#define REGISTRY_KEY TEXT("Software\\TPSO2\\");
+
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param);
 
 HANDLE clientes[MAXCLIENTES], hEvent;	
@@ -90,6 +93,30 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 }
 
+bool AdicionaRegisto(LPCWSTR nome, LPCWSTR pass) {
+
+	HKEY chave;
+	DWORD queAconteceu, versao, tamanho;
+	TCHAR autor[200];
+	TCHAR keyName[200] = REGISTRY_KEY;
+	wcscat_s(keyName, nome);
+	
+	//Criar/abrir uma chave em HKEY_CURRENT_USER\Software\MinhaAplicacao
+	if (RegCreateKeyEx(HKEY_CURRENT_USER, keyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &chave, &queAconteceu) != ERROR_SUCCESS) {
+		tcout << TEXT("Erro ao criar/abrir chave (%d)\n"), GetLastError();
+		return false;
+	}
+
+	//Se a chave foi criada, inicializar os valores
+
+	RegSetValueEx(chave, TEXT("Nome"), 0, REG_SZ, (LPBYTE)nome, _tcslen(nome)*sizeof(TCHAR));
+	
+	RegSetValueEx(chave, TEXT("Pass"), 0, REG_SZ, (LPBYTE)pass, _tcslen(pass)*sizeof(TCHAR));
+
+	return true;	
+
+}
+
 
 
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
@@ -97,7 +124,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	BOOL ret, value;
 	int i, flag = 0;
 	TCHAR buf[256];
-	TCHAR buf2[256];
+	TCHAR nome[256];
+	TCHAR pass[256];
 	int aux;
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
@@ -106,14 +134,18 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	LPCTSTR pStr;
 	string Comando = "";
 	string TipoComando = "";
-	_tcscpy_s(buf2, 256, (TEXT("")));
+	_tcscpy_s(nome, 256, (TEXT("")));
 
-	ret = ReadFile(client, buf2, sizeof(buf2), &n, NULL);
-	buf2[n / sizeof(TCHAR)] = '\0';
-	wcscpy_s(utili[numero].nome, buf2);
+	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
+	nome[n / sizeof(TCHAR)] = '\0';
+	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
+	pass[n / sizeof(TCHAR)] = '\0';
+	AdicionaRegisto(nome, pass);
+	wcscpy_s(utili[numero].nome, nome);
 	utili[numero].pipe = client;
 	_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
 	numero++;
+
 
 	
 	do{
@@ -202,3 +234,4 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	} while (_tcsncmp(buf, TEXT("FIM"), 3));
 
 }
+

@@ -5,16 +5,32 @@
 #include <iostream>
 #include <vector>
 #include <string>
+
+#include "Jogador.h"
+
 using namespace std;
 
 class Objeto {
+	string nome;
 	int posX, posY;
-	int saude;
-	int velocidade; 
-	// vao existir mais objetos e talvez a solucao seja criar classes derivadas da classe Objeto
-
+	int vida;
+	int lentidao; 	
 public:
+	Jogador *j;
+	Objeto(int x, int y);
+	~Objeto();
 
+	string getNome();
+	int getPosX();
+	int getPosY();
+	int getVida();
+	int getLentidao();
+
+	void setNome(string n);
+	void setPosX(int x);
+	void setPosY(int y);
+	void setVida(int v);
+	void setLentidao(int l);
 };
 
 #endif

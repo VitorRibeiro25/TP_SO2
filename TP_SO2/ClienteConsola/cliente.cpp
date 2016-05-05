@@ -74,8 +74,9 @@ DWORD WINAPI Consola(LPVOID param) {
 	int i = 0;
 	TCHAR buf[256];
 	TCHAR Nome[25];
+	TCHAR pass[25];
 
-	//autenticação do utilizador
+	//autenticação do utilizador - nome e pass
 	
 	_tprintf(TEXT("[Autenticação - coloque o nome]: "));
 	fflush(stdin);
@@ -89,7 +90,7 @@ DWORD WINAPI Consola(LPVOID param) {
 	fflush(stdin);
 	_fgetts(Comando, 256, stdin);
 	Comando[_tcslen(Comando) - 1] = '\0';
-	wcscpy_s(Nome, Comando);
+	wcscpy_s(pass, Comando);
 	res.ID_Cliente = ID_Cliente;
 	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 

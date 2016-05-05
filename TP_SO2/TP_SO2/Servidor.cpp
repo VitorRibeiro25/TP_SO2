@@ -24,6 +24,7 @@ struct resposta
 
 typedef struct {
 	TCHAR nome[35];
+	TCHAR pass[35];
 	HANDLE pipe;
 }utilizador;
 
@@ -93,7 +94,7 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 }
 
-bool AdicionaRegisto(LPCWSTR nome, LPCWSTR pass) {
+bool VerificaRegisto(LPCWSTR nome, LPCWSTR pass) {
 
 	HKEY chave;
 	DWORD queAconteceu, versao, tamanho;
@@ -106,16 +107,29 @@ bool AdicionaRegisto(LPCWSTR nome, LPCWSTR pass) {
 		tcout << TEXT("Erro ao criar/abrir chave (%d)\n"), GetLastError();
 		return false;
 	}
+	else {
+		if (queAconteceu == REG_CREATED_NEW_KEY) {
+			// fazer novo registo de um novo cliente, depois da chave ja estar a aberta
 
-	//Se a chave foi criada, inicializar os valores
+			RegSetValueEx(chave, TEXT("Nome"), 0, REG_SZ, (LPBYTE)nome, _tcslen(nome)*sizeof(TCHAR));
 
-	RegSetValueEx(chave, TEXT("Nome"), 0, REG_SZ, (LPBYTE)nome, _tcslen(nome)*sizeof(TCHAR));
-	
-	RegSetValueEx(chave, TEXT("Pass"), 0, REG_SZ, (LPBYTE)pass, _tcslen(pass)*sizeof(TCHAR));
+			RegSetValueEx(chave, TEXT("Pass"), 0, REG_SZ, (LPBYTE)pass, _tcslen(pass)*sizeof(TCHAR));
+		}
+		else if (queAconteceu == REG_OPENED_EXISTING_KEY) {
+			//Se a chave foi aberta, ler os valores lá guardadoss
 
-	return true;	
+			RegQueryValueEx(chave, TEXT("Nome"), NULL, NULL, (LPBYTE)nome, &tamanho);
+
+			RegQueryValueEx(chave, TEXT("Nome"), NULL, NULL, (LPBYTE)pass, &tamanho);
+
+			return true;
+		}
+
+
+	}
 
 }
+
 
 
 
@@ -136,11 +150,17 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	string TipoComando = "";
 	_tcscpy_s(nome, 256, (TEXT("")));
 
+
 	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
 	nome[n / sizeof(TCHAR)] = '\0';
 	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
 	pass[n / sizeof(TCHAR)] = '\0';
-	AdicionaRegisto(nome, pass);
+	
+
+	if (VerificaRegisto(nome, pass) == true) {
+		_tprintf(TEXT("[Servidor] O cliente ja está registado\n\n"));
+	}
+
 	wcscpy_s(utili[numero].nome, nome);
 	utili[numero].pipe = client;
 	_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);

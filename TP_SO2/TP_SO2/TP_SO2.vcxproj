@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CelulaMapa.cpp" />
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="Mapa.cpp" />
     <ClCompile Include="Monstro.cpp" />
@@ -154,6 +155,7 @@
     <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CelulaMapa.h" />
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Mapa.h" />
     <ClInclude Include="Monstro.h" />

@@ -20,8 +20,7 @@ DWORD WINAPI Consola(LPVOID param);
 struct resposta
 {
 	int ID_Cliente;
-	bool JogoCriado;
-	bool JogoIniciado;
+	bool JogadorLogado;
 	int EsperaPlayers;
 	TCHAR nome[30];
 };
@@ -113,8 +112,8 @@ DWORD WINAPI Consola(LPVOID param) {
 		if (ID_Cliente == 0) {
 			ID_Cliente = res.ID_Cliente;
 		}
-		if (res.JogoCriado == true && res.JogoIniciado == true) {
-			_tprintf(TEXT("[%s -Comandos]: "), Nome);
+		if (res.JogadorLogado == true) {
+			_tprintf(TEXT("[%s - Comandos]: "), Nome);
 			fflush(stdin);
 			_fgetts(Comando, 256, stdin);
 			Comando[_tcslen(Comando) - 1] = '\0';
@@ -124,6 +123,5 @@ DWORD WINAPI Consola(LPVOID param) {
 
 		}
 	}
-
 
 }

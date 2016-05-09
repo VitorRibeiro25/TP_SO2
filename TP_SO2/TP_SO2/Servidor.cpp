@@ -1,4 +1,6 @@
 #include "util.h"
+#include "Engenho.h"
+#include "Mapa.h"
 
 
 #define MAXCLIENTES 5
@@ -13,18 +15,20 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param);
 HANDLE clientes[MAXCLIENTES], hEvent;	
 BOOL fim = FALSE;
 
+Engenho *e;
+Mapa *m;
+
 struct resposta
 {	
 	int ID_Cliente;
-	bool JogoCriado;
-	bool JogoIniciado;
+	bool JogoLogado;
 	int EsperaPlayers;
 	char nome[50];
 };
 
 typedef struct {
-	TCHAR nome[35];
-	TCHAR pass[35];
+	TCHAR nome[30];
+	TCHAR pass[30];
 	HANDLE pipe;
 }utilizador;
 
@@ -44,6 +48,7 @@ int _tmain(int argc, LPTSTR argv[]) {
 	HANDLE hThread = NULL;
 	HANDLE hpipe;
 	OVERLAPPED ovl;
+	e = new Engenho;
 
 #ifdef UNICODE 
 	_setmode(_fileno(stdin), _O_WTEXT);
@@ -94,80 +99,48 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 }
 
-bool VerificaRegisto(LPCWSTR nome, LPCWSTR pass) {
-
-	HKEY chave;
-	DWORD queAconteceu, versao, tamanho;
-	TCHAR autor[200];
-	TCHAR keyName[200] = REGISTRY_KEY;
-	wcscat_s(keyName, nome);
-	
-	//Criar/abrir uma chave em HKEY_CURRENT_USER\Software\MinhaAplicacao
-	if (RegCreateKeyEx(HKEY_CURRENT_USER, keyName, 0, NULL, REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, NULL, &chave, &queAconteceu) != ERROR_SUCCESS) {
-		tcout << TEXT("Erro ao criar/abrir chave (%d)\n"), GetLastError();
-		return false;
-	}
-	else {
-		if (queAconteceu == REG_CREATED_NEW_KEY) {
-			// fazer novo registo de um novo cliente, depois da chave ja estar a aberta
-
-			RegSetValueEx(chave, TEXT("Nome"), 0, REG_SZ, (LPBYTE)nome, _tcslen(nome)*sizeof(TCHAR));
-
-			RegSetValueEx(chave, TEXT("Pass"), 0, REG_SZ, (LPBYTE)pass, _tcslen(pass)*sizeof(TCHAR));
-		}
-		else if (queAconteceu == REG_OPENED_EXISTING_KEY) {
-			//Se a chave foi aberta, ler os valores lá guardadoss
-
-			RegQueryValueEx(chave, TEXT("Nome"), NULL, NULL, (LPBYTE)nome, &tamanho);
-
-			RegQueryValueEx(chave, TEXT("Nome"), NULL, NULL, (LPBYTE)pass, &tamanho);
-
-			return true;
-		}
-
-
-	}
-
-}
-
-
-
 
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	DWORD n;
 	BOOL ret, value;
-	int i, flag = 0;
+	int i, flag = 0, valorRetorno;
 	TCHAR buf[256];
 	TCHAR nome[256];
 	TCHAR pass[256];
 	int aux;
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
-	tstring sub1;
-	tstring sub2;
-	LPCTSTR pStr;
-	string Comando = "";
-	string TipoComando = "";
+	tstring sub1 = TEXT("");
+	tstring sub2 = TEXT("");
+	LPCTSTR pStr, pStr2, pStr3;
+	LPCWSTR NOME;
+	string Comando;
+	string TipoComando;
 	_tcscpy_s(nome, 256, (TEXT("")));
 
 
 	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
 	nome[n / sizeof(TCHAR)] = '\0';
+	pStr2 = nome;
+
 	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
 	pass[n / sizeof(TCHAR)] = '\0';
-	
 
-	if (VerificaRegisto(nome, pass) == true) {
-		_tprintf(TEXT("[Servidor] O cliente ja está registado\n\n"));
-	}
 
 	wcscpy_s(utili[numero].nome, nome);
-	utili[numero].pipe = client;
-	_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
+	utili[numero].pipe = client;	
+
+	if (e->VerificaRegisto(nome) == true) {
+		_tprintf(TEXT("[Servidor] O cliente %s ja está registado\n\n"), utili[numero].nome);
+
+	}
+	else {
+		e->NovoRegisto(nome, pass);
+		_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
+	}
+
 	numero++;
 
-
-	
 	do{
 		sub1 = TEXT("");
 		sub2 = TEXT("");
@@ -181,14 +154,13 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			if (value == true ){
-				_tprintf(TEXT("[Servidor] O cliente %d ficou agora logado e chama-se %s\n"), i, utili[i].nome);
+				_tprintf(TEXT("[Servidor] O cliente %d está logado e chama-se %s\n"), i, utili[i].nome);
 			}
 		}
 		_tprintf(TEXT("\n\n"));
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
-			res.JogoCriado = true;
-			res.JogoIniciado = true;
+			res.JogoLogado = true;
 			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
 		}
 		
@@ -221,6 +193,26 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		for (int i = 0; i < sub2.length(); i++)
 			TipoComando += sub2.at(i);
 
+		
+		valorRetorno = e->ExecutaComando(TipoComando, Comando);
+
+		if (valorRetorno == 0) {
+			_tprintf(TEXT("[Servidor] O comando que o cliente mandou não está na lista de comandos\n\n"));
+		}
+		if (valorRetorno == 1 && e->getJogoCriado() == false) {
+			for (int y = 0; y < MAXCLIENTES; y++) {
+				if (client == utili[y].pipe) {
+					_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
+				}
+			}
+		}
+		if (valorRetorno == 2 && e->getJogoCriado() == true && e->getJogoIniciado() == false) {
+			for (int y = 0; y < MAXCLIENTES; y++) {
+				if (client == utili[y].pipe) {
+					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
+				}
+			}
+		}
 
 		/*
 		res.JogoCriado = e.getJogoCriadoEstado();

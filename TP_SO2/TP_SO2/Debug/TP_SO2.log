@@ -1,13 +1,22 @@
 ﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(100): warning C4101: 'versao': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(101): warning C4101: 'autor': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(187): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(223): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(224): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(225): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(226): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(143): warning C4101: 'aux': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(139): warning C4101: 'i': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(131): warning C4715: 'VerificaRegisto': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(260): warning C4715: 'ThreadLeituraEscritaInfo': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(159): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(194): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(195): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(196): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(197): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(116): warning C4101: 'NOME': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(115): warning C4101: 'pStr3': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(110): warning C4101: 'aux': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(106): warning C4101: 'i': unreferenced local variable
+  Engenho.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(27): warning C4553: '==': operator has no effect; did you intend '='?
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(40): warning C4101: 'versao': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(41): warning C4101: 'autor': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(40): warning C4101: 'tamanho': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(64): warning C4101: 'versao': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(64): warning C4101: 'queAconteceu': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(65): warning C4101: 'autor': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(64): warning C4101: 'tamanho': unreferenced local variable
+  Generating Code...
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(251): warning C4715: 'ThreadLeituraEscritaInfo': not all control paths return a value
   TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe

@@ -19,15 +19,57 @@ bool Engenho::getJogoIniciado() {
 int Engenho::ExecutaComando(string tcomando, string comando) {
 
 	if (tcomando == "criarjogo") {
-		jogoCriado = true;
-		return 1;
+		if (jogoCriado == false) {
+			if (comando == "pre") {
+				jogoCriado = true;
+				m = new Mapa(50,50);
+				m->predefinido();
+				return 1;
+			}
+			if (comando == "ran") {
+				jogoCriado = true;
+				return 1;
+			}
+			return 0;
+		}
+		else return -1;
 	}
 	else if (tcomando == "jogar") {
-		if (jogoCriado == true) {
-			jogoIniciado == true;
+		if (jogoCriado == true && jogoIniciado == false) {
+			int x = 0, y = 0;
+			jogoIniciado = true;
+			x = rand() % m->getLinhas();
+			y = rand() % m->getColunas();
+			m->NovoJogador(x,y);
 			return 2;
 		}
-		return 0;
+		else return -1;
+	}
+
+	else if (tcomando == "entrar" && comando == "jogo") {
+		if (jogoCriado == true && jogoIniciado == true) {
+
+			int x1 = 0, y1 = 0;
+			x1 = rand() % m->getLinhas();
+			y1 = rand() % m->getColunas();
+			m->NovoJogador(x1,y1);
+			return 3;
+		}
+		else return -1;
+	}/*
+	else if (tcomando == "posicao") {
+		if (jogoCriado == true && jogoIniciado == true) {
+
+			j->getPosX();
+			j->getPosY();
+
+			return 4;
+		}
+		return -1;
+	}*/
+	else if (tcomando == "move") {
+
+		return 4;
 	}
 	else if (tcomando == "logout") {
 		return 7;

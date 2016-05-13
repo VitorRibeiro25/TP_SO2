@@ -6,15 +6,17 @@
 #include <vector>
 #include <string>
 #include "util.h"
+#include "Mapa.h"
+#include "Jogador.h"
 
 #define REGISTRY_KEY TEXT("Software\\TPSO2\\");
-
 
 using namespace std;
 
 class Engenho {
 	bool jogoCriado;
 	bool jogoIniciado;
+	Mapa *m;
 public:
 
 	Engenho();

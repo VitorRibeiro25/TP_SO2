@@ -16,17 +16,21 @@ class Jogador {
 	string nome;
 	bool emJogo; // se esitver a 1 esta a jogar, caso contrario esta apenas logado
 	int lentidao;
-	int vida; 
+	int vida;
+	int posX, posY;
 	vector <Objeto *> obj;
 public:
 
-	Jogador(string nome);
+	Jogador(int x, int y);
 	~Jogador();
 
 	int getId();
 	string getNome();
 	int getVida();
 	int getLentidao();
+	int getPosX();
+	int getPosY();
+
 
 	void setNome(string na);
 	void setVida(int v);

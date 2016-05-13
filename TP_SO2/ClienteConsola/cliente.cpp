@@ -4,7 +4,6 @@
 #include <windows.h>
 #include <io.h>
 #include <fcntl.h>
-#include "Interface.h"
 using namespace std;
 
 #define MAXCLIENTES 5
@@ -20,7 +19,10 @@ DWORD WINAPI Consola(LPVOID param);
 struct resposta
 {
 	int ID_Cliente;
+	int x, y;
 	bool JogadorLogado;
+	bool jogoCriado;
+	bool jogoIniciado;
 	int EsperaPlayers;
 	TCHAR nome[30];
 };
@@ -44,11 +46,10 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 	if (!WaitNamedPipe(PIPENOME, NMPWAIT_WAIT_FOREVER)) {
 		_tprintf(TEXT("[INFO] Conectando... '%s'\n"), PIPENOME);
-		//exit(-1);
 	}
 	hPipe = CreateFile(PIPENOME, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	hPipe2 = CreateFile(PIPENOME2, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	if (hPipe == NULL) {
+	if (hPipe == NULL || hPipe2 == NULL) {
 		_tprintf(TEXT("[INFO] Nao e possivel conetar o servidor %s, tente mais tarde.\n"), PIPENOME);
 		exit(-1);
 	}
@@ -70,7 +71,7 @@ DWORD WINAPI Consola(LPVOID param) {
 	HANDLE hpipelocal = (HANDLE)param;
 	DWORD n;
 	BOOL ret;
-	int i = 0;
+	int i = 0, flag = 0, flag2 = 0;
 	TCHAR buf[256];
 	TCHAR Nome[25];
 	TCHAR pass[25];
@@ -108,11 +109,25 @@ DWORD WINAPI Consola(LPVOID param) {
 			_tprintf(TEXT("[Cliente -%s] O servidor desligou-se\n\n"), Nome);
 			break;
 		}
-		
+
 		if (ID_Cliente == 0) {
 			ID_Cliente = res.ID_Cliente;
 		}
 		if (res.JogadorLogado == true) {
+
+			if (res.jogoCriado == true && flag == 0) {
+				_tprintf(TEXT("[Servidor] O jogo ja foi criado\n"));
+				flag++;
+			}
+			if (res.jogoIniciado == true && flag2 == 0) {
+				_tprintf(TEXT("[Servidor] O jogo ja foi iniciado\n"));
+				flag2++;
+			}
+
+			if (res.jogoCriado == true && res.jogoIniciado == true) {
+				_tprintf(TEXT("[Servidor] O cliente está na posicao %d %d\n"), res.x, res.y);
+			}
+
 			_tprintf(TEXT("[%s - Comandos]: "), Nome);
 			fflush(stdin);
 			_fgetts(Comando, 256, stdin);
@@ -120,6 +135,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			res.ID_Cliente = ID_Cliente;
 
 			WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
+			ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
 
 		}
 	}

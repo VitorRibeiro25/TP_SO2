@@ -5,7 +5,6 @@ CelulaMapa::CelulaMapa() {
 
 	obj = nullptr;
 	jog = nullptr;
-
 }
 
 
@@ -15,6 +14,21 @@ int CelulaMapa::getParede() {
 
 int CelulaMapa::getPorta() {
 	return porta;
+}
+
+void CelulaMapa::CriaObjeto(int x, int y) {
+	
+	int aux = rand() % 15;
+
+	if (aux == 0){
+		obj = new Objeto(x,y);
+	}
+
+}
+
+void CelulaMapa::ColocaJogador(int x, int y) {
+	jog = new Jogador(x,y);
+
 }
 
 void CelulaMapa::setParede(int p) {

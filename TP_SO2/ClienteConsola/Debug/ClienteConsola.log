@@ -1,3 +1,3 @@
 ﻿  cliente.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(127): warning C4715: 'Consola': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(143): warning C4715: 'Consola': not all control paths return a value
   ClienteConsola.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\ClienteConsola.exe

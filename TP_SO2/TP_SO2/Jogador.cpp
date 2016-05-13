@@ -3,11 +3,13 @@
 int Jogador::id_inc = 0;
 
 
-Jogador::Jogador(string nome) {
+Jogador::Jogador(int x, int y) {
 
-	this->nome = nome;
 	id_inc++;
 	id = id_inc;
+
+	posX = x;
+	posY = y;
 
 	setVida(10);
 	setLentidao(5);
@@ -32,6 +34,14 @@ int Jogador::getLentidao() {
 
 string Jogador::getNome() {
 	return nome;
+}
+
+int Jogador::getPosX() {
+	return posX;
+}
+
+int Jogador::getPosY() {
+	return posY;
 }
 
 void Jogador::setNome(string na) {

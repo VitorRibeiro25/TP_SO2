@@ -23,6 +23,11 @@ public:
 
 	Mapa(int lin, int col);
 	~Mapa();
+
+	void predefinido();
+
+	void NovoJogador(int x, int y);
+	void AtualizaJogador(int x, int y);
 	
 	int getLinhas();
 	int getColunas();

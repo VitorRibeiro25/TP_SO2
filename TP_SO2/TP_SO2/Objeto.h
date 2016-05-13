@@ -16,7 +16,6 @@ class Objeto {
 	int vida;
 	int lentidao; 	
 public:
-	Jogador *j;
 	Objeto(int x, int y);
 	~Objeto();
 

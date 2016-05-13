@@ -3,30 +3,32 @@
 Objeto::Objeto(int x, int y) {
 	
 	int i;
-
-	i = 1 + (rand() % 4);
-
 	posX = x;
 	posY = y;
 
+	i = 1 + (rand() % 4);
+
 	// vitaminas
 	if (i == 1) {
-		j->setVida(j->getVida() + 1);
+		setNome("vitamina");
+		setVida(1);
 	}
 
 	// garrafas orangebull
 	if (i == 2) {
-
+		setNome("orangebull");
+		setVida(3);
 	}
 
 	// pedra
 	if (i == 3) {
-
+		setNome("pedra");
 	}
 
 	// rebuçado de cafeína
 	if (i == 4) {
-
+		setNome("rebucado");
+		setLentidao(-2);
 	}
 	
 }

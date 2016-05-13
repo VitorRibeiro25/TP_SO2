@@ -1,6 +1,7 @@
 #include "util.h"
 #include "Engenho.h"
 #include "Mapa.h"
+#include "Jogador.h"
 
 
 #define MAXCLIENTES 5
@@ -17,11 +18,15 @@ BOOL fim = FALSE;
 
 Engenho *e;
 Mapa *m;
+Jogador *j;
 
 struct resposta
 {	
 	int ID_Cliente;
+	int x, y;
 	bool JogoLogado;
+	bool jogoCriado;
+	bool jogoIniciado;
 	int EsperaPlayers;
 	char nome[50];
 };
@@ -49,7 +54,6 @@ int _tmain(int argc, LPTSTR argv[]) {
 	HANDLE hpipe;
 	OVERLAPPED ovl;
 	e = new Engenho;
-
 #ifdef UNICODE 
 	_setmode(_fileno(stdin), _O_WTEXT);
 	_setmode(_fileno(stdout), _O_WTEXT);
@@ -103,20 +107,20 @@ int _tmain(int argc, LPTSTR argv[]) {
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	DWORD n;
 	BOOL ret, value;
-	int i, flag = 0, valorRetorno;
+	int flag = 0, valorRetorno;
 	TCHAR buf[256];
 	TCHAR nome[256];
 	TCHAR pass[256];
-	int aux;
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
 	tstring sub1 = TEXT("");
 	tstring sub2 = TEXT("");
-	LPCTSTR pStr, pStr2, pStr3;
-	LPCWSTR NOME;
+	LPCTSTR pStr, pStr2;
 	string Comando;
 	string TipoComando;
 	_tcscpy_s(nome, 256, (TEXT("")));
+	res.jogoCriado = false;
+	res.jogoIniciado = false;
 
 
 	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
@@ -186,8 +190,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		pStr = buf;
 		tstring str(pStr);
-		sub1 = str.substr(str.find(TEXT(" ")) + 1);// ult palavra
-		sub2 = str.substr(0, str.length() - sub1.length() - 1);  //prim palavra
+		sub1 = str.substr(str.find(TEXT(" ")) + 1); // ultima palavra
+		sub2 = str.substr(0, str.length() - sub1.length() - 1);  //primeira palavra
 		for (int i = 0; i < sub1.length(); i++)
 			Comando += sub1.at(i);
 		for (int i = 0; i < sub2.length(); i++)
@@ -199,51 +203,47 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (valorRetorno == 0) {
 			_tprintf(TEXT("[Servidor] O comando que o cliente mandou não está na lista de comandos\n\n"));
 		}
-		if (valorRetorno == 1 && e->getJogoCriado() == false) {
+		if (valorRetorno == 1) {
+			res.jogoCriado = true;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
 				}
 			}
 		}
-		if (valorRetorno == 2 && e->getJogoCriado() == true && e->getJogoIniciado() == false) {
+		if (valorRetorno == 2) {
+			res.jogoIniciado = true;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
 				}
 			}
 		}
+		if (valorRetorno == 3) {
+			for (int y = 0; y < MAXCLIENTES; y++) {
+				if (client == utili[y].pipe) {
+					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
+				}
+			}
+		}
+
+		if (valorRetorno == -1) {
+			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n\n"));
+		}
 
 		/*
-		res.JogoCriado = e.getJogoCriadoEstado();
-		res.JogoIniciado = e.getJogoIniciadoEstado();
-		res.ID_Cliente = t.getNJog();
-
-		if (e.getJogoCriadoEstado() == true && e.getJogoIniciadoEstado() == false) {
-			wcout << "Enviou mensagem para ultimo cliente" << endl;
-			WriteFile(client, &res, sizeof(struct resposta), &n, NULL);
-		}
-
-		if (e.getJogoCriadoEstado() == true && e.getJogoIniciadoEstado() == true) {
-			UpdateMapa();
-			for (i = 0; i <PlayersActive; i++) {
-				WriteFile(hPipeAct[i], &res, sizeof(struct resposta), &n, NULL);
-			}
-			_tprintf(TEXT("Foram avisados os clientes de uma actualização.\n"), n);
-		}
-		else {
-			system("cls");
-			_tprintf(TEXT("Espera dos restantes players.\n"));
-
-		}
-		
-		for (int i = 0; i < MAXCLIENTES; i++) {
-			if (!ret)
-				_tprintf(TEXT("[Servidor] O cliente desligou-se\n\n"));
-				
+		if (res.jogoCriado == true && res.jogoIniciado == true) {
+			res.x = j->getPosX();
+			res.y = j->getPosY();
+			
 		}*/
+
+		for (int i = 0; i < MAXCLIENTES; i++) {
+			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
+		}
 
 	} while (_tcsncmp(buf, TEXT("FIM"), 3));
 
+	return 0;
 }
 

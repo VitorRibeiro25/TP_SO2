@@ -19,11 +19,11 @@ DWORD WINAPI Consola(LPVOID param);
 struct resposta
 {
 	int ID_Cliente;
-	int x, y;
 	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
 	int EsperaPlayers;
+	TCHAR frase[256];
 	TCHAR nome[30];
 };
 
@@ -75,6 +75,7 @@ DWORD WINAPI Consola(LPVOID param) {
 	TCHAR buf[256];
 	TCHAR Nome[25];
 	TCHAR pass[25];
+	TCHAR frase[256];
 
 	//autenticação do utilizador - nome e pass
 	
@@ -125,7 +126,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			}
 
 			if (res.jogoCriado == true && res.jogoIniciado == true) {
-				_tprintf(TEXT("[Servidor] O cliente está na posicao %d %d\n"), res.x, res.y);
+				_tprintf(TEXT("%s"), res.frase);
 			}
 
 			_tprintf(TEXT("[%s - Comandos]: "), Nome);
@@ -136,8 +137,8 @@ DWORD WINAPI Consola(LPVOID param) {
 
 			WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 			ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
-
 		}
+
 	}
 
 }

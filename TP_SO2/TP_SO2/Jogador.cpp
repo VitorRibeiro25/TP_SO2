@@ -55,3 +55,11 @@ void Jogador::setVida(int v) {
 void Jogador::setLentidao(int l) {
 	this->lentidao = l;
 }
+
+void Jogador::setPosX(int x) {
+	posX = x;
+}
+
+void Jogador::setPosY(int y) {
+	posY = y;
+}

@@ -2,6 +2,7 @@
 #define UTIL
 
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <tchar.h>
@@ -14,15 +15,25 @@
 using namespace std;
 
 #ifdef UNICODE
-#define tstring wstring
-#define tcout  wcout
-#define tcerr wcerr
+#define tcout wcout
 #define tcin wcin
+#define tos wotstringstream
+#define tfstream wifstream
+#define tstring wstring
+#define otstringstream wostringstream
+#define itstringstream wistringstream
+#define to_tstring to_wstring
+#define tstringstream wstringstream
 #else
-#define tstring string 
 #define tcout cout
 #define tcin cin
-#define tcerr cerr
+#define tos otstringstream
+#define tfstream ifstream
+#define tstring string
+#define otstringstream ostringstream
+#define itstringstream istringstream
+#define to_tstring to_string
+#define tstringstream stringstream
 #endif
 
 

@@ -18,16 +18,15 @@ BOOL fim = FALSE;
 
 Engenho *e;
 Mapa *m;
-Jogador *j;
 
 struct resposta
 {	
 	int ID_Cliente;
-	int x, y;
-	bool JogoLogado;
+	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
 	int EsperaPlayers;
+	TCHAR frase[256];
 	char nome[50];
 };
 
@@ -111,6 +110,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	TCHAR buf[256];
 	TCHAR nome[256];
 	TCHAR pass[256];
+	TCHAR frase[256];
+	Jogador *jog = nullptr;
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
 	tstring sub1 = TEXT("");
@@ -164,7 +165,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		_tprintf(TEXT("\n\n"));
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
-			res.JogoLogado = true;
+			res.JogadorLogado = true;
 			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
 		}
 		
@@ -198,7 +199,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			TipoComando += sub2.at(i);
 
 		
-		valorRetorno = e->ExecutaComando(TipoComando, Comando);
+		valorRetorno = e->ExecutaComando(TipoComando, Comando, jog);
 
 		if (valorRetorno == 0) {
 			_tprintf(TEXT("[Servidor] O comando que o cliente mandou não está na lista de comandos\n\n"));
@@ -209,6 +210,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
 				}
+				m = new Mapa(50, 50);
+				m->predefinido();
 			}
 		}
 		if (valorRetorno == 2) {
@@ -216,6 +219,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
+					int x = rand() % m->getLinhas();
+					int y = rand() % m->getColunas();
+					jog = new Jogador(x, y);
+					m->NovoJogador(x, y);
 				}
 			}
 		}
@@ -223,20 +230,46 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
+					int x1 = rand() % m->getLinhas();
+					int y1 = rand() % m->getColunas();
+					m->NovoJogador(x1, y1);
 				}
 			}
 		}
+		if (valorRetorno == 5) {
+			if (Comando == "direita") {
+				jog->setPosY(jog->getPosY() + 1);
+			}
+			if (Comando == "esquerda") {
+				jog->setPosY(jog->getPosY() - 1);
+			}
+			if (Comando == "cima") {
+				jog->setPosX(jog->getPosX() + 1);
+			}
+			if (Comando == "baixo") {
+				jog->setPosX(jog->getPosX() - 1);
+			}
+		}
+		if (valorRetorno == 7) {
+			for (int y = 0; y < MAXCLIENTES; y++) {
+				if (client == utili[y].pipe) {
+					if (client == utili[y].pipe) {
+						res.JogadorLogado = false;
+						_tprintf(TEXT("[Servidor] O cliente %s fez logout do jogo\n\n"), utili[y].nome);
+					}
+				}
+			}
 
+		}
 		if (valorRetorno == -1) {
 			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n\n"));
 		}
 
-		/*
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
-			res.x = j->getPosX();
-			res.y = j->getPosY();
-			
-		}*/
+
+			tstring aux = e->PosicaoJogador(jog);
+			wcscpy_s(res.frase, aux.c_str());
+		}
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);

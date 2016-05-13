@@ -35,6 +35,8 @@ public:
 	void setNome(string na);
 	void setVida(int v);
 	void setLentidao(int l);
+	void setPosX(int x);
+	void setPosY(int y);
 
 };
 

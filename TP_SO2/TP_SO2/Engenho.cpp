@@ -16,7 +16,7 @@ bool Engenho::getJogoIniciado() {
 }
 
 
-int Engenho::ExecutaComando(string tcomando, string comando) {
+int Engenho::ExecutaComando(string tcomando, string comando, Jogador *jog) {
 
 	if (tcomando == "criarjogo") {
 		if (jogoCriado == false) {
@@ -36,11 +36,7 @@ int Engenho::ExecutaComando(string tcomando, string comando) {
 	}
 	else if (tcomando == "jogar") {
 		if (jogoCriado == true && jogoIniciado == false) {
-			int x = 0, y = 0;
 			jogoIniciado = true;
-			x = rand() % m->getLinhas();
-			y = rand() % m->getColunas();
-			m->NovoJogador(x,y);
 			return 2;
 		}
 		else return -1;
@@ -48,33 +44,50 @@ int Engenho::ExecutaComando(string tcomando, string comando) {
 
 	else if (tcomando == "entrar" && comando == "jogo") {
 		if (jogoCriado == true && jogoIniciado == true) {
-
-			int x1 = 0, y1 = 0;
-			x1 = rand() % m->getLinhas();
-			y1 = rand() % m->getColunas();
-			m->NovoJogador(x1,y1);
 			return 3;
 		}
 		else return -1;
-	}/*
-	else if (tcomando == "posicao") {
-		if (jogoCriado == true && jogoIniciado == true) {
-
-			j->getPosX();
-			j->getPosY();
-
+	}
+	else if (tcomando == "posicao" && comando == "atual") {
+		if (jogoCriado == true && jogoIniciado == true)
 			return 4;
-		}
-		return -1;
-	}*/
+		else return -1;
+	}
 	else if (tcomando == "move") {
+		if (jogoCriado == true && jogoIniciado == true) {
+			if (comando == "direita") {
+				return 5;
+			}
+			else if (comando == "esquerda") {
+				return 5;
+			}
+			else if (comando == "cima") {
+				return 5;
 
-		return 4;
+			}
+			else if (comando == "baixo") {
+				return 5;
+			}
+			else return 0;
+		}
+		else return -1;
 	}
 	else if (tcomando == "logout") {
 		return 7;
 	}
 	else return 0;
+}
+
+tstring Engenho::PosicaoJogador(Jogador *j) {
+
+	tstringstream aux;
+
+
+	aux << TEXT("[Servidor] O jogador encontra-se atualmente na posicao [x,y]: [") << j->getPosX() << "][" << j->getPosY() << "]" << "\n";
+
+
+	return aux.str();
+
 }
 
 void Engenho::NovoRegisto(LPCWSTR nome, LPCWSTR pass) {

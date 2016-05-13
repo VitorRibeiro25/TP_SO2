@@ -4,14 +4,14 @@ Mapa::Mapa(int lin, int col) {
 	linhas = lin;
 	colunas = col;
 
-	celula = new CelulaMapa*[lin];
-	for (int i = 0; i <= lin; i++) {
-		celula[i] = new CelulaMapa[col];
-		for (int j = 0; j <= col; j++) {
+	celula = new CelulaMapa[lin * col];
+
+	for (int i = 0; i < lin; i++) {
+		for (int j = 0; j < col; j++) {
 			if (i == 0 || j == 0 || i == lin || j == col) {
-				celula[i][j].setParede(1);
+				getCelula(i, j).setParede(1);
 			}
-			else celula[i][j].setParede(0);
+			else getCelula(i,j).setParede(0);
 		}
 	}
 
@@ -21,8 +21,8 @@ void Mapa::predefinido() {
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if ((i + j) % 2 == 0) {
-				if (celula[i][j].getParede() == 0) {
-					celula[i][j].setParede(1);
+				if (getCelula(i,j).getParede() == 0) {
+					getCelula(i,j).setParede(1);
 				}
 			}
 		}
@@ -30,8 +30,8 @@ void Mapa::predefinido() {
 
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
-			if (celula[i][j].getParede() == 0) {
-				celula[i][j].CriaObjeto(i,j);
+			if (getCelula(i,j).getParede() == 0) {
+				getCelula(i,j).CriaObjeto(i,j);
 			}
 		}
 	}
@@ -41,11 +41,15 @@ void Mapa::NovoJogador(int x, int y) {
 
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
-			if (celula[x][y].getParede() == 0) {
-				celula[i][j].ColocaJogador(x, y);
+			if (getCelula(i,j).getParede() == 0) {
+				getCelula(i,j).ColocaJogador(x, y);
 			}
 		}
 	}
+}
+
+CelulaMapa &Mapa::getCelula(int x, int y) {
+	return celula[x * colunas + y];
 }
 
 void Mapa::AtualizaJogador(int x, int y) {

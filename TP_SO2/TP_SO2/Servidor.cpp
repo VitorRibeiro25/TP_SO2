@@ -267,8 +267,12 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
 
-			tstring aux = e->PosicaoJogador(jog);
-			wcscpy_s(res.frase, aux.c_str());
+			for (int i = 0; i < MAXCLIENTES; i++) {
+				if (client == utili[i].pipe) {
+					tstring aux = e->PosicaoJogador(jog);
+					wcscpy_s(res.frase, aux.c_str());
+				}
+			}
 		}
 
 		for (int i = 0; i < MAXCLIENTES; i++) {

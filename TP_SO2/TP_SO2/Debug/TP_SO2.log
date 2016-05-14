@@ -1,17 +1,8 @@
 ﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(162): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(197): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(198): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(199): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(200): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(114): warning C4101: 'frase': unreferenced local variable
-  Engenho.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(95): warning C4101: 'versao': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(96): warning C4101: 'autor': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(95): warning C4101: 'tamanho': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(119): warning C4101: 'versao': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(119): warning C4101: 'queAconteceu': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(120): warning C4101: 'autor': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(119): warning C4101: 'tamanho': unreferenced local variable
-  Generating Code...
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(161): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(196): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(197): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(198): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(199): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(113): warning C4101: 'frase': unreferenced local variable
   TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe

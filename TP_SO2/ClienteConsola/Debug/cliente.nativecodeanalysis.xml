@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DEFECTS>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>39</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: '_setmode'.</DESCRIPTION>
+    <FUNCTION>wmain</FUNCTION>
+    <DECORATED>wmain</DECORATED>
+    <FUNCLINE>34</FUNCLINE>
+    <PATH />
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>40</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: '_setmode'.</DESCRIPTION>
+    <FUNCTION>wmain</FUNCTION>
+    <DECORATED>wmain</DECORATED>
+    <FUNCLINE>34</FUNCLINE>
+    <PATH />
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>60</LINE>
+      <COLUMN>20</COLUMN>
+    </SFA>
+    <DEFECTCODE>6387</DEFECTCODE>
+    <DESCRIPTION>'hThread' could be '0':  this does not adhere to the specification for the function 'WaitForSingleObject'. </DESCRIPTION>
+    <FUNCTION>wmain</FUNCTION>
+    <DECORATED>wmain</DECORATED>
+    <FUNCLINE>34</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>35</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>39</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>40</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>47</LINE>
+        <COLUMN>5</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>50</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>51</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>52</LINE>
+        <COLUMN>19</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>58</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'hThread' may be NULL</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>60</LINE>
+        <COLUMN>20</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'hThread' is an Input to 'WaitForSingleObject' (declared at c:\program files (x86)\windows kits\8.1\include\um\synchapi.h:473)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>60</LINE>
+        <COLUMN>20</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'hThread' should not be NULL, because this is not consistent with the SAL annotation on 'WaitForSingleObject'</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>99</LINE>
+      <COLUMN>9</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: 'ReadFile'.</DESCRIPTION>
+    <FUNCTION>Consola</FUNCTION>
+    <DECORATED>?Consola@@YGKPAX@Z</DECORATED>
+    <FUNCLINE>69</FUNCLINE>
+    <PATH />
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>139</LINE>
+      <COLUMN>11</COLUMN>
+    </SFA>
+    <DEFECTCODE>6031</DEFECTCODE>
+    <DESCRIPTION>Return value ignored: 'ReadFile'.</DESCRIPTION>
+    <FUNCTION>Consola</FUNCTION>
+    <DECORATED>?Consola@@YGKPAX@Z</DECORATED>
+    <FUNCLINE>69</FUNCLINE>
+    <PATH />
+  </DEFECT>
+  <DEFECT>
+    <SFA>
+      <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+      <FILENAME>cliente.cpp</FILENAME>
+      <LINE>100</LINE>
+      <COLUMN>24</COLUMN>
+    </SFA>
+    <DEFECTCODE>6386</DEFECTCODE>
+    <DESCRIPTION>Buffer overrun while writing to 'buf':  the writable size is '512' bytes, but '514' bytes might be written.</DESCRIPTION>
+    <FUNCTION>Consola</FUNCTION>
+    <DECORATED>?Consola@@YGKPAX@Z</DECORATED>
+    <FUNCLINE>69</FUNCLINE>
+    <PROBABILITY>1</PROBABILITY>
+    <RANK>4</RANK>
+    <CATEGORY>
+      <RULECATEGORY>mspft</RULECATEGORY>
+    </CATEGORY>
+    <PATH>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>71</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>72</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>73</LINE>
+        <COLUMN>6</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>74</LINE>
+        <COLUMN>5</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>74</LINE>
+        <COLUMN>12</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>74</LINE>
+        <COLUMN>22</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>75</LINE>
+        <COLUMN>7</COLUMN>
+        <KEYEVENT>
+          <ID>1</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>'buf' is an array of 256 elements (512 bytes)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>76</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>77</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>78</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>82</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>83</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>84</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>85</LINE>
+        <COLUMN>31</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>86</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>87</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>88</LINE>
+        <COLUMN>10</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>90</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>91</LINE>
+        <COLUMN>7</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>92</LINE>
+        <COLUMN>8</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>93</LINE>
+        <COLUMN>31</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>94</LINE>
+        <COLUMN>9</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>95</LINE>
+        <COLUMN>16</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>96</LINE>
+        <COLUMN>10</COLUMN>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>99</LINE>
+        <COLUMN>9</COLUMN>
+        <KEYEVENT>
+          <ID>2</ID>
+          <KIND>declaration</KIND>
+          <IMPORTANCE>Full</IMPORTANCE>
+          <MESSAGE>'buf' is an Output from 'ReadFile' (declared at c:\program files (x86)\windows kits\8.1\include\um\fileapi.h:932)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+      <SFA>
+        <FILEPATH>c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\</FILEPATH>
+        <FILENAME>cliente.cpp</FILENAME>
+        <LINE>100</LINE>
+        <COLUMN>24</COLUMN>
+        <KEYEVENT>
+          <ID>3</ID>
+          <KIND>usage</KIND>
+          <IMPORTANCE>Essential</IMPORTANCE>
+          <MESSAGE>Invalid write to 'buf[256]', (writable range is 0 to 255)</MESSAGE>
+        </KEYEVENT>
+      </SFA>
+    </PATH>
+  </DEFECT>
+</DEFECTS>

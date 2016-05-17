@@ -11,9 +11,11 @@
 
 #define REGISTRY_KEY TEXT("Software\\TPSO2\\");
 
+#define MUTEX_NAME TEXT("O servidor está a correr?")
+
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param);
 
-HANDLE clientes[MAXCLIENTES], hEvent;	
+HANDLE clientes[MAXCLIENTES], hEvent, hThread[MAXCLIENTES];
 BOOL fim = FALSE;
 
 Engenho *e;
@@ -25,8 +27,9 @@ struct resposta
 	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
-	int EsperaPlayers;
+	bool comandoErrado;
 	TCHAR frase[256];
+	TCHAR comandoErr[256];
 	char nome[50];
 };
 
@@ -48,8 +51,6 @@ void GameStatus() {
 }
 
 int _tmain(int argc, LPTSTR argv[]) {
-
-	HANDLE hThread = NULL;
 	HANDLE hpipe;
 	OVERLAPPED ovl;
 	e = new Engenho;
@@ -63,6 +64,21 @@ int _tmain(int argc, LPTSTR argv[]) {
 	ovl.hEvent = hEvent;
 
 	_tprintf(TEXT("\t------Espera pelos clientes-------\n\n"));
+
+	//Servidor esta a correr?
+	HANDLE hMutex = OpenMutex(MUTEX_ALL_ACCESS, FALSE, MUTEX_NAME);
+
+	if (hMutex == NULL)
+	{
+		// no duplicate instances found
+		hMutex = CreateMutex(NULL, FALSE, MUTEX_NAME);
+	}
+	else
+	{
+		// a duplicate was found
+		_tprintf(TEXT("Já existe uma instância do servidor a correr!\n"));
+		return 0;
+	}
 
 	for (int i = 0; i < MAXCLIENTES && !fim; i++) {
 
@@ -87,14 +103,11 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 		// Incrementar valor dos players ativos
 
-
-		hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadLeituraEscritaInfo, (LPVOID)hpipe, 0, NULL);
-
-
+		hThread[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadLeituraEscritaInfo, (LPVOID)hpipe, 0, NULL);
 
 	}
 
-	WaitForSingleObject(hThread, INFINITE);
+	WaitForMultipleObjects(MAXCLIENTES, hThread, FALSE, INFINITE);
 	_tprintf(TEXT("O sistema vai ser desligado\n"));
 
 	Sleep(1000);
@@ -123,7 +136,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	res.jogoCriado = false;
 	res.jogoIniciado = false;
 
-
 	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
 	nome[n / sizeof(TCHAR)] = '\0';
 	pStr2 = nome;
@@ -151,6 +163,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		sub2 = TEXT("");
 		ValidarCmd = -1;
 		_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
+		_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O comando introduzido não está lista de comandos\n")));
 		Comando = "";
 		TipoComando = "";
 		sub1.clear();
@@ -203,9 +216,11 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		if (valorRetorno == 0) {
 			_tprintf(TEXT("[Servidor] O comando que o cliente mandou não está na lista de comandos\n\n"));
+			res.comandoErrado = true;
 		}
 		if (valorRetorno == 1) {
 			res.jogoCriado = true;
+			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
@@ -216,6 +231,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		}
 		if (valorRetorno == 2) {
 			res.jogoIniciado = true;
+			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
@@ -227,16 +243,19 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			}
 		}
 		if (valorRetorno == 3) {
+			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
 					int x1 = rand() % m->getLinhas();
 					int y1 = rand() % m->getColunas();
+					jog = new Jogador(x1, y1);
 					m->NovoJogador(x1, y1);
 				}
 			}
 		}
 		if (valorRetorno == 5) {
+			res.comandoErrado = false;
 			if (Comando == "direita") {
 				jog->setPosY(jog->getPosY() + 1);
 			}
@@ -251,6 +270,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			}
 		}
 		if (valorRetorno == 7) {
+			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					if (client == utili[y].pipe) {
@@ -262,7 +282,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		}
 		if (valorRetorno == -1) {
-			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n\n"));
+			res.comandoErrado = false;
+			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n"));
 		}
 
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
@@ -271,12 +292,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[i].pipe) {
 					tstring aux = e->PosicaoJogador(jog);
 					wcscpy_s(res.frase, aux.c_str());
+					_tprintf(TEXT("%s"), res.frase);
+
 				}
 			}
-		}
-
-		for (int i = 0; i < MAXCLIENTES; i++) {
-			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
 		}
 
 	} while (_tcsncmp(buf, TEXT("FIM"), 3));

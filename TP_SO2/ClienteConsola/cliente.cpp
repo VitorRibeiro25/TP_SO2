@@ -22,8 +22,9 @@ struct resposta
 	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
-	int EsperaPlayers;
+	bool comandoErrado;
 	TCHAR frase[256];
+	TCHAR comandoErr[256];
 	TCHAR nome[30];
 };
 
@@ -33,6 +34,7 @@ static TCHAR Comando[256];
 
 int _tmain(int argc, LPTSTR argv[]) {
 	HANDLE hThread;
+	DWORD n;
 
 
 #ifdef UNICODE 
@@ -53,7 +55,6 @@ int _tmain(int argc, LPTSTR argv[]) {
 		_tprintf(TEXT("[INFO] Nao e possivel conetar o servidor %s, tente mais tarde.\n"), PIPENOME);
 		exit(-1);
 	}
-
 
 	hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Consola, (LPVOID)hPipe2, 0, NULL);
 
@@ -125,6 +126,10 @@ DWORD WINAPI Consola(LPVOID param) {
 				flag2++;
 			}
 
+			if (res.comandoErrado == true){
+				_tprintf(TEXT("%s"), res.comandoErr);
+			}
+
 			if (res.jogoCriado == true && res.jogoIniciado == true) {
 				_tprintf(TEXT("%s"), res.frase);
 			}
@@ -136,7 +141,6 @@ DWORD WINAPI Consola(LPVOID param) {
 			res.ID_Cliente = ID_Cliente;
 
 			WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
-			ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
 		}
 
 	}

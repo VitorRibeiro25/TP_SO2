@@ -1,8 +1,8 @@
 ﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(161): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(196): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(197): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(198): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(199): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(113): warning C4101: 'frase': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(174): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(209): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(210): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(211): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(212): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(126): warning C4101: 'frase': unreferenced local variable
   TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe

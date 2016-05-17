@@ -1,6 +1,5 @@
-﻿  Interface.cpp
-  cliente.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(78): warning C4101: 'frase': unreferenced local variable
-  Generating Code...
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(144): warning C4715: 'Consola': not all control paths return a value
+﻿  cliente.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(37): warning C4101: 'n': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(79): warning C4101: 'frase': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(148): warning C4715: 'Consola': not all control paths return a value
   ClienteConsola.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\ClienteConsola.exe

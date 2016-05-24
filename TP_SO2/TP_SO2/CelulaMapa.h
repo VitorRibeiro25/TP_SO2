@@ -27,7 +27,7 @@ public:
 	void setPorta(int p);
 
 	void CriaObjeto(int x, int y);
-	void ColocaJogador(int x, int y);
+	void ColocaJogador(int x, int y, int id);
 
 
 

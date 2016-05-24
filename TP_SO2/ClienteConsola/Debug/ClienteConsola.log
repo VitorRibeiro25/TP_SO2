@@ -1,5 +1,8 @@
 ﻿  cliente.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(37): warning C4101: 'n': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(79): warning C4101: 'frase': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(148): warning C4715: 'Consola': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(42): warning C4101: 'n': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(96): warning C4101: 'frase': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(95): warning C4101: 'buf': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(93): warning C4101: 'ret': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(130): warning C4101: 'frase': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\clienteconsola\cliente.cpp(176): warning C4715: 'Recebe': not all control paths return a value
   ClienteConsola.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\ClienteConsola.exe

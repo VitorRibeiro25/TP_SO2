@@ -26,8 +26,8 @@ void CelulaMapa::CriaObjeto(int x, int y) {
 
 }
 
-void CelulaMapa::ColocaJogador(int x, int y) {
-	jog = new Jogador(x,y);
+void CelulaMapa::ColocaJogador(int x, int y, int id) {
+	//jog = new Jogador(x,y,id);
 
 }
 

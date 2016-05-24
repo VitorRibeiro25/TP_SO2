@@ -16,6 +16,7 @@
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param);
 
 HANDLE clientes[MAXCLIENTES], hEvent, hThread[MAXCLIENTES];
+
 BOOL fim = FALSE;
 
 Engenho *e;
@@ -37,6 +38,9 @@ typedef struct {
 	TCHAR nome[30];
 	TCHAR pass[30];
 	HANDLE pipe;
+	HANDLE envia;
+	HANDLE recebe;
+
 }utilizador;
 
 int numero = 0;
@@ -101,9 +105,10 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 		WaitForSingleObject(ovl.hEvent, INFINITE);
 
-		// Incrementar valor dos players ativos
+		// alterar para duas threads -> uma de leitura e uma de escrita
 
 		hThread[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)ThreadLeituraEscritaInfo, (LPVOID)hpipe, 0, NULL);
+
 
 	}
 
@@ -115,6 +120,40 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 }
 
+void Autenticacao(LPVOID param) {
+
+	DWORD n;
+	HANDLE client = (HANDLE)param;
+	TCHAR nome[256];
+	TCHAR pass[256];
+	BOOL ret, value;
+	LPCTSTR pStr, pStr2;
+
+	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
+	nome[n / sizeof(TCHAR)] = '\0';
+	pStr2 = nome;
+
+	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
+	pass[n / sizeof(TCHAR)] = '\0';
+
+
+	wcscpy_s(utili[numero].nome, nome);
+	utili[numero].pipe = client;
+
+	if (e->VerificaRegisto(nome) == true) {
+		_tprintf(TEXT("[Servidor] O cliente %s ja está registado\n\n"), utili[numero].nome);
+
+	}
+	else {
+		e->NovoRegisto(nome, pass);
+		_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
+	}
+	numero++;
+}
+
+
+// falta colocar o handle para identificar o cliente em questao
+
 
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	DWORD n;
@@ -124,7 +163,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	TCHAR nome[256];
 	TCHAR pass[256];
 	TCHAR frase[256];
-	Jogador *jog = nullptr;
+	Jogador *jog = new Jogador(numero);
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
 	tstring sub1 = TEXT("");
@@ -136,27 +175,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	res.jogoCriado = false;
 	res.jogoIniciado = false;
 
-	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
-	nome[n / sizeof(TCHAR)] = '\0';
-	pStr2 = nome;
-
-	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
-	pass[n / sizeof(TCHAR)] = '\0';
-
-
-	wcscpy_s(utili[numero].nome, nome);
-	utili[numero].pipe = client;	
-
-	if (e->VerificaRegisto(nome) == true) {
-		_tprintf(TEXT("[Servidor] O cliente %s ja está registado\n\n"), utili[numero].nome);
-
-	}
-	else {
-		e->NovoRegisto(nome, pass);
-		_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
-	}
-
-	numero++;
+	Autenticacao(param);
 
 	do{
 		sub1 = TEXT("");
@@ -169,6 +188,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		sub1.clear();
 		sub2.clear();
 
+		//enviaMensagem(jog);
+
 		for (int i = 0; i < MAXCLIENTES; i++) {
 			value = WriteFile(clientes[i], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			if (value == true ){
@@ -178,8 +199,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		_tprintf(TEXT("\n\n"));
 
 		for (int i = 0; i < MAXCLIENTES; i++) {
-			res.JogadorLogado = true;
-			WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
+			if (jog->getId() == i) {
+				res.JogadorLogado = true;
+				WriteFile(clientes[i], &res, sizeof(struct resposta), 0, NULL);
+			}
 		}
 		
 		ret = ReadFile(client, buf, sizeof(buf), &n, NULL);
@@ -235,10 +258,11 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
-					int x = rand() % m->getLinhas();
-					int y = rand() % m->getColunas();
-					jog = new Jogador(x, y);
-					m->NovoJogador(x, y);
+					int Posx = rand() % m->getLinhas();
+					int Posy = rand() % m->getColunas();
+					jog->setPosX(Posx);
+					jog->setPosY(Posy);
+					m->NovoJogador(Posx, Posy, numero);
 				}
 			}
 		}
@@ -249,8 +273,9 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
 					int x1 = rand() % m->getLinhas();
 					int y1 = rand() % m->getColunas();
-					jog = new Jogador(x1, y1);
-					m->NovoJogador(x1, y1);
+					jog->setPosX(x1);
+					jog->setPosY(y1);
+					m->NovoJogador(x1, y1, numero);
 				}
 			}
 		}
@@ -289,7 +314,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
 
 			for (int i = 0; i < MAXCLIENTES; i++) {
-				if (client == utili[i].pipe) {
+				if (jog->getId() == i) {
 					tstring aux = e->PosicaoJogador(jog);
 					wcscpy_s(res.frase, aux.c_str());
 					_tprintf(TEXT("%s"), res.frase);

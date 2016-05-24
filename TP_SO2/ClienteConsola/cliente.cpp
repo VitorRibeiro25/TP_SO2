@@ -14,7 +14,9 @@ using namespace std;
 
 HANDLE hPipe;
 HANDLE hPipe2;
-DWORD WINAPI Consola(LPVOID param);
+DWORD WINAPI Recebe(LPVOID param);
+void Autenticacao(LPVOID param);
+void Envia(TCHAR &Comando);
 
 struct resposta
 {
@@ -30,7 +32,10 @@ struct resposta
 
 struct resposta res;
 static int ID_Cliente = 0;
-static TCHAR Comando[256];
+TCHAR Comando[256];
+TCHAR Nome[25];
+TCHAR pass[25];
+DWORD n;
 
 int _tmain(int argc, LPTSTR argv[]) {
 	HANDLE hThread;
@@ -49,14 +54,29 @@ int _tmain(int argc, LPTSTR argv[]) {
 	if (!WaitNamedPipe(PIPENOME, NMPWAIT_WAIT_FOREVER)) {
 		_tprintf(TEXT("[INFO] Conectando... '%s'\n"), PIPENOME);
 	}
+
 	hPipe = CreateFile(PIPENOME, GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
 	hPipe2 = CreateFile(PIPENOME2, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+
 	if (hPipe == NULL || hPipe2 == NULL) {
 		_tprintf(TEXT("[INFO] Nao e possivel conetar o servidor %s, tente mais tarde.\n"), PIPENOME);
 		exit(-1);
 	}
 
-	hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Consola, (LPVOID)hPipe2, 0, NULL);
+	Autenticacao(hPipe2);
+
+	hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Recebe, (LPVOID)hPipe2, 0, NULL);
+
+	while (1) {
+		fflush(stdin);
+		_fgetts(Comando, 256, stdin);
+		Comando[_tcslen(Comando) - 1] = '\0';
+		res.ID_Cliente = ID_Cliente;
+		
+		Envia(*Comando);
+	}
+
 
 	WaitForSingleObject(hThread, INFINITE);
 
@@ -66,20 +86,17 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 }
 
-
-DWORD WINAPI Consola(LPVOID param) {
+void Autenticacao(LPVOID param) {
 
 	HANDLE hpipelocal = (HANDLE)param;
 	DWORD n;
 	BOOL ret;
 	int i = 0, flag = 0, flag2 = 0;
 	TCHAR buf[256];
-	TCHAR Nome[25];
-	TCHAR pass[25];
 	TCHAR frase[256];
 
-	//autenticação do utilizador - nome e pass
-	
+	//autenticação do utilizador - nome e pass 
+
 	_tprintf(TEXT("[Autenticação - coloque o nome]: "));
 	fflush(stdin);
 	_fgetts(Comando, 256, stdin);
@@ -95,6 +112,22 @@ DWORD WINAPI Consola(LPVOID param) {
 	wcscpy_s(pass, Comando);
 	res.ID_Cliente = ID_Cliente;
 	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
+
+}
+
+void Envia(TCHAR &Comando) {
+
+	WriteFile(hPipe, &Comando, _tcslen(&Comando) * sizeof(TCHAR), &n, NULL);
+}
+
+
+DWORD WINAPI Recebe(LPVOID param) {
+
+	HANDLE hpipelocal = (HANDLE)param;
+	BOOL ret;
+	int i = 0, flag = 0, flag2 = 0;
+	TCHAR buf[256];
+	TCHAR frase[256];
 
 
 	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
@@ -135,12 +168,7 @@ DWORD WINAPI Consola(LPVOID param) {
 			}
 
 			_tprintf(TEXT("[%s - Comandos]: "), Nome);
-			fflush(stdin);
-			_fgetts(Comando, 256, stdin);
-			Comando[_tcslen(Comando) - 1] = '\0';
-			res.ID_Cliente = ID_Cliente;
 
-			WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 		}
 
 	}

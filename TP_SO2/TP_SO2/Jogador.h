@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <Windows.h>
 
 using namespace std;
 
@@ -18,10 +19,11 @@ class Jogador {
 	int lentidao;
 	int vida;
 	int posX, posY;
+	HANDLE hrecebe, henvia;
 	vector <Objeto *> obj;
 public:
 
-	Jogador(int x, int y);
+	Jogador(int id);
 	~Jogador();
 
 	int getId();
@@ -30,7 +32,8 @@ public:
 	int getLentidao();
 	int getPosX();
 	int getPosY();
-
+	HANDLE getRecebe();
+	HANDLE getEnvia();
 
 	void setNome(string na);
 	void setVida(int v);

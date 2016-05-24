@@ -25,8 +25,9 @@ public:
 	~Mapa();
 
 	void predefinido();
+	void random();
 
-	void NovoJogador(int x, int y);
+	void NovoJogador(int x, int y, int id);
 	void AtualizaJogador(int x, int y);
 	CelulaMapa &getCelula(int x, int y);
 	

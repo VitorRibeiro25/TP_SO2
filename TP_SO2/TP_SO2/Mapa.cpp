@@ -37,12 +37,30 @@ void Mapa::predefinido() {
 	}
 }
 
-void Mapa::NovoJogador(int x, int y) {
+void Mapa::random() {
+
+	// ciclo para colocar paredes
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+		}
+	}
+
+	// ciclo para colocar objetos
+
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+
+		}
+	}
+
+}
+
+void Mapa::NovoJogador(int x, int y, int id) {
 
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (getCelula(i,j).getParede() == 0) {
-				getCelula(i,j).ColocaJogador(x, y);
+				getCelula(i,j).ColocaJogador(x, y, id);
 			}
 		}
 	}

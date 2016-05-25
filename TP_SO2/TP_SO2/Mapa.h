@@ -27,7 +27,7 @@ public:
 	void predefinido();
 	void random();
 
-	void NovoJogador(int x, int y, int id);
+	void NovoJogador(Jogador *jog);
 	void AtualizaJogador(int x, int y);
 	CelulaMapa &getCelula(int x, int y);
 	

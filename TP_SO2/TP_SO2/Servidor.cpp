@@ -172,8 +172,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	string Comando;
 	string TipoComando;
 	_tcscpy_s(nome, 256, (TEXT("")));
-	res.jogoCriado = false;
-	res.jogoIniciado = false;
 
 	Autenticacao(param);
 
@@ -262,11 +260,13 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					int Posy = rand() % m->getColunas();
 					jog->setPosX(Posx);
 					jog->setPosY(Posy);
-					m->NovoJogador(Posx, Posy, numero);
+					m->NovoJogador(jog);
 				}
 			}
 		}
 		if (valorRetorno == 3) {
+			res.jogoCriado = true;
+			res.jogoIniciado = true;
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
@@ -275,7 +275,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					int y1 = rand() % m->getColunas();
 					jog->setPosX(x1);
 					jog->setPosY(y1);
-					m->NovoJogador(x1, y1, numero);
+					m->NovoJogador(jog);
 				}
 			}
 		}

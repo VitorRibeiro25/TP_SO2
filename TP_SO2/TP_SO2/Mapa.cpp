@@ -55,12 +55,12 @@ void Mapa::random() {
 
 }
 
-void Mapa::NovoJogador(int x, int y, int id) {
+void Mapa::NovoJogador(Jogador *jog) {
 
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (getCelula(i,j).getParede() == 0) {
-				getCelula(i,j).ColocaJogador(x, y, id);
+				jogs.push_back(jog);
 			}
 		}
 	}

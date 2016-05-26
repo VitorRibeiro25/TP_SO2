@@ -127,29 +127,53 @@ void Autenticacao(LPVOID param) {
 	HANDLE client = (HANDLE)param;
 	TCHAR nome[256];
 	TCHAR pass[256];
+	TCHAR buf[256];
 	BOOL ret, value;
 	LPCTSTR pStr, pStr2;
+	int p, existe;
 
-	ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
-	nome[n / sizeof(TCHAR)] = '\0';
-	pStr2 = nome;
+	do {
+		existe = 0;
+		ret = ReadFile(client, nome, sizeof(nome), &n, NULL);
+		nome[n / sizeof(TCHAR)] = '\0';
+		pStr2 = nome;
 
-	ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
-	pass[n / sizeof(TCHAR)] = '\0';
+		ret = ReadFile(client, pass, sizeof(pass), &n, NULL);
+		pass[n / sizeof(TCHAR)] = '\0';
 
+		for (p = 0; p < MAXCLIENTES; p++) {
+			if (_tcscmp(nome, utili[p].nome) ==  0){
+				existe = 1;
+			}
+		}
 
-	wcscpy_s(utili[numero].nome, nome);
-	utili[numero].pipe = client;
+		if (existe == 0) {
+			wcscpy_s(utili[numero].nome, nome);
+			utili[numero].pipe = client;
 
-	if (e->VerificaRegisto(nome) == true) {
-		_tprintf(TEXT("[Servidor] O cliente %s ja está registado\n\n"), utili[numero].nome);
+			if (e->VerificaRegisto(nome) == true) {
+				_tprintf(TEXT("[Servidor] O cliente %s ja está registado\n\n"), utili[numero].nome);
 
-	}
-	else {
-		e->NovoRegisto(nome, pass);
-		_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
-	}
-	numero++;
+			}
+			else {
+				e->NovoRegisto(nome, pass);
+				_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
+			}
+			_tprintf(TEXT("Login com sucesso\n"));
+			p = 1;
+			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
+			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
+			numero++;
+		}
+		else {
+			_tprintf(TEXT("[Servidor] O cliente %d tentou logar-se com uma conta que já esta ativa! Movimento bloqueado\n"), numero);
+			p = 0;
+			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+		}
+
+	} while(existe!=0);
+
 }
 
 

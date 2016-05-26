@@ -91,28 +91,34 @@ void Autenticacao(LPVOID param) {
 	HANDLE hpipelocal = (HANDLE)param;
 	DWORD n;
 	BOOL ret;
-	int i = 0, flag = 0, flag2 = 0;
+	int i = 0, resp;
 	TCHAR buf[256];
 	TCHAR frase[256];
 
 	//autenticação do utilizador - nome e pass 
 
-	_tprintf(TEXT("[Autenticação - coloque o nome]: "));
-	fflush(stdin);
-	_fgetts(Comando, 256, stdin);
-	Comando[_tcslen(Comando) - 1] = '\0';
-	wcscpy_s(Nome, Comando);
-	res.ID_Cliente = ID_Cliente;
-	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
+	do {
+		_tprintf(TEXT("[Autenticação - coloque o nome]: "));
+		fflush(stdin);
+		_fgetts(Comando, 256, stdin);
+		Comando[_tcslen(Comando) - 1] = '\0';
+		wcscpy_s(Nome, Comando);
+		res.ID_Cliente = ID_Cliente;
+		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 
-	_tprintf(TEXT("[Autenticação - coloque a passe]: "));
-	fflush(stdin);
-	_fgetts(Comando, 256, stdin);
-	Comando[_tcslen(Comando) - 1] = '\0';
-	wcscpy_s(pass, Comando);
-	res.ID_Cliente = ID_Cliente;
-	WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
+		_tprintf(TEXT("[Autenticação - coloque a passe]: "));
+		fflush(stdin);
+		_fgetts(Comando, 256, stdin);
+		Comando[_tcslen(Comando) - 1] = '\0';
+		wcscpy_s(pass, Comando);
+		res.ID_Cliente = ID_Cliente;
+		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 
+		ReadFile(hpipelocal, &resp, sizeof(resp), &n, NULL);
+		if (resp==0) {
+			_tprintf(TEXT("[Servidor] Essa conta já esta em uso! Entre com outra conta\n"));
+		}
+	} while (resp != 1);
 }
 
 void Envia(TCHAR &Comando) {

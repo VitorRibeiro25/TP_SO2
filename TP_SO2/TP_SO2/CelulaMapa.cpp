@@ -16,20 +16,10 @@ int CelulaMapa::getPorta() {
 	return porta;
 }
 
-void CelulaMapa::CriaObjeto(int x, int y) {
-	
-	int aux = rand() % 15;
-
-	if (aux == 0){
-		obj = new Objeto(x,y);
-	}
-
+int CelulaMapa::getObjeto() {
+	return objeto;
 }
 
-void CelulaMapa::ColocaJogador(int x, int y, int id) {
-	//jog = new Jogador(x,y,id);
-
-}
 
 void CelulaMapa::setParede(int p) {
 	parede = p;
@@ -37,4 +27,8 @@ void CelulaMapa::setParede(int p) {
 
 void CelulaMapa::setPorta(int p) {
 	porta = p;
+}
+
+void CelulaMapa::setObjeto(int o) {
+	objeto = o;
 }

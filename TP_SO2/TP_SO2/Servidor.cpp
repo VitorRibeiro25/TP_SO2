@@ -58,6 +58,7 @@ int _tmain(int argc, LPTSTR argv[]) {
 	HANDLE hpipe;
 	OVERLAPPED ovl;
 	e = new Engenho;
+
 #ifdef UNICODE 
 	_setmode(_fileno(stdin), _O_WTEXT);
 	_setmode(_fileno(stdout), _O_WTEXT);
@@ -168,10 +169,12 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	int ValidarCmd = -1;
 	tstring sub1 = TEXT("");
 	tstring sub2 = TEXT("");
+	_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O comando introduzido não está lista de comandos\n")));
 	LPCTSTR pStr, pStr2;
 	string Comando;
 	string TipoComando;
 	_tcscpy_s(nome, 256, (TEXT("")));
+	srand(time(NULL));
 
 	Autenticacao(param);
 
@@ -180,7 +183,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		sub2 = TEXT("");
 		ValidarCmd = -1;
 		_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
-		_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O comando introduzido não está lista de comandos\n")));
 		Comando = "";
 		TipoComando = "";
 		sub1.clear();
@@ -238,6 +240,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (valorRetorno == 0) {
 			_tprintf(TEXT("[Servidor] O comando que o cliente mandou não está na lista de comandos\n\n"));
 			res.comandoErrado = true;
+			_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O comando introduzido não está lista de comandos\n")));
 		}
 		if (valorRetorno == 1) {
 			res.jogoCriado = true;
@@ -283,15 +286,40 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			res.comandoErrado = false;
 			if (Comando == "direita") {
 				jog->setPosY(jog->getPosY() + 1);
+				
+				if (m->VerificaParade(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a direita\n")));
+					jog->setPosY(jog->getPosY() - 1);
+				}
 			}
 			if (Comando == "esquerda") {
 				jog->setPosY(jog->getPosY() - 1);
+
+				if (m->VerificaParade(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a esquerda\n")));
+					jog->setPosY(jog->getPosY() + 1);
+				}
+
 			}
 			if (Comando == "cima") {
-				jog->setPosX(jog->getPosX() + 1);
+				jog->setPosX(jog->getPosX() - 1);
+
+				if (m->VerificaParade(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para cima\n")));
+					jog->setPosX(jog->getPosX() + 1);
+				}
 			}
 			if (Comando == "baixo") {
-				jog->setPosX(jog->getPosX() - 1);
+				jog->setPosX(jog->getPosX() + 1);
+
+				if (m->VerificaParade(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para baixo\n")));
+					jog->setPosX(jog->getPosX() - 1);
+				}
 			}
 		}
 		if (valorRetorno == 7) {
@@ -311,7 +339,14 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n"));
 		}
 
+
+
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
+			if (m->VerificaObjeto(jog) == true) {
+				// fazer frase a dize que o jogador comeu um objeto
+				res.comandoErrado = true;
+				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+			}
 
 			for (int i = 0; i < MAXCLIENTES; i++) {
 				if (jog->getId() == i) {

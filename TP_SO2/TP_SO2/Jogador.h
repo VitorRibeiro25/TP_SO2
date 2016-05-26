@@ -7,9 +7,11 @@
 #include <string>
 #include <Windows.h>
 
-using namespace std;
+#include "Objeto.h"
 
 class Objeto;
+
+using namespace std;
 
 class Jogador {
 	static int id_inc;
@@ -34,6 +36,8 @@ public:
 	int getPosY();
 	HANDLE getRecebe();
 	HANDLE getEnvia();
+
+	void ComeObjeto(Objeto *ob);
 
 	void setNome(string na);
 	void setVida(int v);

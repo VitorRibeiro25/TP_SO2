@@ -10,7 +10,8 @@
 #include <io.h>
 #include <fcntl.h>
 #include <wchar.h>
-
+#include <stdlib.h>
+#include <time.h>
 
 using namespace std;
 

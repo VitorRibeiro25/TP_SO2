@@ -15,6 +15,7 @@ class CelulaMapa {
 	Objeto *obj;
 	int parede; // se estiver a 0 pode andar, se estiver a 1 é uma parede
 	int porta; // se estiver a 0 nao tem porta, se esticer a 1 tem porta
+	int objeto;
 	Jogador *jog;
 public:
 
@@ -22,14 +23,11 @@ public:
 
 	int getParede();
 	int getPorta();
+	int getObjeto();
 
 	void setParede(int p);
 	void setPorta(int p);
-
-	void CriaObjeto(int x, int y);
-	void ColocaJogador(int x, int y, int id);
-
-
+	void setObjeto(int o);
 
 };
 

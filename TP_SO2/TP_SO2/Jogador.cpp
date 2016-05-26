@@ -32,6 +32,7 @@ string Jogador::getNome() {
 	return nome;
 }
 
+
 int Jogador::getPosX() {
 	return posX;
 }
@@ -47,6 +48,16 @@ HANDLE Jogador::getRecebe() {
 HANDLE Jogador::getEnvia() {
 	return henvia;
 }
+
+void Jogador::ComeObjeto(Objeto *ob) {
+	
+	obj.push_back(ob);
+
+	this->setLentidao(this->getLentidao() + ob->getLentidao());
+	this->setVida(this->getVida() + ob->getVida());
+}
+
+
 
 void Jogador::setNome(string na) {
 	nome = na;

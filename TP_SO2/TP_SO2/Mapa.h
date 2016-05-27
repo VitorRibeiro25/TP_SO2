@@ -7,7 +7,6 @@
 #include <string>
 
 #include "Jogador.h"
-#include "Monstro.h"
 #include "Objeto.h"
 #include "CelulaMapa.h"
 
@@ -34,8 +33,10 @@ public:
 	void ComeObjeto(Jogador *jog);
 	bool VerificaParade(Jogador *jog);
 	bool VerificaObjeto(Jogador *jog);
+	bool VerificaJogador(Jogador *jog);
 
-	void AtualizaJogador(int x, int y);
+	Jogador *GuardaJogador(Jogador *jog);
+	void Combate(Jogador *jog);
 
 	CelulaMapa &getCelula(int x, int y);
 	

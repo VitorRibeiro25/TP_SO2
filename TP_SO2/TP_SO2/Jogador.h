@@ -21,7 +21,7 @@ class Jogador {
 	int lentidao;
 	int vida;
 	int posX, posY;
-	HANDLE hrecebe, henvia;
+	bool pedra;
 	vector <Objeto *> obj;
 public:
 
@@ -34,16 +34,19 @@ public:
 	int getLentidao();
 	int getPosX();
 	int getPosY();
-	HANDLE getRecebe();
-	HANDLE getEnvia();
+	bool getPedra();
 
 	void ComeObjeto(Objeto *ob);
+	bool adicionaPedra(Objeto *ob);
+	bool verificaPedra();
+	void retiraPedra();
 
 	void setNome(string na);
 	void setVida(int v);
 	void setLentidao(int l);
 	void setPosX(int x);
 	void setPosY(int y);
+	void setPedra(bool p);
 
 };
 

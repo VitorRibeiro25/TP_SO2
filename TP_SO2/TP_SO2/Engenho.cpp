@@ -72,6 +72,14 @@ int Engenho::ExecutaComando(string tcomando, string comando, Jogador *jog) {
 		}
 		else return -1;
 	}
+	else if (tcomando == "pedra" && "mao") {
+
+		if (jogoCriado == true && jogoIniciado == true) {
+			return 6;
+		}
+		else return -1;
+
+	}
 	else if (tcomando == "logout") {
 		return 7;
 	}

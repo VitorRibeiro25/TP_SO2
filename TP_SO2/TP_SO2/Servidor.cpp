@@ -160,7 +160,7 @@ void Autenticacao(LPVOID param) {
 				e->NovoRegisto(nome, pass);
 				_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
 			}
-			_tprintf(TEXT("Login com sucesso\n"));
+			_tprintf(TEXT("[Servidor] Login com sucesso\n"));
 			p = 1;
 			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
 			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
@@ -284,6 +284,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
+					// fazer verificacao de paredes aqui - em falta
 					int Posx = rand() % m->getLinhas();
 					int Posy = rand() % m->getColunas();
 					jog->setPosX(Posx);
@@ -299,6 +300,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
+					// fazer verificacao de paredes aqui - em falta
 					int x1 = rand() % m->getLinhas();
 					int y1 = rand() % m->getColunas();
 					jog->setPosX(x1);
@@ -347,6 +349,14 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 			}
 		}
+
+		if (valorRetorno == 6) {
+			if (jog->verificaPedra() == true) {
+				res.comandoErrado = true;
+				jog->setPedra(true);
+				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador colocou uma pedra na mao\n")));
+			}
+		}
 		if (valorRetorno == 7) {
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
@@ -368,7 +378,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
 			if (m->VerificaObjeto(jog) == true) {
-				// fazer frase a dize que o jogador comeu um objeto
 				res.comandoErrado = true;
 				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 			}

@@ -150,7 +150,6 @@
     <ClCompile Include="Engenho.cpp" />
     <ClCompile Include="Jogador.cpp" />
     <ClCompile Include="Mapa.cpp" />
-    <ClCompile Include="Monstro.cpp" />
     <ClCompile Include="Objeto.cpp" />
     <ClCompile Include="Servidor.cpp" />
     <ClCompile Include="util.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="Engenho.h" />
     <ClInclude Include="Jogador.h" />
     <ClInclude Include="Mapa.h" />
-    <ClInclude Include="Monstro.h" />
     <ClInclude Include="Objeto.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

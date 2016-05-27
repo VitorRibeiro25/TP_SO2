@@ -88,6 +88,7 @@ void Mapa::ComeObjeto(Jogador *jog) {
 			// o jogador vai comer um objeto
 			jog->ComeObjeto(ob);
 			// incremnetar a pontuacao.
+			// remover objeto do vetor de objetos
 		}
 	}
 
@@ -120,12 +121,99 @@ bool Mapa::VerificaObjeto(Jogador *jog) {
 	}
 }
 
-CelulaMapa &Mapa::getCelula(int x, int y) {
-	return celula[x * colunas + y];
+bool Mapa::VerificaJogador(Jogador *jog) {
+
+	int x = jog->getPosX();
+	int y = jog->getPosY();
+
+	
+	for (int h = 0; h < jogs.size(); h++) {
+		// jogador esta a direita.
+		if (jogs[h]->getPosX() + 1 == x && jogs[h]->getPosY() == y) {
+			return true;
+		}
+		// jogador esta a esquerda
+		else if (jogs[h]->getPosX() - 1 == x && jogs[h]->getPosY() == y) {
+			return true;
+		}
+		// jogador esta a baixo
+		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y + 1) {
+			return true;
+		}
+		// jogador esta em cima
+		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y - 1) {
+			return true;
+		}
+		// nao existe jogador em volta
+		else return false;
+	}
+
+
+
+
 }
 
-void Mapa::AtualizaJogador(int x, int y) {
+Jogador *Mapa::GuardaJogador(Jogador *jog) {
 
+	Jogador *j = nullptr;
+
+	int x = jog->getPosX();
+	int y = jog->getPosY();
+
+	for (int i = 0; i < jogs.size(); i++) {
+		if (VerificaJogador(jog) == true) {
+			// jogador esta a direita.
+			if (jogs[i]->getPosX() + 1 == x && jogs[i]->getPosY() == y) {
+				return jogs[i];
+			}
+			// jogador esta a esquerda
+			else if (jogs[i]->getPosX() - 1 == x && jogs[i]->getPosY() == y) {
+				return jogs[i];
+			}
+			// jogador esta a baixo
+			else if (jogs[i]->getPosX() == x && jogs[i]->getPosY() == y + 1) {
+				return jogs[i];
+			}
+			// jogador esta em cima
+			else if (jogs[i]->getPosX() == x && jogs[i]->getPosY() == y - 1) {
+				return jogs[i];
+			}
+			// nao existe jogador em volta
+			else return j;
+		}
+	}
+}
+
+void Mapa::Combate(Jogador *jog) {
+
+	Jogador *j = nullptr;
+
+	// se exitir um jogador ao lado -> verificar a adjacencia
+
+	if (GuardaJogador(jog) != nullptr) {
+		
+		j = GuardaJogador(jog);
+
+		// se o jogador tiver uma pedra na mao
+		if (jog->getPedra() == true) {
+
+			j->setVida(j->getVida() - 2);
+
+			// tirar a pedra do vetor de objeto;
+
+			jog->retiraPedra();
+		}
+
+		// se nao tiver uma pedra ataca com as maos
+		else {
+			j->setVida(j->getVida() - 1);
+		}
+	}
+
+}
+
+CelulaMapa &Mapa::getCelula(int x, int y) {
+	return celula[x * colunas + y];
 }
 
 

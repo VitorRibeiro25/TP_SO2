@@ -107,12 +107,41 @@ bool Mapa::VerificaParade(Jogador *jog) {
 	}
 }
 
+int Mapa::Verificacelula(int x, int y) {
+	bool parede, objeto, jogador;
+	Jogador *jog = new Jogador(50);//jogador ao calhas é so para não fazer uma versão diferentes das funções tem que se enviar um jogador
+	jog->setPosX(x);
+	jog->setPosY(y);
+
+	parede = VerificaParade(jog);
+	objeto = VerificaObjeto(jog);
+	jogador = VerificaJogador(jog);
+
+	if (parede == true) {
+		return 1;// parede é 1 
+	}
+	else if (objeto == true) {
+		return 2;//objeto é 2
+	}
+	else if (jogador==true){
+		return 3;//jogador é 3
+	}
+	else {
+		return 0;//É so chão
+	}
+
+
+}
+
+
 bool Mapa::VerificaObjeto(Jogador *jog) {
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (jog->getPosX() == i && jog->getPosY() == j) {
 				if (getCelula(i, j).getObjeto() == 1) {
-					ComeObjeto(jog);
+					if (jog->getId() != 50) {//para o jogador teste não comer o objeto
+						ComeObjeto(jog);
+					}
 					return true;
 				}
 				else return false;

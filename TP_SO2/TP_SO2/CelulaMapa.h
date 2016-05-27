@@ -24,6 +24,7 @@ public:
 	int getParede();
 	int getPorta();
 	int getObjeto();
+	//int verificatudo();
 
 	void setParede(int p);
 	void setPorta(int p);

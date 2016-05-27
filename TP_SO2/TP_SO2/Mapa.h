@@ -35,6 +35,8 @@ public:
 	bool VerificaObjeto(Jogador *jog);
 	bool VerificaJogador(Jogador *jog);
 
+	int Verificacelula(int x, int y);
+
 	Jogador *GuardaJogador(Jogador *jog);
 	void Combate(Jogador *jog);
 

@@ -276,6 +276,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 				m = new Mapa(50, 50);
 				m->predefinido();
+				
 			}
 		}
 		if (valorRetorno == 2) {
@@ -319,6 +320,16 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a direita\n")));
 					jog->setPosY(jog->getPosY() - 1);
 				}
+				
+				//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
+				int num;
+				for (int ij = -10; ij < 10; ij++) {
+					for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+						num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY()+ji));
+						res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+					}// a res vai ficar com o mapa
+				}
+
 			}
 			if (Comando == "esquerda") {
 				jog->setPosY(jog->getPosY() - 1);

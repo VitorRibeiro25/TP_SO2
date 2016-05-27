@@ -32,6 +32,7 @@ struct resposta
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
+	int mapa[20][20];
 };
 
 typedef struct {

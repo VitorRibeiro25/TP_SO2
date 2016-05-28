@@ -189,6 +189,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 	TCHAR nome[256];
 	TCHAR pass[256];
 	TCHAR frase[256];
+	TCHAR aux[256];
 	Jogador *jog = new Jogador(numero);
 	HANDLE client = (HANDLE)param;
 	int ValidarCmd = -1;
@@ -390,6 +391,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
 			if (m->VerificaObjeto(jog) == true) {
 				res.comandoErrado = true;
+				string cena = jog->UltimoObjetos();
 				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 			}
 

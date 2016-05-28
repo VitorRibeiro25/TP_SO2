@@ -32,6 +32,7 @@ public:
 
 	void ComeObjeto(Jogador *jog);
 	bool VerificaParade(Jogador *jog);
+	bool VerificaParede(int x, int y);
 	bool VerificaObjeto(Jogador *jog);
 	bool VerificaJogador(Jogador *jog);
 

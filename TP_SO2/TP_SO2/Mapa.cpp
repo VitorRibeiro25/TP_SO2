@@ -68,7 +68,7 @@ void Mapa::NovoJogador(Jogador *jog) {
 
 void Mapa::NovoObjeto(int x, int y) {
 
-	int aux = rand() % 15;
+	int aux = rand() % 5;
 
 	if (aux == 0) {
 		ob = new Objeto(x, y);
@@ -84,11 +84,14 @@ void Mapa::ComeObjeto(Jogador *jog) {
 	int y = jog->getPosY();
 
 	for (int i = 0; i < obj.size(); i++) {
-		if (ob->getPosX() == x && ob->getPosY() == y) {
+		if (obj[i]->getPosX() == x && obj[i]->getPosY() == y) {
 			// o jogador vai comer um objeto
-			jog->ComeObjeto(ob);
+			jog->ComeObjeto(obj[i]);
 			// incremnetar a pontuacao.
-			// remover objeto do vetor de objetos
+			// remover objeto do vetor de objetos do mapa
+			obj.erase(obj.begin() + i);
+			// colocar a celula com o objeto a 0
+			getCelula(obj[i]->getPosX(), obj[i]->getPosY()).setObjeto(0);
 		}
 	}
 
@@ -107,6 +110,18 @@ bool Mapa::VerificaParade(Jogador *jog) {
 	}
 }
 
+bool Mapa::VerificaParede(int x, int y) {
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			if (x == i && y == j) {
+				if (getCelula(i, j).getParede() == 1)
+					return true;
+				else return false;
+			}
+		}
+	}
+}
+
 int Mapa::Verificacelula(int x, int y) {
 	bool parede, objeto, jogador;
 	Jogador *jog = new Jogador(50);//jogador ao calhas é so para não fazer uma versão diferentes das funções tem que se enviar um jogador
@@ -118,7 +133,7 @@ int Mapa::Verificacelula(int x, int y) {
 	jogador = VerificaJogador(jog);
 
 	if (parede == true) {
-		return 1;// parede é 1 
+		return 1; // parede é 1 
 	}
 	else if (objeto == true) {
 		return 2;//objeto é 2

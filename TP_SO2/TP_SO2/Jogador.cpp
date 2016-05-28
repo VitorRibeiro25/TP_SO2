@@ -85,9 +85,9 @@ void Jogador::retiraPedra() {
 		if (obj[i]->getNome() == "pedra") {
 			inc++;
 
-			// incompleto esta funcao
+			// falta fazer erase
 
-			//obj.erase(obj[i]);
+			//obj.erase();
 		}
 	};
 
@@ -123,6 +123,19 @@ void Jogador::ComeObjeto(Objeto *ob) {
 		obj.push_back(ob);
 	}
 
+}
+
+string Jogador::UltimoObjetos() {
+	
+	string aux;
+
+	for (int i = 0; i < obj.size(); i++) {
+		aux = obj[i]->getNome();
+	}
+
+	return aux;
+
+	//return obj.back()->getNome();
 }
 
 void Jogador::setNome(string na) {

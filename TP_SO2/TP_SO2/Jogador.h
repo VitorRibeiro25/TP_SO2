@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <Windows.h>
+#include "util.h"
 
 #include "Objeto.h"
 
@@ -40,6 +40,7 @@ public:
 	bool adicionaPedra(Objeto *ob);
 	bool verificaPedra();
 	void retiraPedra();
+	string UltimoObjetos();
 
 	void setNome(string na);
 	void setVida(int v);

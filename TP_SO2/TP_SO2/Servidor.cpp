@@ -321,15 +321,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a direita\n")));
 					jog->setPosY(jog->getPosY() - 1);
 				}
-				
-				//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
-				int num;
-				for (int ij = -10; ij < 10; ij++) {
-					for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-						num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY()+ji));
-						res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-					}// a res vai ficar com o mapa
-				}
 
 			}
 			if (Comando == "esquerda") {
@@ -359,6 +350,46 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para baixo\n")));
 					jog->setPosX(jog->getPosX() - 1);
 				}
+			}
+
+			//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
+			int num, nx = -1, ny = -1;
+			int posx = 10 - jog->getPosX();//se for menor que 10 a conta é positiva
+			int posy = 10 - jog->getPosY();
+
+			if (posx > 0) {
+				nx = -10 + posx;
+			}
+			if (posy >0) {
+				nx = -10 + posy;
+			}
+			for (int ij = -10; ij < 10; ij++) {
+				for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+					if (ji < ny && ny != -1) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
+						res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
+					}							//assim so se passar para fora dos limites
+					else if (ij < nx && ny != -1) {	//igual
+						res.mapa[ij][ji] = 9;		//9 fora dos limites
+					}
+					else {
+						num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
+						res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+					}
+				}// a res vai ficar com o mapa
+			}
+
+			/*for (int ij = -10; ij < 10; ij++) {
+			for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+			num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY()+ji));
+			res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+			}// a res vai ficar com o mapa
+			}*/
+
+			for (int ij = -10; ij < 10; ij++) {
+				for (int ji = -10; ji < 10; ji++) {
+					_tprintf(TEXT("%d "), res.mapa[ij + 10][ji + 10]);
+				}
+				_tprintf(TEXT("\n"));
 			}
 		}
 

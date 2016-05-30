@@ -145,7 +145,6 @@ int Mapa::Verificacelula(int x, int y) {
 		return 0;//É so chão
 	}
 
-
 }
 
 

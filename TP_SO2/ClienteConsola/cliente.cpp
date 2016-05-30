@@ -27,8 +27,10 @@ struct resposta
 	bool comandoErrado;
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
-	TCHAR nome[30];
+	char nome[50];
+	int mapa[20][20];
 };
+
 
 struct resposta res;
 static int ID_Cliente = 0;
@@ -171,6 +173,16 @@ DWORD WINAPI Recebe(LPVOID param) {
 
 			if (res.jogoCriado == true && res.jogoIniciado == true) {
 				_tprintf(TEXT("%s"), res.frase);
+			}
+			if (flag == 1 && flag2==1) {
+				_tprintf(TEXT("[Servidor] O seu mapa:\n"));
+				for (int ij = 0; ij < 20; ij++) {
+					for (int ji = 0; ji < 20; ji++) {
+						_tprintf(TEXT("%d "), res.mapa[ij][ji]);
+					}
+					_tprintf(TEXT("\n"));
+				}
+				_tprintf(TEXT("\n"));
 			}
 
 			_tprintf(TEXT("[%s - Comandos]: "), Nome);

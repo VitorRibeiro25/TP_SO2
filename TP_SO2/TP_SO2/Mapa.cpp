@@ -6,8 +6,8 @@ Mapa::Mapa(int lin, int col) {
 
 	celula = new CelulaMapa[lin * col];
 
-	for (int i = 0; i < lin; i++) {
-		for (int j = 0; j < col; j++) {
+	for (int i = 0; i <= lin; i++) {
+		for (int j = 0; j <= col; j++) {
 			if (i == 0 || j == 0 || i == lin || j == col) {
 				getCelula(i, j).setParede(1);
 			}
@@ -15,6 +15,10 @@ Mapa::Mapa(int lin, int col) {
 		}
 	}
 
+}
+
+void Mapa::refreshposicao(int x, int y) {
+	getCelula(x, y).setChao(0);
 }
 
 void Mapa::predefinido() {

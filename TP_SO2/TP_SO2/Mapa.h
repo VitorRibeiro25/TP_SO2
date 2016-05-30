@@ -26,6 +26,7 @@ public:
 
 	void predefinido();
 	void random();
+	void refreshposicao(int x, int y);
 
 	void NovoJogador(Jogador *jog);
 	void NovoObjeto(int x, int y);

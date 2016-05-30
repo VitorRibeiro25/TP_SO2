@@ -178,7 +178,12 @@ DWORD WINAPI Recebe(LPVOID param) {
 				_tprintf(TEXT("[Servidor] O seu mapa:\n"));
 				for (int ij = 0; ij < 20; ij++) {
 					for (int ji = 0; ji < 20; ji++) {
-						_tprintf(TEXT("%d "), res.mapa[ij][ji]);
+						if (ij == 9 && ji == 10) {
+							_tprintf(TEXT("|%d|"), res.mapa[ij][ji]);
+						}
+						else {
+							_tprintf(TEXT("%d "), res.mapa[ij][ji]);
+						}
 					}
 					_tprintf(TEXT("\n"));
 				}

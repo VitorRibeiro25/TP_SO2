@@ -18,7 +18,7 @@ Mapa::Mapa(int lin, int col) {
 }
 
 void Mapa::refreshposicao(int x, int y) {
-	getCelula(x, y).setChao(0);
+	getCelula(x, y).setParede(0);
 }
 
 void Mapa::predefinido() {

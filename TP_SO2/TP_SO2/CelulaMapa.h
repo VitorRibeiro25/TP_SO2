@@ -26,7 +26,7 @@ public:
 	int getObjeto();
 	//int verificatudo();
 
-	void setChao(int p);
+
 	void setParede(int p);
 	void setPorta(int p);
 	void setObjeto(int o);

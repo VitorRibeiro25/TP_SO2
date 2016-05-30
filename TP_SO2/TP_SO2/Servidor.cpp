@@ -369,18 +369,18 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			}
 			for (int ij = -10; ij < 10; ij++) {
 				for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-					/*if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
+					if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
 						res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
 					}							//assim so se passar para fora dos limites
 					else if (ij < nx) {	//igual
 						res.mapa[ij][ji] = 9;		//9 fora dos limites
 					}
-					else {*/
+					else {
 						num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
 						res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
 					}
 				}// a res vai ficar com o mapa
-			
+			}
 
 			/*for (int ij = -10; ij < 10; ij++) {
 			for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei

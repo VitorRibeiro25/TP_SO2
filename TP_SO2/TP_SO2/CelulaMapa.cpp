@@ -25,10 +25,6 @@ void CelulaMapa::setParede(int p) {
 	parede = p;
 }
 
-void CelulaMapa::setChao(int p) {
-	parede = p;
-}
-
 void CelulaMapa::setPorta(int p) {
 	porta = p;
 }

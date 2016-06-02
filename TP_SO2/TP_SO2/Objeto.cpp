@@ -12,23 +12,29 @@ Objeto::Objeto(int x, int y) {
 	if (i == 1) {
 		setNome("vitamina");
 		setVida(1);
+		setLentidao(0);
 	}
 
 	// garrafas orangebull
 	if (i == 2) {
 		setNome("orangebull");
 		setVida(3);
+		setLentidao(0);
 	}
 
 	// pedra
 	if (i == 3) {
 		setNome("pedra");
+		setLentidao(0);
+		setVida(0);
 	}
 
 	// rebuçado de cafeína
+	
 	if (i == 4) {
 		setNome("rebucado");
 		setLentidao(-2);
+		setVida(0);
 	}
 	
 }

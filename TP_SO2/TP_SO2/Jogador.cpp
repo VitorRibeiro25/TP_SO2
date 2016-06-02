@@ -84,10 +84,7 @@ void Jogador::retiraPedra() {
 	for (int i = 0; i < obj.size(); i++) {
 		if (obj[i]->getNome() == "pedra") {
 			inc++;
-
-			// falta fazer erase
-
-			//obj.erase();
+			obj.erase(obj.begin() + i);
 		}
 	};
 
@@ -98,8 +95,6 @@ void Jogador::retiraPedra() {
 
 void Jogador::ComeObjeto(Objeto *ob) {
 	
-	// nao esta completamente certo
-
 	if (ob->getNome() == "vitamina") {
 		this->setVida(this->getVida() + ob->getVida());
 		obj.push_back(ob);

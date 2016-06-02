@@ -177,6 +177,48 @@ void Autenticacao(LPVOID param) {
 
 }
 
+void FazerMapa(Jogador *jog) {
+	//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
+	int num, nx = -11, ny = -11;
+	int posx = 10 - jog->getPosX();//se for menor que 10 a conta é positiva
+	int posy = 10 - jog->getPosY();
+
+	if (posx > 0) {
+		nx = -10 + posx;
+	}
+	if (posy >0) {
+		nx = -10 + posy;
+	}
+	for (int ij = -10; ij < 10; ij++) {
+		for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+			if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
+				res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
+			}							//assim so se passar para fora dos limites
+			else if (ij < nx) {	//igual
+				res.mapa[ij][ji] = 9;		//9 fora dos limites
+			}
+			else {
+				num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
+				res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+			}
+		}// a res vai ficar com o mapa
+	}
+
+	/*for (int ij = -10; ij < 10; ij++) {
+	for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+	num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY()+ji));
+	res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+	}// a res vai ficar com o mapa
+	}*/
+
+	for (int ij = -10; ij < 10; ij++) {
+		for (int ji = -10; ji < 10; ji++) {
+			_tprintf(TEXT("%d "), res.mapa[ij + 10][ji + 10]);
+		}
+		_tprintf(TEXT("\n"));
+	}
+}
+
 
 // falta colocar o handle para identificar o cliente em questao
 
@@ -313,87 +355,72 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		}
 		if (valorRetorno == 5) {
 			res.comandoErrado = false;
+
 			if (Comando == "direita") {
+
 				jog->setPosY(jog->getPosY() + 1);
-				
+
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a direita\n")));
-					m->refreshposicao(jog->getPosX(), jog->getPosY());
 					jog->setPosY(jog->getPosY() - 1);
 				}
+
+				if (m->VerificaObjeto(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+				}
+
+				//m->refreshposicao(jog->getPosX(), jog->getPosY());
 
 			}
 			if (Comando == "esquerda") {
 				jog->setPosY(jog->getPosY() - 1);
-
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a esquerda\n")));
-					m->refreshposicao(jog->getPosX(), jog->getPosY());
 					jog->setPosY(jog->getPosY() + 1);
 				}
 
+				if (m->VerificaObjeto(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+				}
+				//m->refreshposicao(jog->getPosX(), jog->getPosY());
+
 			}
 			if (Comando == "cima") {
+
 				jog->setPosX(jog->getPosX() - 1);
 
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para cima\n")));
-					m->refreshposicao(jog->getPosX(), jog->getPosY());
 					jog->setPosX(jog->getPosX() + 1);
 				}
+
+				if (m->VerificaObjeto(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+				}
+				//m->refreshposicao(jog->getPosX(), jog->getPosY());
+
 			}
 			if (Comando == "baixo") {
-				jog->setPosX(jog->getPosX() + 1);
 
+				jog->setPosX(jog->getPosX() + 1);
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para baixo\n")));
-					m->refreshposicao(jog->getPosX(), jog->getPosY());
 					jog->setPosX(jog->getPosX() - 1);
 				}
-			}
 
-			//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
-			int num, nx = -11, ny = -11;
-			int posx = 10 - jog->getPosX();//se for menor que 10 a conta é positiva
-			int posy = 10 - jog->getPosY();
-
-			if (posx > 0) {
-				nx = -10 + posx;
-			}
-			if (posy >0) {
-				nx = -10 + posy;
-			}
-			for (int ij = -10; ij < 10; ij++) {
-				for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-					if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
-						res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
-					}							//assim so se passar para fora dos limites
-					else if (ij < nx) {	//igual
-						res.mapa[ij][ji] = 9;		//9 fora dos limites
-					}
-					else {
-						num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
-						res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-					}
-				}// a res vai ficar com o mapa
-			}
-
-			/*for (int ij = -10; ij < 10; ij++) {
-			for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-			num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY()+ji));
-			res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-			}// a res vai ficar com o mapa
-			}*/
-
-			for (int ij = -10; ij < 10; ij++) {
-				for (int ji = -10; ji < 10; ji++) {
-					_tprintf(TEXT("%d "), res.mapa[ij + 10][ji + 10]);
+				if (m->VerificaObjeto(jog) == true) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 				}
-				_tprintf(TEXT("\n"));
+				//m->refreshposicao(jog->getPosX(), jog->getPosY());
+
 			}
 		}
 
@@ -402,6 +429,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				res.comandoErrado = true;
 				jog->setPedra(true);
 				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador colocou uma pedra na mao\n")));
+			}
+			else {
+				res.comandoErrado = true;
+				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador ainda nao tem pedras\n")));
 			}
 		}
 		if (valorRetorno == 7) {
@@ -421,15 +452,9 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n"));
 		}
 
-
-
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
-			if (m->VerificaObjeto(jog) == true) {
-				res.comandoErrado = true;
-				string cena = jog->UltimoObjetos();
-				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
-			}
 
+			FazerMapa(jog);
 			for (int i = 0; i < MAXCLIENTES; i++) {
 				if (jog->getId() == i) {
 					tstring aux = e->PosicaoJogador(jog);

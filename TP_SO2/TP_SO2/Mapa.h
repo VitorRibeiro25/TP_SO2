@@ -35,6 +35,8 @@ public:
 	bool VerificaParade(Jogador *jog);
 	bool VerificaParede(int x, int y);
 	bool VerificaObjeto(Jogador *jog);
+	bool VerificaObjetos(Jogador *jog);
+	bool VerificaJogadores(Jogador *jog);
 	bool VerificaJogador(Jogador *jog);
 
 	int Verificacelula(int x, int y);

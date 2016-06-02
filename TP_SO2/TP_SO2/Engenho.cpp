@@ -22,8 +22,6 @@ int Engenho::ExecutaComando(string tcomando, string comando, Jogador *jog) {
 		if (jogoCriado == false) {
 			if (comando == "pre") {
 				jogoCriado = true;
-				m = new Mapa(50,50);
-				m->predefinido();
 				return 1;
 			}
 			if (comando == "ran") {

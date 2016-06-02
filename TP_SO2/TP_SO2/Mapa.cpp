@@ -22,6 +22,7 @@ void Mapa::refreshposicao(int x, int y) {
 }
 
 void Mapa::predefinido() {
+	/*
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if ((i + j) % 5 == 0) {
@@ -31,7 +32,7 @@ void Mapa::predefinido() {
 			}
 		}
 	}
-
+	*/
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (getCelula(i,j).getParede() == 0) {
@@ -91,11 +92,14 @@ void Mapa::ComeObjeto(Jogador *jog) {
 		if (obj[i]->getPosX() == x && obj[i]->getPosY() == y) {
 			// o jogador vai comer um objeto
 			jog->ComeObjeto(obj[i]);
-			// incremnetar a pontuacao.
-			// remover objeto do vetor de objetos do mapa
-			obj.erase(obj.begin() + i);
+
 			// colocar a celula com o objeto a 0
 			getCelula(obj[i]->getPosX(), obj[i]->getPosY()).setObjeto(0);
+
+			// incremnetar a pontuacao.
+			// remover objeto do vetor de objetos do mapa
+			// este erase da cabo de todo o jogo
+			obj.erase(obj.begin() + i);
 		}
 	}
 
@@ -103,8 +107,8 @@ void Mapa::ComeObjeto(Jogador *jog) {
 
 bool Mapa::VerificaParade(Jogador *jog) {
 	
-	for (int i = 0; i < linhas; i++) {
-		for (int j = 0; j < colunas; j++) {
+	for (int i = 0; i <= linhas; i++) {
+		for (int j = 0; j <= colunas; j++) {
 			if (jog->getPosX() == i && jog->getPosY() == j){
 				if (getCelula(i, j).getParede() == 1) 
 					return true;
@@ -115,8 +119,8 @@ bool Mapa::VerificaParade(Jogador *jog) {
 }
 
 bool Mapa::VerificaParede(int x, int y) {
-	for (int i = 0; i < linhas; i++) {
-		for (int j = 0; j < colunas; j++) {
+	for (int i = 0; i <= linhas; i++) {
+		for (int j = 0; j <= colunas; j++) {
 			if (x == i && y == j) {
 				if (getCelula(i, j).getParede() == 1)
 					return true;
@@ -133,20 +137,20 @@ int Mapa::Verificacelula(int x, int y) {
 	jog->setPosY(y);
 
 	parede = VerificaParade(jog);
-	objeto = VerificaObjeto(jog);
+	objeto = VerificaObjetos(jog);
 	jogador = VerificaJogador(jog);
 
 	if (parede == true) {
 		return 1; // parede é 1 
 	}
 	else if (objeto == true) {
-		return 2;//objeto é 2
+		return 2; //objeto é 2
 	}
 	else if (jogador==true){
-		return 3;//jogador é 3
+		return 3; //jogador é 3
 	}
 	else {
-		return 0;//É so chão
+		return 0; //É so chão
 	}
 
 }
@@ -157,9 +161,7 @@ bool Mapa::VerificaObjeto(Jogador *jog) {
 		for (int j = 0; j < colunas; j++) {
 			if (jog->getPosX() == i && jog->getPosY() == j) {
 				if (getCelula(i, j).getObjeto() == 1) {
-					if (jog->getId() != 50) {//para o jogador teste não comer o objeto
-						ComeObjeto(jog);
-					}
+					ComeObjeto(jog);
 					return true;
 				}
 				else return false;
@@ -168,7 +170,20 @@ bool Mapa::VerificaObjeto(Jogador *jog) {
 	}
 }
 
-bool Mapa::VerificaJogador(Jogador *jog) {
+bool Mapa::VerificaObjetos(Jogador *jog) {
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			if (jog->getPosX() == i && jog->getPosY() == j) {
+				if (getCelula(i, j).getObjeto() == 1) {
+					return true;
+				}
+				else return false;
+			}
+		}
+	}
+}
+
+bool Mapa::VerificaJogadores(Jogador *jog) {
 
 	int x = jog->getPosX();
 	int y = jog->getPosY();
@@ -191,13 +206,28 @@ bool Mapa::VerificaJogador(Jogador *jog) {
 		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y - 1) {
 			return true;
 		}
+		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
+			return true;
+		}
 		// nao existe jogador em volta
 		else return false;
 	}
 
+}
+
+bool Mapa::VerificaJogador(Jogador *jog) {
+
+	int x = jog->getPosX();
+	int y = jog->getPosY();
 
 
-
+	for (int h = 0; h < jogs.size(); h++) {
+		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
+			return true;
+		}
+		// nao existe jogador em volta
+		else return false;
+	}
 }
 
 Jogador *Mapa::GuardaJogador(Jogador *jog) {

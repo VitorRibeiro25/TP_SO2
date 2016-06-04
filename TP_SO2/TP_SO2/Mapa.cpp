@@ -105,6 +105,25 @@ void Mapa::ComeObjeto(Jogador *jog) {
 
 }
 
+bool Mapa::verificaVida(Jogador *jog) {
+
+	int x = jog->getPosX();
+	int y = jog->getPosY();
+
+	if (jog->getVida() > 0) {
+		return true;
+	}
+	else {
+		for (int i = 0; i < jogs.size(); i++) {
+			if (jogs[i]->getPosX() == x && jogs[i]->getPosY() == y) {
+				jogs.erase(jogs.begin() + i);
+			}
+		}
+		return false;
+	}
+
+}
+
 bool Mapa::VerificaParade(Jogador *jog) {
 	
 	for (int i = 0; i <= linhas; i++) {
@@ -183,6 +202,33 @@ bool Mapa::VerificaObjetos(Jogador *jog) {
 	}
 }
 
+int Mapa::VerificaAdjacencia(Jogador *jog) {
+	int x = jog->getPosX();
+	int y = jog->getPosY();
+
+
+	for (int h = 0; h < jogs.size(); h++) {
+		// jogador baixo
+		if (jogs[h]->getPosX() == x + 1 && jogs[h]->getPosY() == y) {
+			return 1;
+		}
+		// jogador cima
+		else if (jogs[h]->getPosX() == x - 1 && jogs[h]->getPosY() == y) {
+			return 2;
+		}
+		// jogador a direita
+		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y + 1) {
+			return 3;
+		}
+		// jogador esquerda
+		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y - 1) {
+			return 4;
+		}
+		// nao existe jogador em volta
+		else return 0;
+	}
+}
+
 bool Mapa::VerificaJogadores(Jogador *jog) {
 
 	int x = jog->getPosX();
@@ -191,11 +237,11 @@ bool Mapa::VerificaJogadores(Jogador *jog) {
 	
 	for (int h = 0; h < jogs.size(); h++) {
 		// jogador esta a direita.
-		if (jogs[h]->getPosX() + 1 == x && jogs[h]->getPosY() == y) {
+		if (jogs[h]->getPosX() == x + 1 && jogs[h]->getPosY() == y) {
 			return true;
 		}
 		// jogador esta a esquerda
-		else if (jogs[h]->getPosX() - 1 == x && jogs[h]->getPosY() == y) {
+		else if (jogs[h]->getPosX() == x - 1 && jogs[h]->getPosY() == y) {
 			return true;
 		}
 		// jogador esta a baixo
@@ -204,9 +250,6 @@ bool Mapa::VerificaJogadores(Jogador *jog) {
 		}
 		// jogador esta em cima
 		else if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y - 1) {
-			return true;
-		}
-		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
 			return true;
 		}
 		// nao existe jogador em volta
@@ -238,7 +281,6 @@ Jogador *Mapa::GuardaJogador(Jogador *jog) {
 	int y = jog->getPosY();
 
 	for (int i = 0; i < jogs.size(); i++) {
-		if (VerificaJogador(jog) == true) {
 			// jogador esta a direita.
 			if (jogs[i]->getPosX() + 1 == x && jogs[i]->getPosY() == y) {
 				return jogs[i];
@@ -257,7 +299,6 @@ Jogador *Mapa::GuardaJogador(Jogador *jog) {
 			}
 			// nao existe jogador em volta
 			else return j;
-		}
 	}
 }
 
@@ -279,11 +320,20 @@ void Mapa::Combate(Jogador *jog) {
 			// tirar a pedra do vetor de objeto;
 
 			jog->retiraPedra();
+
+			// adiciona pontos
+			jog->setPontos(jog->getPontos() + 5);
 		}
 
 		// se nao tiver uma pedra ataca com as maos
 		else {
 			j->setVida(j->getVida() - 1);
+
+			jog->setPontos(jog->getPontos() + 3);
+		}
+
+		if (j->getVida() <= 0) {
+			jog->setPontos(jog->getPontos() + 10);
 		}
 	}
 

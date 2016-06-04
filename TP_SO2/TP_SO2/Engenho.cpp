@@ -70,7 +70,7 @@ int Engenho::ExecutaComando(string tcomando, string comando, Jogador *jog) {
 		}
 		else return -1;
 	}
-	else if (tcomando == "pedra" && "mao") {
+	else if (tcomando == "pedra" && comando == "mao") {
 
 		if (jogoCriado == true && jogoIniciado == true) {
 			return 6;
@@ -78,9 +78,16 @@ int Engenho::ExecutaComando(string tcomando, string comando, Jogador *jog) {
 		else return -1;
 
 	}
+	
+	else if (tcomando == "ataca") {
+		if (jogoCriado == true && jogoIniciado == true) {
+			return 7;
+		}
+		else return -1;
+	}
 
 	else if (tcomando == "logout") {
-		return 7;
+		return 8;
 	}
 	else return 0;
 }

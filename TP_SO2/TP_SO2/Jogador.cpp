@@ -33,6 +33,10 @@ string Jogador::getNome() {
 	return nome;
 }
 
+int Jogador::getPontos() {
+	return pontos;
+}
+
 
 int Jogador::getPosX() {
 	return posX;
@@ -155,4 +159,8 @@ void Jogador::setPosY(int y) {
 
 void Jogador::setPedra(bool p) {
 	pedra = p;
+}
+
+void Jogador::setPontos(int pon) {
+	pontos = pon;
 }

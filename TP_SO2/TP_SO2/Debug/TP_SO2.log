@@ -1,13 +1,20 @@
 ﻿  Mapa.cpp
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(91): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(192): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(224): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(240): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(119): warning C4715: 'Mapa::VerificaParade': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(171): warning C4715: 'Mapa::VerificaObjeto': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(131): warning C4715: 'Mapa::VerificaParede': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(184): warning C4715: 'Mapa::VerificaObjetos': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(231): warning C4715: 'Mapa::VerificaJogador': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(216): warning C4715: 'Mapa::VerificaJogadores': not all control paths return a value
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(262): warning C4715: 'Mapa::GuardaJogador': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(117): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(210): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(238): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(267): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(283): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(150): warning C4715: 'Mapa::VerificaParede': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(138): warning C4715: 'Mapa::VerificaParade': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(203): warning C4715: 'Mapa::VerificaObjetos': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(190): warning C4715: 'Mapa::VerificaObjeto': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(230): warning C4715: 'Mapa::VerificaAdjacencia': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(274): warning C4715: 'Mapa::VerificaJogador': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(303): warning C4715: 'Mapa::GuardaJogador': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(259): warning C4715: 'Mapa::VerificaJogadores': not all control paths return a value
+  Skipping... (no relevant changes detected)
+  Servidor.cpp
+  Engenho.cpp
   TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe

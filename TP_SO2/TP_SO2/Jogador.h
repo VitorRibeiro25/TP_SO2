@@ -19,6 +19,7 @@ class Jogador {
 	string nome;
 	bool emJogo; // se esitver a 1 esta a jogar, caso contrario esta apenas logado
 	int lentidao;
+	int pontos;
 	int vida;
 	int posX, posY;
 	bool pedra;
@@ -34,6 +35,7 @@ public:
 	int getLentidao();
 	int getPosX();
 	int getPosY();
+	int getPontos();
 	bool getPedra();
 
 	void ComeObjeto(Objeto *ob);
@@ -47,6 +49,7 @@ public:
 	void setLentidao(int l);
 	void setPosX(int x);
 	void setPosY(int y);
+	void setPontos(int pon);
 	void setPedra(bool p);
 
 };

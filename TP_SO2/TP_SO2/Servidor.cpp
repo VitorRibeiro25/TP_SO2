@@ -25,6 +25,8 @@ Mapa *m;
 struct resposta
 {	
 	int ID_Cliente;
+	int vida;
+	int pontuacao;
 	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
@@ -358,24 +360,30 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 			if (Comando == "direita") {
 
-				jog->setPosY(jog->getPosY() + 1);
+				if (m->VerificaAdjacencia(jog) == 3) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Encontra-se um jogador a sua direita\n")));
+				}
+				else jog->setPosY(jog->getPosY() + 1);
 
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a direita\n")));
 					jog->setPosY(jog->getPosY() - 1);
 				}
-
 				if (m->VerificaObjeto(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 				}
-
-				//m->refreshposicao(jog->getPosX(), jog->getPosY());
-
 			}
 			if (Comando == "esquerda") {
-				jog->setPosY(jog->getPosY() - 1);
+
+				if (m->VerificaAdjacencia(jog) == 4) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Encontra-se um jogador a sua esquerda\n")));
+				}
+				else jog->setPosY(jog->getPosY() - 1);
+
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para a esquerda\n")));
@@ -386,12 +394,14 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 				}
-				//m->refreshposicao(jog->getPosX(), jog->getPosY());
-
 			}
 			if (Comando == "cima") {
 
-				jog->setPosX(jog->getPosX() - 1);
+				if (m->VerificaAdjacencia(jog) == 2) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Encontra-se um jogador acima\n")));
+				}
+				else jog->setPosX(jog->getPosX() - 1);
 
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
@@ -403,12 +413,15 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 				}
-				//m->refreshposicao(jog->getPosX(), jog->getPosY());
-
 			}
 			if (Comando == "baixo") {
 
-				jog->setPosX(jog->getPosX() + 1);
+				if (m->VerificaAdjacencia(jog) == 1) {
+					res.comandoErrado = true;
+					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Encontra-se um jogador abaixo\n")));
+				}
+				else jog->setPosX(jog->getPosX() + 1);
+
 				if (m->VerificaParade(jog) == true) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] Não é possivel mover para baixo\n")));
@@ -419,8 +432,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					res.comandoErrado = true;
 					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
 				}
-				//m->refreshposicao(jog->getPosX(), jog->getPosY());
-
 			}
 		}
 
@@ -435,7 +446,16 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador ainda nao tem pedras\n")));
 			}
 		}
+
 		if (valorRetorno == 7) {
+			if (m->VerificaJogadores(jog) == true) {
+				m->Combate(jog);
+				res.comandoErrado = true;
+				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador atacou outro Jogador\n")));
+			}
+		}
+
+		if (valorRetorno == 8) {
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
@@ -455,6 +475,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (res.jogoCriado == true && res.jogoIniciado == true) {
 
 			FazerMapa(jog);
+			res.vida = jog->getVida();
+			res.pontuacao = jog->getPontos();
 			for (int i = 0; i < MAXCLIENTES; i++) {
 				if (jog->getId() == i) {
 					tstring aux = e->PosicaoJogador(jog);

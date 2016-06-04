@@ -21,6 +21,8 @@ void Envia(TCHAR &Comando);
 struct resposta
 {
 	int ID_Cliente;
+	int vida;
+	int pontuacao;
 	bool JogadorLogado;
 	bool jogoCriado;
 	bool jogoIniciado;
@@ -172,6 +174,8 @@ DWORD WINAPI Recebe(LPVOID param) {
 			}
 
 			if (res.jogoCriado == true && res.jogoIniciado == true) {
+				_tprintf(TEXT("[Cliente] Vida do Jogador: %d\n"), res.vida);
+				_tprintf(TEXT("[Cliente] Pontuacao do Jogador: %d\n"), res.pontuacao);
 				_tprintf(TEXT("%s"), res.frase);
 			}
 			if (flag == 1 && flag2==1) {

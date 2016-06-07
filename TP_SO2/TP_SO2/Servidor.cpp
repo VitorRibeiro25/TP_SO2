@@ -37,6 +37,15 @@ struct resposta
 	int mapa[20][20];
 };
 
+struct monstro
+{
+	int vida;
+	bool jogoIniciado;
+	int linhas;
+	int colunas;
+	int mapa[20][20];
+};
+
 typedef struct {
 	TCHAR nome[30];
 	TCHAR pass[30];
@@ -48,6 +57,7 @@ typedef struct {
 
 int numero = 0;
 struct resposta res;
+struct monstro monst;
 static int ID_Cliente = 0;
 static TCHAR Comando[256];
 utilizador utili[MAXCLIENTES];
@@ -180,29 +190,24 @@ void Autenticacao(LPVOID param) {
 }
 
 void FazerMapa(Jogador *jog) {
+
 	//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
 	int num, nx = -11, ny = -11;
-	int posx = 10 - jog->getPosX();//se for menor que 10 a conta é positiva
+	int posx = 10 - jog->getPosX(); //se for menor que 10 a conta é positiva
 	int posy = 10 - jog->getPosY();
 
 	if (posx > 0) {
 		nx = -10 + posx;
 	}
 	if (posy >0) {
-		nx = -10 + posy;
+		ny = -10 + posy;
 	}
 	for (int ij = -10; ij < 10; ij++) {
 		for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-			if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
-				res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
-			}							//assim so se passar para fora dos limites
-			else if (ij < nx) {	//igual
-				res.mapa[ij][ji] = 9;		//9 fora dos limites
-			}
-			else {
 				num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
 				res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-			}
+				monst.mapa[ij + 10][ji + 10] = num;
+			
 		}// a res vai ficar com o mapa
 	}
 
@@ -321,6 +326,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 				m = new Mapa(50, 50);
 				m->predefinido();
+				monst.linhas = m->getLinhas();
+				monst.colunas = m->getColunas();
 				
 			}
 		}
@@ -331,8 +338,8 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int Posx = rand() % m->getLinhas();
-					int Posy = rand() % m->getColunas();
+					int Posx = 1 + (rand() % m->getLinhas());
+					int Posy = 1 + (rand() % m->getColunas());
 					jog->setPosX(Posx);
 					jog->setPosY(Posy);
 					m->NovoJogador(jog);
@@ -342,13 +349,14 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (valorRetorno == 3) {
 			res.jogoCriado = true;
 			res.jogoIniciado = true;
+			monst.jogoIniciado = true;
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int x1 = rand() % m->getLinhas();
-					int y1 = rand() % m->getColunas();
+					int x1 = 1 + (rand() % m->getLinhas());
+					int y1 = 1 + (rand() % m->getColunas());
 					jog->setPosX(x1);
 					jog->setPosY(y1);
 					m->NovoJogador(jog);

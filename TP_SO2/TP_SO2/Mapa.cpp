@@ -1,6 +1,7 @@
 #include "Mapa.h"
 
 Mapa::Mapa(int lin, int col) {
+
 	linhas = lin;
 	colunas = col;
 
@@ -17,9 +18,6 @@ Mapa::Mapa(int lin, int col) {
 
 }
 
-void Mapa::refreshposicao(int x, int y) {
-	getCelula(x, y).setParede(0);
-}
 
 void Mapa::predefinido() {
 	/*
@@ -96,7 +94,6 @@ void Mapa::ComeObjeto(Jogador *jog) {
 			// colocar a celula com o objeto a 0
 			getCelula(obj[i]->getPosX(), obj[i]->getPosY()).setObjeto(0);
 
-			// incremnetar a pontuacao.
 			// remover objeto do vetor de objetos do mapa
 			// este erase da cabo de todo o jogo
 			obj.erase(obj.begin() + i);
@@ -150,27 +147,32 @@ bool Mapa::VerificaParede(int x, int y) {
 }
 
 int Mapa::Verificacelula(int x, int y) {
+
 	bool parede, objeto, jogador;
-	Jogador *jog = new Jogador(50);//jogador ao calhas é so para não fazer uma versão diferentes das funções tem que se enviar um jogador
-	jog->setPosX(x);
-	jog->setPosY(y);
 
-	parede = VerificaParade(jog);
-	objeto = VerificaObjetos(jog);
-	jogador = VerificaJogador(jog);
-
-	if (parede == true) {
-		return 1; // parede é 1 
-	}
-	else if (objeto == true) {
-		return 2; //objeto é 2
-	}
-	else if (jogador==true){
-		return 3; //jogador é 3
+	if (x < 0 || y < 0 || x > linhas || y > colunas) {
+		return 9; //fora do mapa
 	}
 	else {
-		return 0; //É so chão
+
+		parede = VerificaParede(x, y);
+		objeto = VerificaObjetosXY(x, y);
+		jogador = VerificaJogadoresXY(x, y);
+
+		if (parede == true) {
+			return 1; // parede é 1 
+		}
+		else if (objeto == true) {
+			return 2; //objeto é 2
+		}
+		else if (jogador == true) {
+			return 3; //jogador é 3
+		}
+		else {
+			return 0; //É so chão
+		}
 	}
+
 
 }
 
@@ -193,6 +195,19 @@ bool Mapa::VerificaObjetos(Jogador *jog) {
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (jog->getPosX() == i && jog->getPosY() == j) {
+				if (getCelula(i, j).getObjeto() == 1) {
+					return true;
+				}
+				else return false;
+			}
+		}
+	}
+}
+
+bool Mapa::VerificaObjetosXY(int x, int y) {
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			if (x == i && y== j) {
 				if (getCelula(i, j).getObjeto() == 1) {
 					return true;
 				}
@@ -268,7 +283,16 @@ bool Mapa::VerificaJogador(Jogador *jog) {
 		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
 			return true;
 		}
-		// nao existe jogador em volta
+		else return false;
+	}
+}
+
+bool Mapa::VerificaJogadoresXY(int x, int y) {
+
+	for (int h = 0; h < jogs.size(); h++) {
+		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
+			return true;
+		}
 		else return false;
 	}
 }

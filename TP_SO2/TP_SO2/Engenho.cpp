@@ -137,8 +137,9 @@ bool Engenho::VerificaRegisto(LPCWSTR nome) {
 	wcscat_s(keyName, nome);
 
 	//Criar/abrir uma chave em HKEY_CURRENT_USER\Software\MinhaAplicacao
-	if (RegOpenKeyEx(HKEY_CURRENT_USER, keyName, 0, KEY_ALL_ACCESS, &chave) == ERROR_SUCCESS)
+	if (RegOpenKeyEx(HKEY_CURRENT_USER, keyName, 0, KEY_ALL_ACCESS, &chave) == ERROR_SUCCESS) {
 		return true;
+	}
 	else return false;
 
 }

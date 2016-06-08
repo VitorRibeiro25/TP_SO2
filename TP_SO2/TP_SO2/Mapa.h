@@ -26,7 +26,6 @@ public:
 
 	void predefinido();
 	void random();
-	void refreshposicao(int x, int y);
 
 	void NovoJogador(Jogador *jog);
 	void NovoObjeto(int x, int y);
@@ -37,7 +36,9 @@ public:
 	bool VerificaParede(int x, int y);
 	bool VerificaObjeto(Jogador *jog);
 	bool VerificaObjetos(Jogador *jog);
+	bool VerificaObjetosXY(int x, int y);
 	bool VerificaJogadores(Jogador *jog);
+	bool VerificaJogadoresXY(int x, int y);
 	int VerificaAdjacencia(Jogador *jog);
 	bool VerificaJogador(Jogador *jog);
 

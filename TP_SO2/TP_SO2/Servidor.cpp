@@ -2,6 +2,7 @@
 #include "Engenho.h"
 #include "Mapa.h"
 #include "Jogador.h"
+#include "Partilha.h"
 
 
 #define MAXCLIENTES 5
@@ -11,7 +12,11 @@
 
 #define REGISTRY_KEY TEXT("Software\\TPSO2\\");
 
+#define CAMINHO TEXT("C:\\Users\\Vitor Ribeiro\\Documents\\GitHub\\TP_SO2\\TP_SO2\Debug\\MonstroConsola.exe")
+
 #define MUTEX_NAME TEXT("O servidor está a correr?")
+#define MUTEX_NAME2 TEXT("Mutex a funcionar?")
+
 
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param);
 
@@ -21,6 +26,7 @@ BOOL fim = FALSE;
 
 Engenho *e;
 Mapa *m;
+Partilha *p;
 
 struct resposta
 {	
@@ -37,6 +43,16 @@ struct resposta
 	int mapa[20][20];
 };
 
+struct monstro
+{
+	int vida;
+	int tipo;
+	bool jogoIniciado;
+	int linhas;
+	int colunas;
+	int mapa[20][20];
+};
+
 typedef struct {
 	TCHAR nome[30];
 	TCHAR pass[30];
@@ -48,7 +64,9 @@ typedef struct {
 
 int numero = 0;
 struct resposta res;
+struct monstro monst;
 static int ID_Cliente = 0;
+HANDLE hMapFile;
 static TCHAR Comando[256];
 utilizador utili[MAXCLIENTES];
 
@@ -180,29 +198,24 @@ void Autenticacao(LPVOID param) {
 }
 
 void FazerMapa(Jogador *jog) {
+
 	//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
 	int num, nx = -11, ny = -11;
-	int posx = 10 - jog->getPosX();//se for menor que 10 a conta é positiva
+	int posx = 10 - jog->getPosX(); //se for menor que 10 a conta é positiva
 	int posy = 10 - jog->getPosY();
 
 	if (posx > 0) {
 		nx = -10 + posx;
 	}
 	if (posy >0) {
-		nx = -10 + posy;
+		ny = -10 + posy;
 	}
 	for (int ij = -10; ij < 10; ij++) {
 		for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-			if (ji < ny) {// se for negativo nunca se verifica isto ex: Posxy= 10-11
-				res.mapa[ij][ji] = 9;    // ji=-10,  -10 < -1 + (-10) x cond. falsa
-			}							//assim so se passar para fora dos limites
-			else if (ij < nx) {	//igual
-				res.mapa[ij][ji] = 9;		//9 fora dos limites
-			}
-			else {
 				num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
 				res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-			}
+				monst.mapa[ij + 10][ji + 10] = num;
+			
 		}// a res vai ficar com o mapa
 	}
 
@@ -221,8 +234,70 @@ void FazerMapa(Jogador *jog) {
 	}
 }
 
+void PartilhaMonstro() {
 
-// falta colocar o handle para identificar o cliente em questao
+	hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, m->getLinhas()*m->getColunas()*sizeof(Partilha), TEXT("ObjetodePartilha"));
+
+	if (hMapFile == NULL)
+	{
+		_tprintf(TEXT("Could not open file mapping object (%d).\n"),
+			GetLastError());
+		return;
+	}
+
+	p = (Partilha*)MapViewOfFile(hMapFile, FILE_MAP_ALL_ACCESS, 0, 0, m->getLinhas()*m->getColunas()*sizeof(Partilha));
+
+
+	if (p == NULL)
+	{
+		return;
+	}
+
+	Partilha * tempP = new Partilha[m->getLinhas()*m->getColunas()];
+
+	CopyMemory(p, tempP, m->getLinhas()*m->getColunas()*sizeof(Partilha));
+
+	delete tempP;
+
+	HANDLE tempMutex = CreateMutex(NULL, FALSE, MUTEX_NAME2);
+
+	if (tempMutex == NULL)
+		exit(-1);
+
+	for (int i = 0; i < m->getLinhas(); i++)
+	{
+		for (int j = 0; j < m->getColunas(); j++)
+		{
+			p[i * m->getColunas() + j].setMutex(tempMutex);
+			if (m->getCelula(i, j).getParede() == 1)
+				p[i* m->getColunas() + j].setParede();
+		}
+	}
+}
+
+void PartilhaJogador(Jogador *jog) {
+
+	p[jog->getPosX() *m->getColunas() + jog->getPosY()].setJogador(numero);
+	
+}
+
+void MandaMonstro(tstring tipo)
+{
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+	TCHAR args[TAM];
+	int n_casas = 2;
+
+	tstringstream aux;
+	aux << TEXT(" ") << tipo << TEXT(" ") << m->getLinhas() << TEXT(" ") << m->getColunas() << TEXT(" ") << n_casas;
+
+	wcscpy_s(args, (aux.str()).c_str());
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	CreateProcess(CAMINHO, args, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
+}
 
 
 DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
@@ -321,7 +396,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 				m = new Mapa(50, 50);
 				m->predefinido();
-				
+				PartilhaMonstro();
+				for (int i = 0; i < 2; i++) {
+					MandaMonstro(TEXT("Bully"));
+				}
 			}
 		}
 		if (valorRetorno == 2) {
@@ -331,27 +409,30 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int Posx = rand() % m->getLinhas();
-					int Posy = rand() % m->getColunas();
+					int Posx = 1 + (rand() % m->getLinhas());
+					int Posy = 1 + (rand() % m->getColunas());
 					jog->setPosX(Posx);
 					jog->setPosY(Posy);
 					m->NovoJogador(jog);
+					PartilhaJogador(jog);
 				}
 			}
 		}
 		if (valorRetorno == 3) {
 			res.jogoCriado = true;
 			res.jogoIniciado = true;
+			monst.jogoIniciado = true;
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int x1 = rand() % m->getLinhas();
-					int y1 = rand() % m->getColunas();
+					int x1 = 1 + (rand() % m->getLinhas());
+					int y1 = 1 + (rand() % m->getColunas());
 					jog->setPosX(x1);
 					jog->setPosY(y1);
 					m->NovoJogador(jog);
+					PartilhaJogador(jog);
 				}
 			}
 		}

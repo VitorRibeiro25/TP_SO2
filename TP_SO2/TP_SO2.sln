@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TP_SO2", "TP_SO2\TP_SO2.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ClienteConsola", "ClienteConsola\ClienteConsola.vcxproj", "{61AAFF79-96F8-478B-8FB8-E9FB610B2ACA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MonstroConsola", "MonstroConsola\MonstroConsola.vcxproj", "{C9743F3B-996F-48A4-BC6F-06BBE47EC502}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -38,6 +40,16 @@ Global
 		{61AAFF79-96F8-478B-8FB8-E9FB610B2ACA}.Release|x64.Build.0 = Release|x64
 		{61AAFF79-96F8-478B-8FB8-E9FB610B2ACA}.Release|x86.ActiveCfg = Release|Win32
 		{61AAFF79-96F8-478B-8FB8-E9FB610B2ACA}.Release|x86.Build.0 = Release|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Debug|ARM.ActiveCfg = Debug|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Debug|x64.ActiveCfg = Debug|x64
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Debug|x64.Build.0 = Debug|x64
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Debug|x86.ActiveCfg = Debug|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Debug|x86.Build.0 = Debug|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Release|ARM.ActiveCfg = Release|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Release|x64.ActiveCfg = Release|x64
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Release|x64.Build.0 = Release|x64
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Release|x86.ActiveCfg = Release|Win32
+		{C9743F3B-996F-48A4-BC6F-06BBE47EC502}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

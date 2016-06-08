@@ -1,16 +1,35 @@
-﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(144): warning C4101: 'value': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(145): warning C4101: 'pStr': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(252): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(270): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(307): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(308): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(309): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(310): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(240): warning C4101: 'frase': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(241): warning C4101: 'aux': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(248): warning C4101: 'pStr2': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(239): warning C4101: 'pass': unreferenced local variable
+﻿  util.cpp
+  Servidor.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(17): warning C4005: 'MUTEX_NAME': macro redefinition
+  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\partilha.h(4): note: see previous definition of 'MUTEX_NAME'
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(152): warning C4101: 'value': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(153): warning C4101: 'pStr': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(299): warning C4129: 'D': unrecognized character escape sequence
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(322): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(340): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(377): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(378): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(379): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(380): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(310): warning C4101: 'frase': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(311): warning C4101: 'aux': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(318): warning C4101: 'pStr2': unreferenced local variable
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(309): warning C4101: 'pass': unreferenced local variable
+  Partilha.cpp
+  Objeto.cpp
+  Mapa.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(89): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(114): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(225): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(253): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(282): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(292): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(307): warning C4018: '<': signed/unsigned mismatch
+  Jogador.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(75): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(88): warning C4018: '<': signed/unsigned mismatch
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(131): warning C4018: '<': signed/unsigned mismatch
   Engenho.cpp
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(109): warning C4101: 'versao': unreferenced local variable
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(110): warning C4101: 'autor': unreferenced local variable
@@ -19,5 +38,16 @@ c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): w
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): warning C4101: 'queAconteceu': unreferenced local variable
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(134): warning C4101: 'autor': unreferenced local variable
 c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): warning C4101: 'tamanho': unreferenced local variable
+  CelulaMapa.cpp
   Generating Code...
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(135): warning C4715: 'Mapa::VerificaParade': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(147): warning C4715: 'Mapa::VerificaParede': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(192): warning C4715: 'Mapa::VerificaObjeto': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(218): warning C4715: 'Mapa::VerificaObjetosXY': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(205): warning C4715: 'Mapa::VerificaObjetos': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(274): warning C4715: 'Mapa::VerificaJogadores': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(288): warning C4715: 'Mapa::VerificaJogador': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(245): warning C4715: 'Mapa::VerificaAdjacencia': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(298): warning C4715: 'Mapa::VerificaJogadoresXY': not all control paths return a value
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(327): warning C4715: 'Mapa::GuardaJogador': not all control paths return a value
   TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe

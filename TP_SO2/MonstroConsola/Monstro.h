@@ -11,20 +11,23 @@
 #include <wchar.h>
 #include <stdlib.h>
 #include <time.h>
+#include "Partilha.h"
 
 using namespace std;
 
 class Monstro {
-	string nome;
+	TCHAR nome[TAM];
 	int vida;
 	int id;
-	static int id_m;
+	int linhas, colunas;
+	HANDLE hMapFile;
+	Partilha *p;
 	int posX, posY;
 	int lentidao;
-
+	int n_casas;
 public:
 
-	Monstro(int x, int y);
+	Monstro(TCHAR nome[TAM], int linhas, int colunas);
 
 	~Monstro();
 
@@ -32,16 +35,19 @@ public:
 	int getPosY();
 	int getVida();
 	int getLentidao();
-	int getId();
-	string getNome();
+	TCHAR getNome();
+	Partilha getPartilha(int x, int y);
+
+	void ColocaMonstro();
 
 	void setPosX(int x);
 	void setPosY(int y);
 	void setVida(int vid);
 	void setLentidao(int l);
-	void setNome(string n);
+	void setNome(TCHAR m[TAM]);
 
 	int movePosicao(Monstro *m);
-	void combate(Monstro *m);
+	void moveDist(int distancia);
+	//int RandomDirecao();
 
 };

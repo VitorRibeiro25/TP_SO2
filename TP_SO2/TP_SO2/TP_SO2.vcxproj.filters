@@ -36,6 +36,9 @@
     <ClCompile Include="Engenho.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Partilha.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="util.h">
@@ -54,6 +57,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engenho.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Partilha.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

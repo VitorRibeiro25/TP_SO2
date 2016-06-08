@@ -1,2 +1,7 @@
-﻿  Monstro.cpp
+﻿  Partilha.cpp
+  Monstro.cpp
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\monstroconsola\monstro.cpp(49): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Main.cpp
+  Generating Code...
+c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\monstroconsola\monstro.cpp(88): warning C4715: 'Monstro::getPartilha': not all control paths return a value
   MonstroConsola.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\MonstroConsola.exe

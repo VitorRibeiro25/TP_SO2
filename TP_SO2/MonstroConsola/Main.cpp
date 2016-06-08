@@ -1,27 +1,29 @@
 #include "Monstro.h"
 
-struct monstro
-{
-	int vida;
-	bool jogoIniciado;
-	int linhas;
-	int colunas;
-	int mapa[20][20];
-};
-
-struct monstro monst;
+#define TAM 256
 
 
-void main() {
+
+int _tmain(int argc, LPTSTR argv[]) {
 
 	Monstro *m;
+
+	TCHAR nome[TAM];
+	wcscpy_s(nome, argv[1]);
+	int linhas = _ttoi(argv[2]);
+	int colunas = _ttoi(argv[3]);
+	int n_casas = _ttoi(argv[4]);
+
+	m = new Monstro(nome, linhas, colunas);
+
 	
-	srand(time(NULL));
+	if (_tcscmp(nome, TEXT("Distraido")) == 0) {
+		m->moveDist(n_casas);
+	}
+	else if (_tcscmp(nome, TEXT("Bully")) == 0) {
+		m->moveDist(n_casas);
+	}
 
-	int x = 1 + (rand() % monst.linhas);
-	int y = 1 + (rand() % monst.colunas);
 
-
-	m = new Monstro(x, y);
 
 }

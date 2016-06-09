@@ -1,0 +1,322 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_ICON1               ICON                    "icon1.ico"
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Clientes\tCtrlF1",           ID_CLIENTES
+        MENUITEM "E&xit\tCtrlX",                ID_SAIR
+    END
+    MENUITEM "&Ajuda",                      ID_AJUDA
+    MENUITEM "Login",                       ID_LOGIN
+    MENUITEM "Utilizadores",                ID_UTILIZADORES
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_ACCELERATOR1 ACCELERATORS
+BEGIN
+    VK_F1,          ID_CLIENTES,            VIRTKEY, CONTROL, NOINVERT
+    "X",            ID_SAIR,                VIRTKEY, CONTROL, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG1, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 182
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 105
+        HORZGUIDE, 92
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG1 DIALOGEX 30, 30, 191, 116
+STYLE DS_SYSMODAL | DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION
+CAPTION "Clientes"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,7,50,14
+    PUSHBUTTON      "Close",IDCCLOSE,130,24,50,14
+    LISTBOX         IDC_LIST1,7,7,118,54,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,7,72,118,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Seleccionar",IDSELECCIONAR,130,48,50,14
+    DEFPUSHBUTTON   "Procurar",IDPROCURAR,130,72,50,14
+    LTEXT           "Duplo click na List Box => Seleccionar item",IDC_STATIC,7,95,173,10
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Portuguese (Portugal) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_PTG)
+LANGUAGE LANG_PORTUGUESE, SUBLANG_PORTUGUESE
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU2 MENU
+BEGIN
+    MENUITEM "Autenticação",                ID_autent
+    MENUITEM "Ajuda",                       ID_AJUDA
+    MENUITEM "Sair",                        ID_SAIR
+END
+
+IDR_MENU3 MENU
+BEGIN
+    MENUITEM "Jogar",                       ID_jogar
+    MENUITEM "Pontuação",                   ID_Pontuacao
+    MENUITEM "Ajuda",                       ID_Ajudalogin
+    MENUITEM "Sair",                        ID_SAIRlogin
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 160
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 158
+    END
+
+    IDD_DIALOG3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_DIALOG4, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 319
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 240
+    END
+
+    IDD_DIALOG5, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_DIALOG6, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DIALOG2 DIALOGEX 0, 0, 163, 164
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Autenticar"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,110,40,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,110,62,50,14
+    EDITTEXT        IDC_EDIT1,7,33,99,12,ES_AUTOHSCROLL
+    LTEXT           "Login",IDC_STATIC,7,18,18,8
+    LTEXT           "Password",IDC_STATIC,7,52,32,8
+    EDITTEXT        IDC_EDIT2,7,64,99,12,ES_AUTOHSCROLL
+    LISTBOX         IDC_LIST1,7,91,153,67,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG3 DIALOGEX 0, 0, 309, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Online"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LISTBOX         IDC_LIST1,47,36,210,104,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    CONTROL         IDB_BITMAP1,IDC_STATIC,"Static",SS_BITMAP,270,7,32,30
+    CONTROL         "",ID_FOTO,"Static",SS_BLACKFRAME,255,37,47,42
+END
+
+IDD_DIALOG4 DIALOGEX 0, 0, 326, 247
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Continuar»",IDC_BUTTON1,253,226,50,14
+    LTEXT           "Informação:",IDC_STATIC,19,16,40,8
+END
+
+IDD_DIALOG5 DIALOGEX 100, 200, 309, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,198,156,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,252,156,50,14
+    EDITTEXT        IDC_EDIT1,22,59,40,14,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG6 DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Entre com a sua conta"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,198,155,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,252,155,50,14
+    EDITTEXT        IDC_EDIT1,28,56,161,14,ES_AUTOHSCROLL,WS_EX_STATICEDGE
+    EDITTEXT        IDC_EDIT2,28,94,161,14,ES_PASSWORD | ES_AUTOHSCROLL,WS_EX_STATICEDGE
+    LTEXT           "Faça a sua autenticação:",IDC_STATIC,10,9,82,8
+    LTEXT           "Nome:",IDC_STATIC,29,46,22,8
+    LTEXT           "Palavra-passe:",IDC_STATIC,30,84,49,8
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_BITMAP1             BITMAP                  "bitmap1.bmp"
+IDB_BITMAP2             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\floor.bmp"
+IDB_BITMAP3             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog1.bmp"
+IDB_BITMAP4             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog2.bmp"
+IDB_BITMAP5             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog3.bmp"
+IDB_BITMAP6             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog4.bmp"
+IDB_BITMAP7             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog5.bmp"
+IDB_BITMAP8             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\monst1.bmp"
+IDB_BITMAP9             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\monst2.bmp"
+IDB_BITMAP10            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\monst3.bmp"
+IDB_BITMAP11            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\monst4.bmp"
+IDB_BITMAP12            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\monst5.bmp"
+IDB_BITMAP13            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\orange bottle.bmp"
+IDB_BITMAP14            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\pedra.bmp"
+IDB_BITMAP15            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\rebucado.bmp"
+IDB_BITMAP16            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\vitamina.bmp"
+IDB_BITMAP17            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\wall.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG6 AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG4 AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+#endif    // Portuguese (Portugal) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

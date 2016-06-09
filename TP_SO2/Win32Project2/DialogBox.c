@@ -415,7 +415,7 @@ BOOL CALLBACK DialogAutenticacao(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lP
 			case IDC_EDIT1:
 				if (HIWORD(wParam) == EN_SETFOCUS){
 					item = GetDlgItem(hWnd, IDC_EDIT1);
-					SendMessage(item, EM_SETSEL, (WPARAM)0, (LPARAM)_tcslen(TEXT("introduza aqui a sua password")));
+					SendMesFage(item, EM_SETSEL, (WPARAM)0, (LPARAM)_tcslen(TEXT("introduza aqui a sua password")));
 				}
 				return 1;
 			case IDOK:

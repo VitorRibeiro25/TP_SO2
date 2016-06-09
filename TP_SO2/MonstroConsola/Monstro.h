@@ -22,6 +22,7 @@ class Monstro {
 	int linhas, colunas;
 	HANDLE hMapFile;
 	Partilha *p;
+	static int id_m;
 	int posX, posY;
 	int lentidao;
 	int n_casas;
@@ -34,6 +35,7 @@ public:
 	int getPosX();
 	int getPosY();
 	int getVida();
+	int getId();
 	int getLentidao();
 	TCHAR getNome();
 	Partilha getPartilha(int x, int y);

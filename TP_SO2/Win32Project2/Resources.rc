@@ -271,7 +271,7 @@ END
 //
 // Bitmap
 //
-
+/*
 IDB_BITMAP1             BITMAP                  "bitmap1.bmp"
 IDB_BITMAP2             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\floor.bmp"
 IDB_BITMAP3             BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\jog1.bmp"
@@ -289,7 +289,7 @@ IDB_BITMAP14            BITMAP                  "C:\\Users\\Asus\\Documents\\Git
 IDB_BITMAP15            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\rebucado.bmp"
 IDB_BITMAP16            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\vitamina.bmp"
 IDB_BITMAP17            BITMAP                  "C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\ClienteConsola\\wall.bmp"
-
+*/
 /////////////////////////////////////////////////////////////////////////////
 //
 // AFX_DIALOG_LAYOUT

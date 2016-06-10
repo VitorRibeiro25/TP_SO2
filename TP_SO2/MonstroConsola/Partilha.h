@@ -15,7 +15,6 @@
 #define MUTEX_NAME TEXT("Mutex a funcionar?")
 #define TAM 256
 
-
 using namespace std;
 
 class Partilha {

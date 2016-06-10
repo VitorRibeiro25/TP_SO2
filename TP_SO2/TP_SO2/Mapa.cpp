@@ -148,7 +148,7 @@ bool Mapa::VerificaParede(int x, int y) {
 
 int Mapa::Verificacelula(int x, int y) {
 
-	bool parede, objeto, jogador;
+	bool parede, objeto, jogador, monstro = false;
 
 	if (x < 0 || y < 0 || x > linhas || y > colunas) {
 		return 9; //fora do mapa
@@ -158,6 +158,7 @@ int Mapa::Verificacelula(int x, int y) {
 		parede = VerificaParede(x, y);
 		objeto = VerificaObjetosXY(x, y);
 		jogador = VerificaJogadoresXY(x, y);
+		//monstro = VerificaMonstro(x, y);
 
 		if (parede == true) {
 			return 1; // parede é 1 
@@ -167,6 +168,9 @@ int Mapa::Verificacelula(int x, int y) {
 		}
 		else if (jogador == true) {
 			return 3; //jogador é 3
+		}
+		else if (monstro == true) {
+			return 4;
 		}
 		else {
 			return 0; //É so chão
@@ -361,6 +365,18 @@ void Mapa::Combate(Jogador *jog) {
 		}
 	}
 
+}
+
+bool Mapa::VerificaMonstro(int x, int y) {
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			
+				if (p[i*colunas + j].asMonstro() == true) {
+					return true;
+				}
+				else return false;
+		}
+	}
 }
 
 CelulaMapa &Mapa::getCelula(int x, int y) {

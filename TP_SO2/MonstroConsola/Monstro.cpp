@@ -1,6 +1,6 @@
 #include "Monstro.h"
 
-
+int Monstro::id_m = 0;
 
 Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
 
@@ -56,6 +56,8 @@ void Monstro::ColocaMonstro() {
 	} while (getPartilha(x, y).getParede() || getPartilha(x, y).asMonstro());
 
 	getPartilha(x, y).setMonstro(nome);
+	id_m++;
+	id = id_m;
 	posX = x;
 	posY = y;
 }
@@ -70,6 +72,10 @@ int Monstro::getPosY() {
 
 int Monstro::getVida() {
 	return vida;
+}
+
+int Monstro::getId() {
+	return id;
 }
 
 int Monstro::getLentidao() {

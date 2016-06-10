@@ -43,15 +43,6 @@ struct resposta
 	int mapa[20][20];
 };
 
-struct monstro
-{
-	int vida;
-	int tipo;
-	bool jogoIniciado;
-	int linhas;
-	int colunas;
-	int mapa[20][20];
-};
 
 typedef struct {
 	TCHAR nome[30];
@@ -64,7 +55,6 @@ typedef struct {
 
 int numero = 0;
 struct resposta res;
-struct monstro monst;
 static int ID_Cliente = 0;
 HANDLE hMapFile;
 static TCHAR Comando[256];
@@ -197,6 +187,54 @@ void Autenticacao(LPVOID param) {
 
 }
 
+bool VerificaMonstro(int x, int y) {
+	for (int i = 0; i < m->getLinhas(); i++) {
+		for (int j = 0; j < m->getColunas(); j++) {
+			if (x == i && y == j) {
+				if (p[i*m->getColunas() + j].asMonstro() == true) {
+					return true;
+				}
+				else return false;
+			}
+		}
+	}
+}
+
+
+int Verificacelula(int x, int y) {
+
+	bool parede, objeto, jogador, monstro = false;
+
+	if (x < 0 || y < 0 || x > m->getLinhas() || y > m->getColunas()) {
+		return 9; //fora do mapa
+	}
+	else {
+
+		parede = m->VerificaParede(x, y);
+		objeto = m->VerificaObjetosXY(x, y);
+		jogador = m->VerificaJogadoresXY(x, y);
+		//monstro = VerificaMonstro(x, y);
+
+		if (parede == true) {
+			return 1; // parede é 1 
+		}
+		else if (objeto == true) {
+			return 2; //objeto é 2
+		}
+		else if (jogador == true) {
+			return 3; //jogador é 3
+		}
+		else if (monstro == true) {
+			return 4;
+		}
+		else {
+			return 0; //É so chão
+		}
+	}
+
+
+}
+
 void FazerMapa(Jogador *jog) {
 
 	//  jogador no meio 0 a 9 em cima, 0 a 9 a esquerda, 11 a 20 para baixo e a direita
@@ -212,9 +250,8 @@ void FazerMapa(Jogador *jog) {
 	}
 	for (int ij = -10; ij < 10; ij++) {
 		for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
-				num = m->Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
+				num = Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
 				res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
-				monst.mapa[ij + 10][ji + 10] = num;
 			
 		}// a res vai ficar com o mapa
 	}
@@ -280,6 +317,8 @@ void PartilhaJogador(Jogador *jog) {
 	p[jog->getPosX() *m->getColunas() + jog->getPosY()].setJogador(numero);
 	
 }
+
+
 
 void MandaMonstro(tstring tipo)
 {
@@ -421,7 +460,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (valorRetorno == 3) {
 			res.jogoCriado = true;
 			res.jogoIniciado = true;
-			monst.jogoIniciado = true;
 			res.comandoErrado = false;
 			for (int y = 0; y < MAXCLIENTES; y++) {
 				if (client == utili[y].pipe) {

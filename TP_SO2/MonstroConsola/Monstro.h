@@ -28,7 +28,7 @@ class Monstro {
 	int n_casas;
 public:
 
-	Monstro(TCHAR nome[TAM], int linhas, int colunas);
+	Monstro(int linhas, int colunas);
 
 	~Monstro();
 
@@ -39,6 +39,8 @@ public:
 	int getLentidao();
 	TCHAR getNome();
 	Partilha getPartilha(int x, int y);
+
+	void mostrainfo();
 
 	void ColocaMonstro();
 

@@ -2,7 +2,7 @@
 
 int Monstro::id_m = 0;
 
-Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
+Monstro::Monstro(int linhas, int colunas) {
 
 	int x = 1 + (rand() % linhas);
 	int y = 1 + (rand() % colunas);
@@ -35,27 +35,42 @@ Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
 		}
 	}
 
-	wcscpy_s(this->nome, nome);
+	//wcscpy_s(this->nome, nome);
 
 	this->linhas = linhas;
 	this->colunas = colunas;
 
 	ColocaMonstro();
+}
 
+
+void Monstro::mostrainfo() {
+
+	cout << getPosX() << " " << getPosY() << endl;
+
+	/*
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			cout << p[i * colunas + j].asMonstro();
+		}
+		cout << endl;
+	}*/
 }
 
 void Monstro::ColocaMonstro() {
 
 	srand(time(NULL));
 	int x, y;
-
+	
 	do {
 
 		x = 1 + (rand() % linhas);
 		y = 1 + (rand() % colunas);
 	} while (getPartilha(x, y).getParede() || getPartilha(x, y).asMonstro());
+	
 
-	getPartilha(x, y).setMonstro(nome);
+
+	getPartilha(x, y).setMonstro(1);
 	id_m++;
 	id = id_m;
 	posX = x;
@@ -90,7 +105,7 @@ Partilha Monstro::getPartilha(int x, int y) {
 	if (x < 0 || x > linhas || y < 0 || y > colunas) {
 		return Partilha();
 	}
-	else p[x * colunas + y];
+	return p[x * colunas + y];
 }
 	
 void Monstro::setPosX(int x) {
@@ -117,8 +132,6 @@ void Monstro::setNome(TCHAR m[TAM]) {
 Monstro::~Monstro() {
 
 }
-
-
 
 int Monstro::movePosicao(Monstro *m) {
 

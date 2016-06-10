@@ -1,16 +1,24 @@
 #pragma once
-#include "util.h"
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <string>
+#include <tchar.h>
+#include <windows.h>
+#include <io.h>
+#include <fcntl.h>
+#include <wchar.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define MUTEX_NAME TEXT("Mutex a funcionar?")
-#define TAM 256
-
 
 using namespace std;
 
 class Partilha {
 	int parede;
 	int jogador;
-	TCHAR monstro[TAM];
+	int monstro;
 	HANDLE mutex;
 public:
 
@@ -22,7 +30,7 @@ public:
 
 	void setParede();
 	void setJogador(int i);
-	void setMonstro(TCHAR m[TAM]);
+	void setMonstro(int m);
 	void setMutex(HANDLE m);
 
 	int PartilhaMapa(int x, int y);

@@ -146,40 +146,6 @@ bool Mapa::VerificaParede(int x, int y) {
 	}
 }
 
-int Mapa::Verificacelula(int x, int y) {
-
-	bool parede, objeto, jogador, monstro = false;
-
-	if (x < 0 || y < 0 || x > linhas || y > colunas) {
-		return 9; //fora do mapa
-	}
-	else {
-
-		parede = VerificaParede(x, y);
-		objeto = VerificaObjetosXY(x, y);
-		jogador = VerificaJogadoresXY(x, y);
-		//monstro = VerificaMonstro(x, y);
-
-		if (parede == true) {
-			return 1; // parede é 1 
-		}
-		else if (objeto == true) {
-			return 2; //objeto é 2
-		}
-		else if (jogador == true) {
-			return 3; //jogador é 3
-		}
-		else if (monstro == true) {
-			return 4;
-		}
-		else {
-			return 0; //É so chão
-		}
-	}
-
-
-}
-
 
 bool Mapa::VerificaObjeto(Jogador *jog) {
 	for (int i = 0; i < linhas; i++) {
@@ -208,15 +174,20 @@ bool Mapa::VerificaObjetos(Jogador *jog) {
 	}
 }
 
-bool Mapa::VerificaObjetosXY(int x, int y) {
-	for (int i = 0; i < linhas; i++) {
-		for (int j = 0; j < colunas; j++) {
-			if (x == i && y== j) {
-				if (getCelula(i, j).getObjeto() == 1) {
-					return true;
-				}
-				else return false;
-			}
+
+
+int Mapa::verifaObjetoNome(int x, int y) {
+
+	for (int k = 0; k < obj.size(); k++) {
+		if (obj[k]->getPosX() == x && obj[k]->getPosY() == y) {
+			if (obj[k]->getNome() == "vitamina")
+				return 2;
+			else if (obj[k]->getNome() == "orangebull")
+				return 3;
+			else if (obj[k]->getNome() == "pedra")
+				return 4;
+			else if (obj[k]->getNome() == "rebucado")
+				return 5;
 		}
 	}
 }
@@ -291,13 +262,26 @@ bool Mapa::VerificaJogador(Jogador *jog) {
 	}
 }
 
-bool Mapa::VerificaJogadoresXY(int x, int y) {
+int Mapa::VerificaJogadoresXY(int x, int y) {
 
 	for (int h = 0; h < jogs.size(); h++) {
 		if (jogs[h]->getPosX() == x && jogs[h]->getPosY() == y) {
-			return true;
+			if (jogs[h]->getId() == 0) {
+				return 6;
+			}
+			if (jogs[h]->getId() == 1) {
+				return 7;
+			}
+			if (jogs[h]->getId() == 2) {
+				return 8;
+			}
+			if (jogs[h]->getId() == 3) {
+				return 9;
+			}
+			if (jogs[h]->getId() == 4) {
+				return 10;
+			}
 		}
-		else return false;
 	}
 }
 
@@ -367,17 +351,6 @@ void Mapa::Combate(Jogador *jog) {
 
 }
 
-bool Mapa::VerificaMonstro(int x, int y) {
-	for (int i = 0; i < linhas; i++) {
-		for (int j = 0; j < colunas; j++) {
-			
-				if (p[i*colunas + j].asMonstro() == true) {
-					return true;
-				}
-				else return false;
-		}
-	}
-}
 
 CelulaMapa &Mapa::getCelula(int x, int y) {
 	return celula[x * colunas + y];

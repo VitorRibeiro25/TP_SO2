@@ -42,6 +42,8 @@ public:
 
 	void ColocaMonstro();
 
+	void mostraInfo();
+
 	void setPosX(int x);
 	void setPosY(int y);
 	void setVida(int vid);

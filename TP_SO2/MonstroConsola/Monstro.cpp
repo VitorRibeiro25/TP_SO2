@@ -62,6 +62,10 @@ void Monstro::ColocaMonstro() {
 	posY = y;
 }
 
+void Monstro::mostraInfo() {
+	cout << "Posicao do monstro X:" << posX << " Y:" << posY;
+}
+
 int Monstro::getPosX() {
 	return posX;
 }

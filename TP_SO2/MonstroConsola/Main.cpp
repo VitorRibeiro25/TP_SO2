@@ -16,14 +16,17 @@ int _tmain(int argc, LPTSTR argv[]) {
 
 	m = new Monstro(nome, linhas, colunas);
 
-	
-	if (_tcscmp(nome, TEXT("Distraido")) == 0) {
-		m->moveDist(n_casas);
-	}
-	else if (_tcscmp(nome, TEXT("Bully")) == 0) {
-		m->moveDist(n_casas);
-	}
+	m->mostraInfo();
 
+	while (true) {
+		if (_tcscmp(nome, TEXT("Distraido")) == 0) {
+			m->moveDist(n_casas);
+		}
+		else if (_tcscmp(nome, TEXT("Bully")) == 0) {
+			m->moveDist(n_casas);
+		}
+
+	}
 
 
 }

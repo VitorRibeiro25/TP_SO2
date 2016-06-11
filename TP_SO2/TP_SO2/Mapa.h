@@ -38,15 +38,12 @@ public:
 	bool VerificaParede(int x, int y);
 	bool VerificaObjeto(Jogador *jog);
 	bool VerificaObjetos(Jogador *jog);
-	bool VerificaObjetosXY(int x, int y);
+	int verifaObjetoNome(int x, int y);
 	bool VerificaJogadores(Jogador *jog);
-	bool VerificaJogadoresXY(int x, int y);
+	int VerificaJogadoresXY(int x, int y);
 	int VerificaAdjacencia(Jogador *jog);
 	bool VerificaJogador(Jogador *jog);
 
-
-	bool VerificaMonstro(int x, int y);
-	int Verificacelula(int x, int y);
 
 	Jogador *GuardaJogador(Jogador *jog);
 	void Combate(Jogador *jog);

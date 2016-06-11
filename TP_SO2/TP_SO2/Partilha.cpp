@@ -21,8 +21,7 @@ bool Partilha::asJogador() {
 }
 
 bool Partilha::asMonstro() {
-	TCHAR b[TAM] = TEXT("");
-	if (_tcscmp(monstro,b) == 0)
+	if (_tcscmp(monstro,TEXT(" ")) == 0)
 		return false;
 	else return true;
 }

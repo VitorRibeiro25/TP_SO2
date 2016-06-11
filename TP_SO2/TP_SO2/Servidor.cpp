@@ -12,7 +12,7 @@
 
 #define REGISTRY_KEY TEXT("Software\\TPSO2\\");
 
-#define CAMINHO TEXT("C:\\Users\\Vitor Ribeiro\\Documents\\GitHub\\TP_SO2\\TP_SO2\Debug\\MonstroConsola.exe")
+#define CAMINHO TEXT("C:\\Users\\Vitor Ribeiro\\Documents\\GitHub\\TP_SO2\\TP_SO2\\Debug\\MonstroConsola.exe")
 
 #define MUTEX_NAME TEXT("O servidor está a correr?")
 #define MUTEX_NAME2 TEXT("Mutex a funcionar?")
@@ -27,6 +27,7 @@ BOOL fim = FALSE;
 Engenho *e;
 Mapa *m;
 Partilha *p;
+
 
 struct resposta
 {	
@@ -203,29 +204,51 @@ bool VerificaMonstro(int x, int y) {
 
 int Verificacelula(int x, int y) {
 
-	bool parede, objeto, jogador, monstro = false;
+	bool parede, monstro;
+	int objeto, jogador;
 
 	if (x < 0 || y < 0 || x > m->getLinhas() || y > m->getColunas()) {
-		return 9; //fora do mapa
+		return -1; //fora do mapa
 	}
 	else {
 
 		parede = m->VerificaParede(x, y);
-		objeto = m->VerificaObjetosXY(x, y);
+		objeto = m->verifaObjetoNome(x, y);
 		jogador = m->VerificaJogadoresXY(x, y);
-		//monstro = VerificaMonstro(x, y);
+		monstro = VerificaMonstro(x, y);
 
 		if (parede == true) {
 			return 1; // parede é 1 
 		}
-		else if (objeto == true) {
-			return 2; //objeto é 2
+		else if (objeto == 2) {
+			return 2; //objeto vitamina
 		}
-		else if (jogador == true) {
-			return 3; //jogador é 3
+		else if (objeto == 3) {
+			return 3; // objeto orangebull
+		}
+		else if (objeto == 4) {
+			return 4;  // objeto pedra
+		}
+		else if (objeto == 5 ) {
+			return 5;  // objeto rebucado
+		}
+		else if (jogador == 6) {
+			return 6; //jogador 1 é 6
+		}
+		else if (jogador == 7) {
+			return 7; //jogador 2 é 7
+		}
+		else if (jogador == 8) {
+			return 8; //jogador 3 é 8
+		}
+		else if (jogador == 9) {
+			return 9; //jogador 4 é 9
+		}
+		else if (jogador == 10) {
+			return 10; //jogador 5 é 10
 		}
 		else if (monstro == true) {
-			return 4;
+			return 11; 
 		}
 		else {
 			return 0; //É so chão
@@ -241,6 +264,7 @@ void FazerMapa(Jogador *jog) {
 	int num, nx = -11, ny = -11;
 	int posx = 10 - jog->getPosX(); //se for menor que 10 a conta é positiva
 	int posy = 10 - jog->getPosY();
+	int id_u = jog->getId();
 
 	if (posx > 0) {
 		nx = -10 + posx;
@@ -320,7 +344,7 @@ void PartilhaJogador(Jogador *jog) {
 
 
 
-void MandaMonstro(tstring tipo)
+void MandaMonstro(TCHAR tipo[25])
 {
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
@@ -436,10 +460,9 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				m = new Mapa(50, 50);
 				m->predefinido();
 				PartilhaMonstro();
-				for (int i = 0; i < 2; i++) {
-					MandaMonstro(TEXT("Bully"));
-				}
+				
 			}
+			MandaMonstro(TEXT("Bully"));
 		}
 		if (valorRetorno == 2) {
 			res.jogoIniciado = true;

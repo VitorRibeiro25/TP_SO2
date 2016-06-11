@@ -28,55 +28,139 @@
     <Image Include="..\bitmap1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\ICON1.ICO">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog1.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\floor.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog2.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\jog1.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog3.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\jog2.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog4.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\jog3.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog5.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\jog4.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog21.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\jog5.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog22.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\monst1.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog23.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\monst2.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog24.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\monst3.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog25.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\monst4.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog26.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\monst5.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog27.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\orange bottle.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog31.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\pedra.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog32.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\rebucado.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog33.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\vitamina.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog34.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="..\..\ClienteConsola\wall.bmp">
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog35.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog41.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog42.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog43.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog44.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog45.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog51.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog52.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog53.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog54.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\jog55.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons21.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons22.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons31.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons32.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons41.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons42.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons51.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons52.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons61.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\mons62.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\obtgarrafa.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\obtpedra.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\obtrebucado.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\obvitamina.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\pchao.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\pparede.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zfora.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\icon1.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

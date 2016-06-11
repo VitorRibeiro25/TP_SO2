@@ -25,7 +25,7 @@
 HANDLE hPipe;
 HANDLE hPipe2;
 DWORD WINAPI Recebe(LPVOID param);
-void Autenticacao(LPVOID param);
+int Autenticacao(LPVOID param);
 //void Envia(TCHAR &Comando);
 
 
@@ -257,6 +257,7 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 	TCHAR nada[30]=TEXT("");
 	switch(messg){
 	case WM_COMMAND:
+		
 		if (LOWORD(w) == IDOK) {
 			GetDlgItemText(hWnd, IDC_EDIT1, nome, 30);
 			GetDlgItemText(hWnd, IDC_EDIT2, pass, 30);
@@ -267,9 +268,13 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 				break;
 			}
 			else {
-				Autenticacao(hWnd,hPipe2, nome, pass);
+				int passa=0;
+				
+					passa=Autenticacao(hWnd, hPipe2, nome, pass);
+			if(passa==1) {
 				EndDialog(hWnd, 1);
 				return TRUE;
+						}
 
 			}
 		}
@@ -285,7 +290,7 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 		break;
 	case WM_CLOSE:
 		EndDialog(hWnd, 1);
-		return TRUE;
+		return FALSE;
 		break;
 	default:
 		break;
@@ -298,11 +303,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 	HWND h1, h2;
 	TCHAR nome2[25];
 	static HMENU hMenu = NULL;
+	BOOL RES;
 // Processamento das mensagens
 
 
 	switch (messg) 
 	{
+
+		//==============================================================================
+		// Terminar e Processamentos default
+		//==============================================================================
+	case WM_CLOSE:
+		if (MessageBox(hWnd, TEXT("Tem a certeza que quer sair do jogo?"), TEXT("Sair do jogo"), MB_OKCANCEL) == IDOK) {
+			PostQuitMessage(0);
+			break;
+		}
+		break;
 //==============================================================================
 // Resposta a opções do Menu da janela
 // Clicar num menu gera a mensagem WM_COMMAND. Nesta mensagem:
@@ -314,24 +330,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 		switch (LOWORD(wParam)) 
 		{
 		case ID_autent:
-
-			DialogBox(hInstance, (LPCWSTR) MAKEINTRESOURCE(111), hWnd, (DLGPROC)Trata);
+			
+			RES=DialogBox(hInstance, (LPCWSTR) MAKEINTRESOURCE(111), hWnd, (DLGPROC)Trata);
 			//h1=CreateDialog(hInstance, (LPCWSTR) IDD_DIALOG4, hWnd, (DLGPROC) Trata);
 			//h2=CreateDialog(hInstance, (LPCWSTR)IDD_DIALOG5, hWnd, (DLGPROC)Trata);
 			//ShowWindow(h1, SW_SHOW);
 			//ShowWindow(h2, SW_SHOW);
-			_tcscpy_s(nome2, 25, (TEXT("Bem vindo ")));
-			wcscat_s(nome2, 25, nome);
-			if (MessageBox(hWnd, nome2, TEXT("Autenticação"), MB_OKCANCEL) == IDOK) {
-				//SendDlgItemMessage(hWnd, MAKEINTRESOURCE(40013), LB_ADDSTRING, 0, (LPARAM)nome);
+			if (RES == TRUE) {
+				_tcscpy_s(nome2, 25, (TEXT("Bem vindo ")));
+				wcscat_s(nome2, 25, nome);
+				if (MessageBox(hWnd, nome2, TEXT("Autenticação"), MB_OK) == IDOK) {
+					//SendDlgItemMessage(hWnd, MAKEINTRESOURCE(40013), LB_ADDSTRING, 0, (LPARAM)nome);
 
-				InsertMenuItem(IDR_MENU3, 1, TRUE, nome);
-				hMenu = LoadMenu(NULL, IDR_MENU3);
+					InsertMenuItem(IDR_MENU3, 1, TRUE, nome);
+					hMenu = LoadMenu(NULL, IDR_MENU3);
 
 
-				AppendMenu(hMenu, MF_STRING, IDR_MENU3, nome2);
-				SetMenu(hWnd, hMenu);
-				break;
+					AppendMenu(hMenu, MF_STRING, IDR_MENU3, nome2);
+					SetMenu(hWnd, hMenu);
+				}
 			}
 			break;
 		case ID_SAIR:
@@ -342,15 +359,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 		case ID_AJUDA:	
 			DialogBox(hInstance, MAKEINTRESOURCE(IDD_DIALOG4), hWnd, (DLGPROC)DialogNova);
 			break;
-		case ID_LOGIN:{
-			SYSTEMTIME hora;
-			GetSystemTime(&hora);						
-			DialogBox(hInstance, (LPCWSTR)IDD_DIALOG2, hWnd, (DLGPROC)DialogAutenticacao);
-			break;
-		}
-		case ID_UTILIZADORES:
-			DialogBox(hInstance, (LPCWSTR)IDD_DIALOG3, hWnd, (DLGPROC)DialogUtilizadores);
-			break;
+		case ID_LOGIN:
 		
 		//id´s relativos a segunda barra
 		case ID_jogar: //id jogar da barra autenticação 
@@ -368,15 +377,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			break;
 
 	 }
-//==============================================================================
-// Terminar e Processamentos default
-//==============================================================================
-	case WM_CLOSE:
-		if (MessageBox(hWnd, TEXT("Tem a certeza que quer sair do jogo?"), TEXT("Sair do jogo"), MB_OKCANCEL) == IDOK) {
-			PostQuitMessage(0);
-			break;
-		}
-		break;
+
 // Restantes mensagens têm processamento default
 	default:
 		return(DefWindowProc(hWnd,messg,wParam,lParam));
@@ -415,7 +416,7 @@ BOOL CALLBACK DialogAutenticacao(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lP
 			case IDC_EDIT1:
 				if (HIWORD(wParam) == EN_SETFOCUS){
 					item = GetDlgItem(hWnd, IDC_EDIT1);
-					SendMesFage(item, EM_SETSEL, (WPARAM)0, (LPARAM)_tcslen(TEXT("introduza aqui a sua password")));
+					//SendMesFage(item, EM_SETSEL, (WPARAM)0, (LPARAM)_tcslen(TEXT("introduza aqui a sua password")));
 				}
 				return 1;
 			case IDOK:
@@ -627,7 +628,7 @@ BOOL CALLBACK DialogUtilizadores(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lP
 	return 0;
 }
 
-void Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
+int Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 
 	HANDLE hpipelocal = (HANDLE)param;
 	DWORD n;
@@ -638,7 +639,7 @@ void Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 
 	//autenticação do utilizador - nome e pass 
 
-	do {
+	//do {
 		//_tprintf(TEXT("[Autenticação - coloque o nome]: "));
 		//fflush(stdin);
 		//nom[_tcslen(nom) - 1] = '\0';
@@ -660,10 +661,9 @@ void Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 		ReadFile(hpipelocal, &resp, sizeof(resp), &n, NULL);
 		if (resp == 0) {
 			//_tprintf(TEXT("[Servidor] Essa conta já esta em uso! Entre com outra conta\n"));
-			int resposta = MessageBox(hnd, TEXT("Intruduza uma conta valida"), TEXT("Sem sucesso"), MB_OK);
-			if (resposta == IDYES)
-				PostQuitMessage(0);				// Se for YES terminar
-			break;
+			MessageBox(hnd, TEXT("Intruduza uma conta valida"), TEXT("Sem sucesso"), MB_OK);
+			
 		}
-	} while (resp != 1);
+		return resp;
+	//} while (resp != 1);
 }

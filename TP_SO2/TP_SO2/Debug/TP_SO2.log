@@ -1,18 +1,9 @@
-﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(17): warning C4005: 'MUTEX_NAME': macro redefinition
-  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\partilha.h(4): note: see previous definition of 'MUTEX_NAME'
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(142): warning C4101: 'value': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(143): warning C4101: 'pStr': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(338): warning C4129: 'D': unrecognized character escape sequence
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(361): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(379): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(416): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(417): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(418): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(419): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(349): warning C4101: 'frase': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(350): warning C4101: 'aux': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(357): warning C4101: 'pStr2': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(348): warning C4101: 'pass': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(201): warning C4715: 'VerificaMonstro': not all control paths return a value
-  TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe
+﻿Build started 11/06/2016 00:35:10.
+     1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         TP_SO2.vcxproj -> C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe
+     1>Done Building Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.04

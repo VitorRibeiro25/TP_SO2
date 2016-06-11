@@ -6,7 +6,6 @@
 
 
 #define MAXCLIENTES 5
-#define TAM 256
 
 #define PIPENOME TEXT("\\\\.\\pipe\\teste")
 #define PIPE2NOME TEXT("\\\\.\\pipe\\teste2")
@@ -191,10 +190,12 @@ void Autenticacao(LPVOID param) {
 bool VerificaMonstro(int x, int y) {
 	for (int i = 0; i < m->getLinhas(); i++) {
 		for (int j = 0; j < m->getColunas(); j++) {
-			if (p[i*m->getColunas() + j].asMonstro() == 1) {
-				return true;
+			if (x == i && y == j) {
+				if (p[i*m->getColunas() + j].asMonstro() == true) {
+					return true;
+				}
+				else return false;
 			}
-			else return false;
 		}
 	}
 }
@@ -202,7 +203,7 @@ bool VerificaMonstro(int x, int y) {
 
 int Verificacelula(int x, int y) {
 
-	bool parede, objeto, jogador, monstro;
+	bool parede, objeto, jogador, monstro = false;
 
 	if (x < 0 || y < 0 || x > m->getLinhas() || y > m->getColunas()) {
 		return 9; //fora do mapa
@@ -212,7 +213,7 @@ int Verificacelula(int x, int y) {
 		parede = m->VerificaParede(x, y);
 		objeto = m->VerificaObjetosXY(x, y);
 		jogador = m->VerificaJogadoresXY(x, y);
-		monstro = VerificaMonstro(x, y);
+		//monstro = VerificaMonstro(x, y);
 
 		if (parede == true) {
 			return 1; // parede é 1 
@@ -319,7 +320,7 @@ void PartilhaJogador(Jogador *jog) {
 
 
 
-void MandaMonstro()
+void MandaMonstro(tstring tipo)
 {
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
@@ -327,13 +328,9 @@ void MandaMonstro()
 	int n_casas = 2;
 
 	tstringstream aux;
-
-	aux << m->getLinhas() << TEXT(" ") << m->getColunas() << TEXT(" ") << n_casas;
+	aux << TEXT(" ") << tipo << TEXT(" ") << m->getLinhas() << TEXT(" ") << m->getColunas() << TEXT(" ") << n_casas;
 
 	wcscpy_s(args, (aux.str()).c_str());
-
-	_tprintf(TEXT("\n[Servidor] %s\n"), args);
-
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
@@ -440,7 +437,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				m->predefinido();
 				PartilhaMonstro();
 				for (int i = 0; i < 2; i++) {
-					MandaMonstro();
+					MandaMonstro(TEXT("Bully"));
 				}
 			}
 		}

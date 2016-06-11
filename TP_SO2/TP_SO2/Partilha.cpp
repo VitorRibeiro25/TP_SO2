@@ -4,7 +4,7 @@
 Partilha::Partilha() {
 	parede = 0;
 	jogador = -1;
-	monstro = 0;
+	wcscpy_s(monstro, TEXT(" "));
 }
 
 bool Partilha::getParede() {
@@ -21,10 +21,10 @@ bool Partilha::asJogador() {
 }
 
 bool Partilha::asMonstro() {
-	if (monstro == 1) {
-		return true;
-	}
-	else return false;
+	TCHAR b[TAM] = TEXT("");
+	if (_tcscmp(monstro,b) == 0)
+		return false;
+	else return true;
 }
 
 void Partilha::setParede() {
@@ -35,8 +35,8 @@ void Partilha::setJogador(int j) {
 	jogador = j;
 }
 
-void Partilha::setMonstro(int m) {
-	monstro = m;
+void Partilha::setMonstro(TCHAR m[TAM]) {
+	wcscpy_s(monstro, m);
 }
 
 void Partilha::setMutex(HANDLE m) {

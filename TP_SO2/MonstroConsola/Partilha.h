@@ -20,7 +20,7 @@ using namespace std;
 class Partilha {
 	int parede;
 	int jogador;
-	int monstro;
+	TCHAR monstro[TAM];
 	HANDLE mutex;
 public:
 
@@ -32,7 +32,7 @@ public:
 
 	void setParede();
 	void setJogador(int j);
-	void setMonstro(int m);
+	void setMonstro(TCHAR m[TAM]);
 	void setMutex(HANDLE m);
 
 	int PartilhaMapa(int x, int y);

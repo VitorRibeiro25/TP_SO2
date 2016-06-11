@@ -47,6 +47,7 @@ struct resposta
 
 struct resposta res;
 static int ID_Cliente = 0;
+int RES;
 TCHAR Comando[256];
 TCHAR nome[25];
 TCHAR pass[25];
@@ -253,7 +254,7 @@ BOOL CALLBACK DialogNova(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam)
 // ============================================================================
 // FUNÇÂO DE PROCESSAMENTO DA JANELA
 // ============================================================================
-BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FALSE se não tratar evento, TRUE se tratar o evento
+BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam, int retor){//Retorna FALSE se não tratar evento, TRUE se tratar o evento
 	TCHAR nada[30]=TEXT("");
 	switch(messg){
 	case WM_COMMAND:
@@ -269,19 +270,20 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 			}
 			else {
 				int passa=0;
-				
-					passa=Autenticacao(hWnd, hPipe2, nome, pass);
-			if(passa==1) {
+				passa=Autenticacao(hWnd, hPipe2, nome, pass);
+				if(passa==1) {
 				EndDialog(hWnd, 1);
+				RES = 1;
 				return TRUE;
-						}
 
+						}
 			}
 		}
 
 		if (LOWORD(w) == IDCANCEL) {
 			EndDialog(hWnd, 1);
-			return TRUE;
+			RES = 0;
+			return FALSE;
 		}
 
 		break;
@@ -290,6 +292,7 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 		break;
 	case WM_CLOSE:
 		EndDialog(hWnd, 1);
+		RES = 0;
 		return FALSE;
 		break;
 	default:
@@ -297,13 +300,14 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam){//Retorna FA
 	}
 	return FALSE;
 }
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam) 
 {
 	int resposta;					// Resposta a MessageBox
 	HWND h1, h2;
 	TCHAR nome2[25];
 	static HMENU hMenu = NULL;
-	BOOL RES;
+	
 // Processamento das mensagens
 
 
@@ -331,12 +335,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 		{
 		case ID_autent:
 			
-			RES=DialogBox(hInstance, (LPCWSTR) MAKEINTRESOURCE(111), hWnd, (DLGPROC)Trata);
+			DialogBox(hInstance, (LPCWSTR) MAKEINTRESOURCE(111), hWnd, (DLGPROC)Trata);
 			//h1=CreateDialog(hInstance, (LPCWSTR) IDD_DIALOG4, hWnd, (DLGPROC) Trata);
 			//h2=CreateDialog(hInstance, (LPCWSTR)IDD_DIALOG5, hWnd, (DLGPROC)Trata);
 			//ShowWindow(h1, SW_SHOW);
 			//ShowWindow(h2, SW_SHOW);
-			if (RES == TRUE) {
+			if (RES == 1) {
 				_tcscpy_s(nome2, 25, (TEXT("Bem vindo ")));
 				wcscat_s(nome2, 25, nome);
 				if (MessageBox(hWnd, nome2, TEXT("Autenticação"), MB_OK) == IDOK) {
@@ -344,7 +348,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 					InsertMenuItem(IDR_MENU3, 1, TRUE, nome);
 					hMenu = LoadMenu(NULL, IDR_MENU3);
-
 
 					AppendMenu(hMenu, MF_STRING, IDR_MENU3, nome2);
 					SetMenu(hWnd, hMenu);

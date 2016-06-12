@@ -272,10 +272,10 @@ void FazerMapa(Jogador *jog) {
 	if (posy >0) {
 		ny = -10 + posy;
 	}
-	for (int ij = -10; ij < 10; ij++) {
-		for (int ji = -10; ji < 10; ji++) {//ver posição a posição pela função que criei
+	for (int ij = -6; ij <= 6; ij++) {
+		for (int ji = -6; ji <= 6; ji++) {//ver posição a posição pela função que criei
 				num = Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
-				res.mapa[ij + 10][ji + 10] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+				res.mapa[ij + 6][ji + 6] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
 			
 		}// a res vai ficar com o mapa
 	}
@@ -287,9 +287,9 @@ void FazerMapa(Jogador *jog) {
 	}// a res vai ficar com o mapa
 	}*/
 
-	for (int ij = -10; ij < 10; ij++) {
-		for (int ji = -10; ji < 10; ji++) {
-			_tprintf(TEXT("%d "), res.mapa[ij + 10][ji + 10]);
+	for (int ij = -6; ij <=6; ij++) {
+		for (int ji = -6; ji <= 6; ji++) {
+			_tprintf(TEXT("%d "), res.mapa[ij + 6][ji + 6]);
 		}
 		_tprintf(TEXT("\n"));
 	}

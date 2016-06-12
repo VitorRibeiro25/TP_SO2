@@ -1,17 +1,72 @@
-﻿  Servidor.cpp
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(17): warning C4005: 'MUTEX_NAME': macro redefinition
-  c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\partilha.h(4): note: see previous definition of 'MUTEX_NAME'
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(143): warning C4101: 'value': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(144): warning C4101: 'pStr': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(385): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(403): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(440): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(441): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(442): warning C4018: '<': signed/unsigned mismatch
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(443): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(373): warning C4101: 'frase': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(374): warning C4101: 'aux': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(381): warning C4101: 'pStr2': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(372): warning C4101: 'pass': unreferenced local variable
-c:\users\vitor ribeiro\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(202): warning C4715: 'VerificaMonstro': not all control paths return a value
-  TP_SO2.vcxproj -> C:\Users\Vitor Ribeiro\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe
+﻿Build started 11/06/2016 22:11:05.
+     1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt CelulaMapa.cpp Engenho.cpp Jogador.cpp Mapa.cpp Objeto.cpp Partilha.cpp Servidor.cpp util.cpp
+         util.cpp
+         Servidor.cpp
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(17): warning C4005: 'MUTEX_NAME': macro redefinition
+         c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\partilha.h(4): note: see previous definition of 'MUTEX_NAME'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(143): warning C4101: 'value': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(144): warning C4101: 'pStr': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(385): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(403): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(440): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(441): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(442): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(443): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(373): warning C4101: 'frase': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(374): warning C4101: 'aux': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(381): warning C4101: 'pStr2': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(372): warning C4101: 'pass': unreferenced local variable
+         Partilha.cpp
+         Objeto.cpp
+         Mapa.cpp
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(89): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(114): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(181): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(200): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(228): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(257): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(267): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(295): warning C4018: '<': signed/unsigned mismatch
+         Jogador.cpp
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(58): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(75): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(88): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\jogador.cpp(131): warning C4018: '<': signed/unsigned mismatch
+         Engenho.cpp
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(109): warning C4101: 'versao': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(110): warning C4101: 'autor': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(109): warning C4101: 'tamanho': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): warning C4101: 'versao': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): warning C4101: 'queAconteceu': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(134): warning C4101: 'autor': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\engenho.cpp(133): warning C4101: 'tamanho': unreferenced local variable
+         CelulaMapa.cpp
+         Generating Code...
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(135): warning C4715: 'Mapa::VerificaParade': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(147): warning C4715: 'Mapa::VerificaParede': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(162): warning C4715: 'Mapa::VerificaObjeto': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(175): warning C4715: 'Mapa::VerificaObjetos': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(220): warning C4715: 'Mapa::VerificaAdjacencia': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(249): warning C4715: 'Mapa::VerificaJogadores': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(193): warning C4715: 'Mapa::verifaObjetoNome': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(263): warning C4715: 'Mapa::VerificaJogador': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(286): warning C4715: 'Mapa::VerificaJogadoresXY': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\mapa.cpp(315): warning C4715: 'Mapa::GuardaJogador': not all control paths return a value
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(202): warning C4715: 'VerificaMonstro': not all control paths return a value
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.lib" /MACHINE:X86 Debug\CelulaMapa.obj
+         Debug\Engenho.obj
+         Debug\Jogador.obj
+         Debug\Mapa.obj
+         Debug\Objeto.obj
+         Debug\Partilha.obj
+         Debug\Servidor.obj
+         Debug\util.obj
+         TP_SO2.vcxproj -> C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe
+     1>Done Building Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:06.87

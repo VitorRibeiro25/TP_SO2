@@ -125,10 +125,7 @@ void Autenticacao(LPVOID param) {
 	} while (resp != 1);
 }
 
-void Envia(TCHAR &Comando) {
 
-	WriteFile(hPipe, &Comando, _tcslen(&Comando) * sizeof(TCHAR), &n, NULL);
-}
 
 
 DWORD WINAPI Recebe(LPVOID param) {
@@ -180,9 +177,9 @@ DWORD WINAPI Recebe(LPVOID param) {
 			}
 			if (flag == 1 && flag2==1) {
 				_tprintf(TEXT("[Servidor] O seu mapa:\n"));
-				for (int ij = 0; ij < 20; ij++) {
-					for (int ji = 0; ji < 20; ji++) {
-						if (ij == 10 && ji == 10) {
+				for (int ij = 0; ij < 13; ij++) {
+					for (int ji = 0; ji < 13; ji++) {
+						if (ij == 6 && ji == 6) {
 							_tprintf(TEXT("|%d|"), res.mapa[ij][ji]);
 						}
 						else {

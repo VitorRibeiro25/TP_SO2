@@ -80,6 +80,11 @@
 #define FOTO                            1022
 #define ID_FOTO                         1022
 #define IDC_BUTTON1                     1024
+#define IDC_BUTTON2                     1025
+#define IDC_BUTTONRAN                   1025
+#define IDC_BUTTONPRE                   1027
+#define IDC_EDITXRAN                    1028
+#define IDC_EDITYRAN                    1029
 #define IDR_ACCELERATOR1                7000
 #define IDR_MENU1                       7001
 #define IDI_ICON1                       7002
@@ -99,9 +104,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        176
+#define _APS_NEXT_RESOURCE_VALUE        177
 #define _APS_NEXT_COMMAND_VALUE         40012
-#define _APS_NEXT_CONTROL_VALUE         1025
+#define _APS_NEXT_CONTROL_VALUE         1030
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

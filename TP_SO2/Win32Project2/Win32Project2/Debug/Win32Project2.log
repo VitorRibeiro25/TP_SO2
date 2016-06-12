@@ -1,79 +1,33 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Win32Project2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  
-..\Resources.rc(291): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog1.bmp
-  
-  
-..\Resources.rc(292): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog2.bmp
-  
-  
-..\Resources.rc(293): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog3.bmp
-  
-  
-..\Resources.rc(294): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog4.bmp
-  
-  
-..\Resources.rc(295): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog5.bmp
-  
-  
-..\Resources.rc(296): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog21.bmp
-  
-  
-..\Resources.rc(297): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog22.bmp
-  
-  
-..\Resources.rc(298): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog23.bmp
-  
-  
-..\Resources.rc(299): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog24.bmp
-  
-  
-..\Resources.rc(300): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog25.bmp
-  
-  
-..\Resources.rc(301): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog26.bmp
-  
-  
-..\Resources.rc(302): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog27.bmp
-  
-  
-..\Resources.rc(303): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog31.bmp
-  
-  
-..\Resources.rc(304): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog32.bmp
-  
-  
-..\Resources.rc(305): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog33.bmp
-  
-  
-..\Resources.rc(306): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog34.bmp
-  
-  
-..\Resources.rc(307): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog35.bmp
-  
-  
-..\Resources.rc(308): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog41.bmp
-  
-  
-..\Resources.rc(309): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog42.bmp
-  
-  
-..\Resources.rc(310): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog43.bmp
-  
-  
-..\Resources.rc(311): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog44.bmp
-  
-  
-..\Resources.rc(312): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog45.bmp
-  
-  
-..\Resources.rc(313): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog51.bmp
-  
-  
-..\Resources.rc(314): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog52.bmp
-  
-  
-..\Resources.rc(315): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog53.bmp
-  
-  
-..\Resources.rc(316): error RC2135: file not found: C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\ClienteConsola\bitmapsbonecos\jog54.bmp
-  
+﻿Build started 11/06/2016 22:11:05.
+     1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Win32Project2\Win32Project2\Win32Project2.vcxproj" on node 4 (Rebuild target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (Win32Project2.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TC /analyze- /errorReport:prompt ..\DialogBox.c
+         DialogBox.c
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(355): warning C4020: 'Autenticacao': too many actual parameters
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(433): warning C4047: 'function': 'HMENU' differs in levels of indirection from 'int'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(433): warning C4024: 'InsertMenuItemW': different types for formal and actual parameter 1
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(433): warning C4133: 'function': incompatible types - from 'TCHAR [25]' to 'LPCMENUITEMINFOW'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(434): warning C4047: 'function': 'LPCWSTR' differs in levels of indirection from 'int'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(434): warning C4024: 'LoadMenuW': different types for formal and actual parameter 2
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(463): warning C4047: 'function': 'LPCWSTR' differs in levels of indirection from 'int'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(463): warning C4024: 'LoadMenuW': different types for formal and actual parameter 2
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(388): warning C4101: 'hThread': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(391): warning C4101: 'h1': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(391): warning C4101: 'h2': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(389): warning C4101: 'n': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(719): warning C4029: declared formal parameter list different from definition
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(726): warning C4101: 'frase': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(725): warning C4101: 'buf': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\win32project2\dialogbox.c(723): warning C4101: 'ret': unreferenced local variable
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\Resources.res" ..\Resources.rc 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\Cliente_grafico.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\Cliente_grafico.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\Cliente_grafico.lib" /MACHINE:X86 Debug\Resources.res
+         Debug\DialogBox.obj
+         Win32Project2.vcxproj -> C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\Cliente_grafico.exe
+     1>Done Building Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Win32Project2\Win32Project2\Win32Project2.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.96

@@ -9,10 +9,10 @@ int _tmain(int argc, LPTSTR argv[]) {
 	Monstro *m;
 
 	TCHAR nome[TAM];
-	wcscpy_s(nome, argv[1]);
-	int linhas = _ttoi(argv[2]);
-	int colunas = _ttoi(argv[3]);
-	int n_casas = _ttoi(argv[4]);
+	wcscpy_s(nome, argv[0]);
+	int linhas = _ttoi(argv[1]);
+	int colunas = _ttoi(argv[2]);
+	int n_casas = _ttoi(argv[3]);
 
 	m = new Monstro(nome, linhas, colunas);
 

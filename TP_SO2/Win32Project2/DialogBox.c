@@ -68,6 +68,9 @@ struct resposta
 	int ID_Cliente;
 	int vida;
 	int pontuacao;
+	int pedras;
+	int lin;
+	int col;
 	BOOL JogadorLogado;
 	BOOL jogoCriado;
 	BOOL jogoIniciado;
@@ -373,8 +376,14 @@ BOOL CALLBACK DialogJogar(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam)
 			
 		}
 		if (LOWORD(wp) == IDC_BUTTONRAN) {
+			TCHAR cordx[30], cordy[30];
 			//dimensões escolhidas pelo utilizador
+			GetDlgItemText(hWnd, IDC_EDITXRAN, res.lin, 30);
+			GetDlgItemText(hWnd, IDC_EDITYRAN, res.col, 30);
 			_tcscpy_s(Comando, 256, (TEXT("criarjogo ran")));
+			wcscat_s(Comando, 256, cordx);
+			_tcscpy_s(Comando, 256, (TEXT(" ")));
+			wcscat_s(Comando, 256, cordy);
 			//Comando[_tcslen(Comando) - 1] = '\0';
 			res.ID_Cliente = ID_Cliente;
 			Envia(Comando);

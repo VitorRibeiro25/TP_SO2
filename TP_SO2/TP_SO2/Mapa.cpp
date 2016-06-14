@@ -43,9 +43,16 @@ void Mapa::predefinido() {
 
 void Mapa::random() {
 
+	srand(time(NULL));
+
 	// ciclo para colocar paredes
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
+			int x = 1 + rand() % 4;
+			if (x == 1) {
+				getCelula(i, j).setParede(1);
+			}
+			else getCelula(i, j).setParede(0);
 		}
 	}
 
@@ -53,7 +60,9 @@ void Mapa::random() {
 
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
-
+			if (getCelula(i, j).getParede() == 0) {
+				NovoObjeto(i, j);
+			}
 		}
 	}
 

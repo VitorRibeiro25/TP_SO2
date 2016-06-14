@@ -21,6 +21,7 @@ class Jogador {
 	int lentidao;
 	int pontos;
 	int vida;
+	int n_pedras;
 	int posX, posY;
 	bool pedra;
 	vector <Objeto *> obj;
@@ -37,6 +38,7 @@ public:
 	int getPosY();
 	int getPontos();
 	bool getPedra();
+	int getNpedras();
 
 	void ComeObjeto(Objeto *ob);
 	bool adicionaPedra(Objeto *ob);

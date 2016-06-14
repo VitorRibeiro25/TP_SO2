@@ -34,6 +34,9 @@ struct resposta
 	int ID_Cliente;
 	int vida;
 	int pontuacao;
+	int pedras;
+	int lin;
+	int col;
 	BOOL JogadorLogado;
 	BOOL jogoCriado;
 	BOOL jogoIniciado;
@@ -459,14 +462,27 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		if (valorRetorno == 1) {
 			res.jogoCriado = true;
 			res.comandoErrado = false;
-			for (int y = 0; y < MAXCLIENTES; y++) {
-				if (client == utili[y].pipe) {
-					_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
+			if (Comando == "pre") {
+				for (int y = 0; y < MAXCLIENTES; y++) {
+					if (client == utili[y].pipe) {
+						_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
+					}
+					m = new Mapa(50, 50);
+					m->predefinido();
+					PartilhaMonstro();
+
 				}
-				m = new Mapa(50, 50);
-				m->predefinido();
-				PartilhaMonstro();
-				
+			}
+			if (Comando == "ran") {
+				for (int y = 0; y < MAXCLIENTES; y++) {
+					if (client == utili[y].pipe) {
+						_tprintf(TEXT("[Servidor] O cliente %s criou o jogo\n\n"), utili[y].nome);
+					}
+					m = new Mapa(res.lin, res.col);
+					m->predefinido();
+					PartilhaMonstro();
+
+				}
 			}
 			MandaMonstro(TEXT("Bully"));
 		}
@@ -530,8 +546,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					jog->setPosY(jog->getPosY() - 1);
 				}
 				if (m->VerificaObjeto(jog) == true) {
-					res.comandoErrado = true;
-					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+					_tprintf(TEXT("[Servidor] O cliente comeu um objeto\n"));
 				}
 			}
 			if (Comando == "esquerda") {
@@ -549,8 +564,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 
 				if (m->VerificaObjeto(jog) == true) {
-					res.comandoErrado = true;
-					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+					_tprintf(TEXT("[Servidor] O cliente comeu um objeto\n"));
 				}
 			}
 			if (Comando == "cima") {
@@ -568,8 +582,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 
 				if (m->VerificaObjeto(jog) == true) {
-					res.comandoErrado = true;
-					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+					_tprintf(TEXT("[Servidor] O cliente comeu um objeto\n"));
 				}
 			}
 			if (Comando == "baixo") {
@@ -587,8 +600,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				}
 
 				if (m->VerificaObjeto(jog) == true) {
-					res.comandoErrado = true;
-					_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O cliente comeu um objeto\n")));
+					_tprintf(TEXT("[Servidor] O cliente comeu um objeto\n"));
 				}
 			}
 		}
@@ -636,6 +648,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 			FazerMapa(jog);
 			res.vida = jog->getVida();
 			res.pontuacao = jog->getPontos();
+			res.pedras = jog->getNpedras();
 			for (int i = 0; i < MAXCLIENTES; i++) {
 				if (jog->getId() == i) {
 					tstring aux = e->PosicaoJogador(jog);

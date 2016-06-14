@@ -7,6 +7,8 @@ Jogador::Jogador(int id) {
 
 	this->id = id;
 
+	n_pedras = 0;
+
 	setVida(10);
 	setLentidao(5);
 	setPedra(false);
@@ -46,6 +48,10 @@ int Jogador::getPosY() {
 	return posY;
 }
 
+int Jogador::getNpedras() {
+	return n_pedras;
+}
+
 bool Jogador::getPedra() {
 	return pedra;
 }
@@ -58,6 +64,7 @@ bool Jogador::adicionaPedra(Objeto *ob) {
 	for (int i = 0; i < obj.size(); i++) {
 		if (obj[i]->getNome() == "pedra") {
 			inc++;
+			n_pedras++;
 		}
 	}
 

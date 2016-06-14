@@ -173,12 +173,13 @@ void Autenticacao(LPVOID param) {
 				_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
 			}
 			
-			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
-			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			_tprintf(TEXT("[Servidor] Login com sucesso\n"));
 			res.numero = 1;
 			p = 1;
-			WriteFile(clientes[numero], &res, sizeof(res), 0, NULL);
+			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+
+			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
+			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 			
 			numero++;
 		}

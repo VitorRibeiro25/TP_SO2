@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "Partilha.h"
+#define TAM 256
 
 using namespace std;
 

@@ -24,14 +24,15 @@ struct resposta
 	int ID_Cliente;
 	int vida;
 	int pontuacao;
-	bool JogadorLogado;
-	bool jogoCriado;
-	bool jogoIniciado;
-	bool comandoErrado;
+	BOOL JogadorLogado;
+	BOOL jogoCriado;
+	BOOL jogoIniciado;
+	BOOL comandoErrado;
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
-	int mapa[20][20];
+	int mapa[13][13];
+	int numero;
 };
 
 

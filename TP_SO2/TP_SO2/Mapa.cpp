@@ -7,8 +7,8 @@ Mapa::Mapa(int lin, int col) {
 
 	celula = new CelulaMapa[lin * col];
 
-	for (int i = 0; i <= lin; i++) {
-		for (int j = 0; j <= col; j++) {
+	for (int i = 0; i < lin; i++) {
+		for (int j = 0; j < col; j++) {
 			if (i == 0 || j == 0 || i == lin || j == col) {
 				getCelula(i, j).setParede(1);
 			}
@@ -20,17 +20,18 @@ Mapa::Mapa(int lin, int col) {
 
 
 void Mapa::predefinido() {
-	/*
+
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
-			if ((i + j) % 5 == 0) {
+			if (i % 3 == 0 && j % 3 == 0) {
 				if (getCelula(i,j).getParede() == 0) {
 					getCelula(i,j).setParede(1);
 				}
 			}
+			if (i == 49)
+				getCelula(i, j).setParede(1);
 		}
 	}
-	*/
 	for (int i = 0; i < linhas; i++) {
 		for (int j = 0; j < colunas; j++) {
 			if (getCelula(i,j).getParede() == 0) {

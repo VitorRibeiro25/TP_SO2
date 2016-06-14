@@ -41,7 +41,7 @@ struct resposta
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
-	int mapa[13][13];
+	int mapa[9][9];
 	int numero;
 };
 
@@ -278,10 +278,10 @@ void FazerMapa(Jogador *jog) {
 	if (posy >0) {
 		ny = -10 + posy;
 	}
-	for (int ij = -6; ij <= 6; ij++) {
-		for (int ji = -6; ji <= 6; ji++) {//ver posição a posição pela função que criei
+	for (int ij = -4; ij <= 4; ij++) {
+		for (int ji = -4; ji <= 4; ji++) {//ver posição a posição pela função que criei
 				num = Verificacelula((jog->getPosX() + ij), (jog->getPosY() + ji));
-				res.mapa[ij + 6][ji + 6] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
+				res.mapa[ij + 4][ji + 4] = num;//o vetor começa no 0 qualquer valor do ij ou ji é sempre mais 10 para dar certo
 			
 		}// a res vai ficar com o mapa
 	}

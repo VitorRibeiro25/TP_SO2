@@ -75,7 +75,7 @@ struct resposta
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
-	int mapa[13][13];
+	int mapa[9][9];
 	int numero;
 };
 
@@ -89,7 +89,7 @@ TCHAR nome[25];
 TCHAR pass[25];
 DWORD n;
 HWND pararecebe;
-HBITMAP mp, m;
+HBITMAP mp, m, m2, mc;
 HDC hug;
 
 
@@ -485,7 +485,7 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam, int retor){/
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam) 
 {
-	HDC hdc, auxdc, hdctexto;
+	HDC hdc, auxdc, hdctexto, auxchao;
 	PAINTSTRUCT pt;
 	HANDLE hThread;
 	DWORD n;
@@ -592,32 +592,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			else {//fazer o mapa e o jogador
 				hdc = BeginPaint(hWnd, &pt);
 				HBRUSH fundo;
-				int quemeojogador = ((res.mapa[6][6])-5);
+				int quemeojogador = (res.mapa[4][4]);
 				
 				int posixx = 0, posiyy = 0;
-				for (int xu = 0; xu <= 975; xu += 75) {
-					for (int yu = 0; yu <= 715; yu += 55) {
+				for (int xu = 0; xu <= 975; xu += 108) { //108
+					for (int yu = 0; yu <= 715; yu += 79) {//79
 						//ver que tipo de objeto
 
 						if (res.mapa[posixx][posiyy] == 0) {//chão
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 
 						}
 						else if(res.mapa[posixx][posiyy] == 1) {//parede
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(174));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //parede
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //parede
 
 						}
 						else if (res.mapa[posixx][posiyy] == 2) {//vitamina
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 							//---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(172));
@@ -630,7 +630,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(169));
@@ -643,7 +643,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(170));
@@ -656,7 +656,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(171));
@@ -670,73 +670,73 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP18));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, xu, yu, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+							TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 7) {//jog no mapa flash
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 							fundo = CreatePatternBrush(mp);
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+							TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 8) {//jog no mapa supermen
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+							TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 9) {//jog no mapa arrow
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+							TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 10) {//jog no mapa wonder woman
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+							TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 11) {//monstro
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
 																			   //---desenhar chão
 
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(167));
@@ -748,7 +748,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(175));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-							TransparentBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, 75, 55, RGB(255, 255, 255));//para fora
+							TransparentBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, 108, 79, RGB(255, 255, 255));//para fora
 						}
 
 
@@ -759,8 +759,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					posiyy++;
 					posixx = 0;
 				}
+				DeleteDC(hug);
 
-
+				mc = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+				auxchao = CreateCompatibleDC(hdc);
+				SelectObject(auxchao, mc);
+				
 				//movimento do boneco do jogador....................^^...............................
 				if(irparaadireita==1) {//o boneco para a direita
 					if (quemeojogador == 6) {
@@ -783,61 +787,66 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					SelectObject(hug, m);//pintar com o flsh a correr
 
 					if (quemeojogador == 6) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 7) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 156, 96, hug, 0, 0, 156, 96, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 156, 96, auxdc, 0, 0, SRCCOPY);//pintar com chão
-						BitBlt(hdc, 450 - 25, 330, 156, 96, auxdc, 0, 0, SRCCOPY);
+						BitBlt(hdc, 450 - 30, 330, 156, 96, auxchao, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 25, 330, 156, 96, auxchao, 0, 0, SRCCOPY);
 
 						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 8) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 9) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 10) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 					}
 					irparaadireita = 0;//repor
 
@@ -863,63 +872,68 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					SelectObject(hug, m);//pintar com o flsh a correr
 
 					if (quemeojogador == 6) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 7) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 74, 101, hug, 0, 0, 74, 101, RGB(255, 255, 255));
 						Sleep(152);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 74, 101, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 74, 101, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 8) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 75, 111, hug, 0, 0, 75, 111, RGB(255, 255, 255));
 						Sleep(152);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																					   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 9) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 100, 106, hug, 0, 0, 100, 106, RGB(255, 255, 255));
 						Sleep(140);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																						 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 
 					}
 					else if (quemeojogador == 10) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 80, 107, hug, 0, 0, 80, 107, RGB(255, 255, 255));
 						Sleep(152);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 80, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 80, 107, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 
 					}
 					irparaesquerda = 0;//repor
@@ -946,61 +960,66 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					SelectObject(hug, m);//pintar com o flsh a correr
 
 					if (quemeojogador == 6) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 7) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330 + 30, 96, 156, hug, 0, 0, 96, 156, RGB(255, 255, 255));
 						Sleep(140);//esperar um pouco
-						BitBlt(hdc, 450, 330 + 30, 96, 156, auxdc, 0, 0, SRCCOPY);//pintar com chão
-						BitBlt(hdc, 450, 330 + 78, 96, 156, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450, 330 + 30, 96, 156, auxchao, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450, 330 + 78, 96, 156, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 8) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 9) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 									//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 10) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 					}
 					irparabaixo = 0;//repor
 
@@ -1027,61 +1046,67 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					SelectObject(hug, m);//pintar com o flsh a correr
 
 					if (quemeojogador == 6) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
-
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxchao, 0, 0, SRCCOPY);//pintar com chão
+						
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 7) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330 + 30, 96, 156, hug, 0, 0, 96, 142, RGB(255, 255, 255));
 						Sleep(140);//esperar um pouco
-						BitBlt(hdc, 450, 330 + 83, 300, 300, auxdc, 0, 0, SRCCOPY);//pintar com chão
-						BitBlt(hdc, 450, 330 + 23, 300, 300, auxdc, 0, 0, SRCCOPY);
+
+						BitBlt(hdc, 450, 330 + 83, 300, 300, auxchao, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450, 330 + 23, 300, 300, auxchao, 0, 0, SRCCOPY);
 
 						//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 8) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				 //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 9) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 																				   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 10) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
 						Sleep(148);//esperar um pouco
-						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
 
 					//repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 					}
 					irparacima = 0; //repor
 
@@ -1108,65 +1133,70 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					SelectObject(hug, m);//pintar com o flsh a correr
 
 					if (quemeojogador == 6) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330, 92, 85, hug, 0, 0, 92, 85, RGB(255, 255, 255));
 						Sleep(192);//esperar um pouco
-						BitBlt(hdc, 450, 330, 92, 85, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						BitBlt(hdc, 450, 330, 92, 85, auxchao, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
 						ataque = 0;//voltar a por o ataque a 0
 
 								   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 7) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330, 115, 106, hug, 0, 0, 115, 106, RGB(255, 255, 255));
 						Sleep(192);//esperar um pouco
-						BitBlt(hdc, 450, 330, 115, 106, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						BitBlt(hdc, 450, 330, 115, 106, auxchao, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
 						ataque = 0;//voltar a por o ataque a 0
 
 								   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 8) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330, 71, 107, hug, 0, 0, 71, 107, RGB(255, 255, 255));
 						Sleep(192);//esperar um pouco
-						BitBlt(hdc, 450, 330, 71, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						BitBlt(hdc, 450, 330, 71, 107, auxchao, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
 						ataque = 0;//voltar a por o ataque a 0
 
 								   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 					}
 					else if (quemeojogador == 9) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330, 132, 117, hug, 0, 0, 132, 117, RGB(255, 255, 255));
 						Sleep(152);//esperar um pouco
-						BitBlt(hdc, 450, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						BitBlt(hdc, 450, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
 						ataque = 0;//voltar a por o ataque a 0
 
 								   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 					}
 					else if (quemeojogador == 10) {
+						BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
 						TransparentBlt(hdc, 450, 330, 87, 107, hug, 0, 0, 87, 107, RGB(255, 255, 255));
 						Sleep(192);//esperar um pouco
-						BitBlt(hdc, 450, 330, 87, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						BitBlt(hdc, 450, 330, 87, 107, auxchao, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
 						ataque = 0;//voltar a por o ataque a 0
 
 								   //repintar
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 					}
 
 					//voltar a desenhar normal que é feito fora do ciclo - vai ser feito aqui agora
@@ -1174,16 +1204,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				}
 				
 				Sleep(12); //pequena pausa
-
+				DeleteDC(auxchao);
 				DeleteDC(hug);
 				
 
 				//fazer retangulo e cenas
-				Rectangle(hdc, 1052, 0, 1360, 450);
-				m = LoadBitmap(hInstance, MAKEINTRESOURCE(148));
+				Rectangle(hdc, 1082, 0, 1360, 450);
+				m = LoadBitmap(hInstance, MAKEINTRESOURCE(136));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);
-				TransparentBlt(hdc, 1053, 0, 83, 87, hug, 0, 0, 83, 87, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1083, 0, 83, 87, hug, 0, 0, 83, 87, RGB(255, 255, 255));
 				int vidad = 10;
 
 
@@ -1193,7 +1223,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 				//nomes e pontos e cenas
 				hdctexto = GetDC(hWnd);
-				TextOut(hdctexto, 1056, 150, TEXT("Batman: "), _tcslen(TEXT("Batman: ")));
+				TextOut(hdctexto, 1086, 150, TEXT("Batman: "), _tcslen(TEXT("Batman: ")));
 
 				
 				ReleaseDC(hWnd, hdctexto);

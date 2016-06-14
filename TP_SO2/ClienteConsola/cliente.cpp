@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <io.h>
 #include <fcntl.h>
+
 using namespace std;
 
 #define MAXCLIENTES 5
@@ -197,4 +198,9 @@ DWORD WINAPI Recebe(LPVOID param) {
 
 	}
 
+}
+
+void Envia(TCHAR &Comando) {
+
+	WriteFile(hPipe, &Comando, _tcslen(&Comando) * sizeof(TCHAR), &n, NULL);
 }

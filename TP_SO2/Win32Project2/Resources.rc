@@ -202,6 +202,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 169
     END
+
+    IDD_DIALOG7, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -272,6 +280,16 @@ BEGIN
     LTEXT           "Palavra-passe:",IDC_STATIC,30,84,49,8
 END
 
+IDD_DIALOG7 DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Voltar",IDCANCEL,252,155,50,14
+    LTEXT           "O jogo já foi iniciado. Junte-se ao jogo clicando em:",IDC_STATIC,69,32,166,8
+    PUSHBUTTON      "Entrar em jogo",IDC_BUTTON1,125,79,59,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -289,6 +307,11 @@ BEGIN
 END
 
 IDD_DIALOG5 AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG7 AFX_DIALOG_LAYOUT
 BEGIN
     0
 END

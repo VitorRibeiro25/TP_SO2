@@ -34,14 +34,15 @@ struct resposta
 	int ID_Cliente;
 	int vida;
 	int pontuacao;
-	bool JogadorLogado;
-	bool jogoCriado;
-	bool jogoIniciado;
-	bool comandoErrado;
+	BOOL JogadorLogado;
+	BOOL jogoCriado;
+	BOOL jogoIniciado;
+	BOOL comandoErrado;
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
-	int mapa[20][20];
+	int mapa[13][13];
+	int numero;
 };
 
 
@@ -171,17 +172,21 @@ void Autenticacao(LPVOID param) {
 				e->NovoRegisto(nome, pass);
 				_tprintf(TEXT("[Servidor] O cliente tem o nome como: %s\n\n"), utili[numero].nome);
 			}
-			_tprintf(TEXT("[Servidor] Login com sucesso\n"));
-			p = 1;
-			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+			
 			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
 			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
+			_tprintf(TEXT("[Servidor] Login com sucesso\n"));
+			res.numero = 1;
+			p = 1;
+			WriteFile(clientes[numero], &res, sizeof(res), 0, NULL);
+			
 			numero++;
 		}
 		else {
 			_tprintf(TEXT("[Servidor] O cliente %d tentou logar-se com uma conta que já esta ativa! Movimento bloqueado\n"), numero);
 			p = 0;
-			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+			res.numero = 0;
+			WriteFile(clientes[numero], &res, sizeof(res), 0, NULL);
 		}
 
 	} while(existe!=0);

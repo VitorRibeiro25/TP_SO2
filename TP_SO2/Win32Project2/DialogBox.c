@@ -16,7 +16,7 @@
 #include <string.h>
 #include <mbstring.h>
 #include <wchar.h>
-
+#include <stdio.h>
 
 
 // ============================================================================
@@ -75,13 +75,14 @@ struct resposta
 	TCHAR frase[256];
 	TCHAR comandoErr[256];
 	char nome[50];
-	int mapa[20][20];
+	int mapa[13][13];
+	int numero;
 };
 
 
 struct resposta res;
 static int ID_Cliente = 0;
-int RES;
+int RES, resp=0;
 int jogo = 0;
 TCHAR Comando[256];
 TCHAR nome[25];
@@ -106,10 +107,6 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 // Declaração antecipada da função de processamento da DialogBox, "DialogProc()"
 BOOL CALLBACK DialogJogar(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam);
-BOOL CALLBACK DialogProc(HWND, UINT, WPARAM, LPARAM);
-BOOL CALLBACK DialogAutenticacao(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam);
-BOOL CALLBACK DialogUtilizadores(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam);
-
 // Mostrar numa dialog box cliente escolhido na ListBox e confirmá-lo
 // Se sim, mostrar nome numa Edit Box
 void ConfirmarItemSeleccionado(HWND);
@@ -128,19 +125,6 @@ struct fichas {
 };
 
 #define NUM 7
-struct fichas lista[NUM] = {
-	{TEXT("Pedro Manuel Vieira"), 10133450, 40000},
-	{TEXT("Antonio de Jesus"), 10345300, 3000},
-	{TEXT("Maria Amelia"), 10456320, 35000},
-	{TEXT("Jose Pedro Fonseca"), 10256700, 10000},
-	{TEXT("Rosa Pereira"), 10434560, 65000},
-	{TEXT("Ana Cristina Pires"), 10667800, 120000},
-	{TEXT("Joao Peste"), 10945560, 2500}
-};
-
-TCHAR logins[NUM][30] = { TEXT("Pedro Manuel Vieira"), TEXT("António de Jesus"),
-TEXT("Maria Amélia"), TEXT("José Pedro Fonseca"), TEXT("Rosa Pereira"), TEXT("Ana Cristina Pires"),
-TEXT("João Peste") };
 
 // ============================================================================
 // WinMain()
@@ -162,7 +146,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 										
 	wcApp.lpszClassName = szProgName;	
 	wcApp.lpfnWndProc = WndProc;		
-	wcApp.style = CS_HREDRAW | CS_VREDRAW ;
+	wcApp.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wcApp.hIcon = LoadIcon(hInst, (LPCTSTR)IDI_ICON1);	// ícon normal=Aplicação do Windows
 
 //==============================================================================
@@ -201,14 +185,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 	
 	/*xMax = GetSystemMetrics(SM_CXSCREEN);
 	yMax*/
-	hWnd = CreateWindow(
+	hWnd = CreateWindowEx(WS_EX_OVERLAPPEDWINDOW,
 		szProgName,				// Nome da janela e/ou programa
-		TEXT("Menus / Resources"),	// Título da janela
-		WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_THICKFRAME,	// Estilo da janela 
-		0,			// Posição x 
-		0,			// Posição y 
-		520,			// Largura 
-		550,			// Altura 
+		TEXT("Liente do Jogo"),	// Título da janela
+		WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_THICKFRAME| WS_VISIBLE| WS_MAXIMIZEBOX | WS_MINIMIZEBOX,	// Estilo da janela 
+		0,
+		0,			// Posição x 		// Posição y 
+		1000,			// Largura 
+		600,			// Altura 
 		(HWND) HWND_DESKTOP,	// handle da janela pai (HWND_DESKTOP para 1ª)
 		(HMENU) NULL,			// handle do menu (se tiver menu)
 		(HINSTANCE) hInst,			// handle da instância actual (vem de WinMain())
@@ -280,7 +264,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nC
 //enviar msg para o servidor
 void Envia(TCHAR Comand[256]) {
 
-	WriteFile(hPipe, Comando, _tcslen(Comando), &n, NULL);
+	WriteFile(hPipe, Comando, _tcslen(Comando)* sizeof(TCHAR), &n, NULL);
 }
 
 
@@ -288,86 +272,89 @@ DWORD WINAPI Recebe(LPVOID param) {
 
 	HANDLE hpipelocal = (HANDLE)param;
 	BOOL ret;
-	int i = 0, flag = 0, flag2 = 0;
+	int i = 0, flag = 0, flag2 = 0, flag3 = 0;
 	TCHAR buf[256];
 	TCHAR frase[256];
+	
 
 
-	ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
-	buf[n / sizeof(TCHAR)] = '\0';
+		ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
+		buf[n / sizeof(TCHAR)] = '\0';
 
-	_tprintf(TEXT("%s"), buf);
-	_tprintf(TEXT("[Cliente %s] Seja bem vindo ao jogo\n"), nome);
-
-	while (1) {
+		while (1) {
 
 
-		ret = ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
-		if (!ret || !n) {
-			_tcscpy_s(buf, 256, "[Cliente ");
-			wcscat_s(buf, 256, nome);
-			_tcscpy_s(buf, 256, "] O servidor desligou-se\n\n");
-			MessageBox(pararecebe, buf , TEXT("Servidor foi abaixo"), MB_OK);
-			//_tprintf(TEXT("[Cliente -%s] O servidor desligou-se\n\n"), nome);
-			break;
-		}
-
-		if (ID_Cliente == 0) {
-			ID_Cliente = res.ID_Cliente;
-		}
-		if (res.JogadorLogado == TRUE) {
-
-			if (res.jogoCriado == TRUE && flag == 0) {
-				MessageBox(pararecebe, TEXT("[Servidor] O jogo ja foi criado\n"), TEXT("Jogo criado"), MB_OK);
-				//_tprintf(TEXT("[Servidor] O jogo ja foi criado\n"));
-				flag++;
+			ret = ReadFile(hpipelocal, &res, sizeof(struct resposta), &n, NULL);
+			if (!ret || !n) {
+				_tcscpy_s(buf, 256, "[Cliente ");
+				wcscat_s(buf, 256, nome);
+				_tcscpy_s(buf, 256, "] O servidor desligou-se\n\n");
+				MessageBox(pararecebe, buf, TEXT("Servidor foi abaixo"), MB_OK);
+				//_tprintf(TEXT("[Cliente -%s] O servidor desligou-se\n\n"), nome);
+				break;
 			}
-			if (res.jogoIniciado == TRUE && flag2 == 0) {
-				MessageBox(pararecebe, TEXT("[Servidor] O jogo ja foi iniciado\n"), TEXT("Jogo iniciado"), MB_OK);
-				//_tprintf(TEXT("[Servidor] O jogo ja foi iniciado\n"));
-				flag2++;
+			if (res.numero == 1) {
+				resp = 1;
 			}
 
-			if (res.comandoErrado == TRUE) {
-				_tcscpy_s(buf, 256, res.comandoErr);
-				MessageBox(pararecebe, buf, TEXT("comando errado"), MB_OK);
-				//_tprintf(TEXT("%s"), res.comandoErr);
-
+			if (ID_Cliente == 0) {
+				ID_Cliente = res.ID_Cliente;
 			}
+			if (res.JogadorLogado == TRUE) {
 
-			if (res.jogoCriado == TRUE && res.jogoIniciado == TRUE) {
-				_tcscpy_s(buf, 256, "Vida do Jogador: ");
-				wcscat_s(buf, 256, res.vida);
-				_tcscpy_s(buf, 256, "\n Pontuacao do Jogador: ");
-				wcscat_s(buf, 256, res.pontuacao);
-				_tprintf(TEXT("Vida do Jogador: %d\n"), res.vida);
-				_tprintf(TEXT("Pontuacao do Jogador: %d\n"), res.pontuacao);
-				_tprintf(TEXT("%s"), res.frase);
-			}
-			if (flag == 1 && flag2 == 1) {
-				jogo = 1;
-				/*_tprintf(TEXT("[Servidor] O seu mapa:\n"));
-				for (int ij = 0; ij < 13; ij++) {
-					for (int ji = 0; ji < 13; ji++) {
-						if (ij == 6 && ji == 6) {
-							_tprintf(TEXT("|%d|"), res.mapa[ij][ji]);
-						}
-						else {
-							_tprintf(TEXT("%d "), res.mapa[ij][ji]);
-						}
-					}
-					_tprintf(TEXT("\n"));
+				if (res.jogoCriado == TRUE && flag == 0) {
+					MessageBox(pararecebe, TEXT("[Servidor] O jogo ja foi criado\n"), TEXT("Jogo criado"), MB_OK);
+					//_tprintf(TEXT("[Servidor] O jogo ja foi criado\n"));
+					flag++;
 				}
-				_tprintf(TEXT("\n"));*/
+				if (res.jogoIniciado == TRUE && flag2 == 0) {
+					MessageBox(pararecebe, TEXT("[Servidor] O jogo ja foi iniciado\n"), TEXT("Jogo iniciado"), MB_OK);
+					//_tprintf(TEXT("[Servidor] O jogo ja foi iniciado\n"));
+					flag2++;
+					jogo = 1;
+				}
+
+				if (res.comandoErrado == TRUE) {
+					_tcscpy_s(buf, 256, res.comandoErr);
+					MessageBox(pararecebe, buf, TEXT("comando errado"), MB_OK);
+					//_tprintf(TEXT("%s"), res.comandoErr);
+
+				}
+
+				if (res.jogoCriado == TRUE && res.jogoIniciado == TRUE) {
+					/*_tcscpy_s(buf, 256, "Vida do Jogador: ");
+					wcscat_s(buf, 256, res.vida);
+					_tcscpy_s(buf, 256, "\n Pontuacao do Jogador: ");
+					wcscat_s(buf, 256, res.pontuacao);
+					_tprintf(TEXT("Vida do Jogador: %d\n"), res.vida);
+					_tprintf(TEXT("Pontuacao do Jogador: %d\n"), res.pontuacao);
+					_tprintf(TEXT("%s"), res.frase);*/
+					//jogo = 2;
+				}
+				if (flag == 1 && flag2 == 1) {
+					jogo = 1;
+					/*_tprintf(TEXT("[Servidor] O seu mapa:\n"));
+					for (int ij = 0; ij < 13; ij++) {
+						for (int ji = 0; ji < 13; ji++) {
+							if (ij == 6 && ji == 6) {
+								_tprintf(TEXT("|%d|"), res.mapa[ij][ji]);
+							}
+							else {
+								_tprintf(TEXT("%d "), res.mapa[ij][ji]);
+							}
+						}
+						_tprintf(TEXT("\n"));
+					}
+					_tprintf(TEXT("\n"));*/
+				}
+
+				//_tprintf(TEXT("[%s - Comandos]: "), nome);
+
 			}
 
-			//_tprintf(TEXT("[%s - Comandos]: "), nome);
-
 		}
-
-	}
-
 }
+
 
 BOOL CALLBACK DialogJogar(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam)
 {
@@ -398,6 +385,10 @@ BOOL CALLBACK DialogJogar(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam)
 			//Comando[_tcslen(Comando) - 1] = '\0';
 			res.ID_Cliente = ID_Cliente;
 			Envia(Comando);
+
+			//voltar ao menu
+			EndDialog(hWnd, 1);
+			return TRUE;
 		}
 		if (LOWORD(wp) == IDCANCEL) {
 			//voltar ao menu
@@ -449,7 +440,8 @@ BOOL CALLBACK Trata(HWND hWnd, UINT messg, WPARAM w, LPARAM lParam, int retor){/
 			}
 			else {
 				int passa=0;
-				passa=Autenticacao(hWnd, hPipe2, nome, pass);
+				Autenticacao(hWnd, hPipe2, nome, pass);
+				passa = resp;
 				if(passa==1) {
 				EndDialog(hWnd, 1);
 				RES = 1;
@@ -490,7 +482,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 	HWND h1, h2;
 	TCHAR nome2[25];
 	static HMENU hMenu = NULL;
-	static int ataque = 0, yup = 0, ychar = 0, xdown = 0, xup = 0, xupantigo = 0, yupantigo = 0;
+	static int ataque = 0, irparacima = 0, irparabaixo = 0, irparaesquerda = 0, irparaadireita = 0;
 	
 // Processamento das mensagens
 
@@ -560,27 +552,40 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 			break;
 		case ID_SAIRlogin:
-			hMenu = LoadMenu(NULL, IDR_MENU2);
-			SetMenu(hWnd, hMenu);
+			if (jogo == 1) {
+				_tcscpy_s(Comando, 256, (TEXT("logout")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+				jogo = 2;
+			}
+			else {
+				hMenu = LoadMenu(NULL, IDR_MENU2);
+				SetMenu(hWnd, hMenu);
+			}
 			break;
+		}
 		case WM_PAINT:
 			if (jogo == 0) {
 				//desenhos antes do jogo
+				hdc = BeginPaint(hWnd, &pt);
+				
+				EndPaint(hWnd, &pt);
+			}
+			else if(jogo==2){
+				//apresnetar algumas coisas da jogada
+				hdc = BeginPaint(hWnd, &pt);
 
+				EndPaint(hWnd, &pt);
 			}
 			else {//fazer o mapa e o jogador
 				hdc = BeginPaint(hWnd, &pt);
 				HBRUSH fundo;
-				int inty = 188;
-				/*
-				mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
-				fundo = CreatePatternBrush(mp);
-				auxdc = CreateCompatibleDC(hdc);
-				SelectObject(auxdc, mp);
-				*/
+				int quemeojogador = ((res.mapa[6][6])-5);
+				
 				int posixx = 0, posiyy = 0;
-				for (int xu = 0; xu <= 980; xu += 75) {
-					for (int yu = 0; yu <= 680; yu += 55) {
+				for (int xu = 0; xu <= 975; xu += 75) {
+					for (int yu = 0; yu <= 715; yu += 55) {
 						//ver que tipo de objeto
 
 						if (res.mapa[posixx][posiyy] == 0) {//chão
@@ -598,6 +603,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 						}
 						else if (res.mapa[posixx][posiyy] == 2) {//vitamina
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+							//---desenhar chão
+
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(172));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
@@ -605,6 +616,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 						}
 						else if (res.mapa[posixx][posiyy] == 3) {//orange bull
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(169));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
@@ -612,6 +629,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 						}
 						else if (res.mapa[posixx][posiyy] == 4) {//pedra
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(170));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
@@ -619,55 +642,92 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 						}
 						else if (res.mapa[posixx][posiyy] == 5) {//rebuçado
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(171));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
 							TransparentBlt(hdc, xu, yu, 48, 40, auxdc, 0, 0, 48, 40, RGB(255, 255, 255));//para o rebuçado e vitamina
 
 						}
-						//----------------------bitmaps para os jogadores numero fazer daqui
-						else if (res.mapa[posixx][posiyy] == 6) {//jog 
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
+						//----------------------bitmaps para os jogadores
+						else if (res.mapa[posixx][posiyy] == 6) {//jog no mapa batman
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
 
-
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							TransparentBlt(hdc, xu, yu, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
 
 						}
-						else if (res.mapa[posixx][posiyy] == 7) {//jog
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
+						else if (res.mapa[posixx][posiyy] == 7) {//jog no mapa flash
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 							fundo = CreatePatternBrush(mp);
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
-
-
-
-						}
-						else if (res.mapa[posixx][posiyy] == 8) {//jog
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
-							auxdc = CreateCompatibleDC(hdc);
-							SelectObject(auxdc, mp);
-
-
+							TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
 
 						}
-						else if (res.mapa[posixx][posiyy] == 9) {//jog
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
+						else if (res.mapa[posixx][posiyy] == 8) {//jog no mapa supermen
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
 
-
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
 
 						}
-						else if (res.mapa[posixx][posiyy] == 10) {//jog
-							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(120));
+						else if (res.mapa[posixx][posiyy] == 9) {//jog no mapa arrow
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
 
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
 
+						}
+						else if (res.mapa[posixx][posiyy] == 10) {//jog no mapa wonder woman
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
 
 						}
 						else if (res.mapa[posixx][posiyy] == 11) {//monstro
+							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
+							auxdc = CreateCompatibleDC(hdc);
+							SelectObject(auxdc, mp);
+							BitBlt(hdc, xu, yu, 75, 55, auxdc, 0, 0, SRCCOPY); //chão
+																			   //---desenhar chão
+
 							mp = LoadBitmap(hInstance, MAKEINTRESOURCE(167));
 							auxdc = CreateCompatibleDC(hdc);
 							SelectObject(auxdc, mp);
@@ -688,69 +748,423 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					posixx++;
 				}
 
-				//movimento do boneco do jogador................^^...............................
-				if (xup>xupantigo) {//o boneco para a direita
-					m = LoadBitmap(hInstance, MAKEINTRESOURCE(183));
+
+				//movimento do boneco do jogador....................^^...............................
+				if(irparaadireita==1) {//o boneco para a direita
+					if (quemeojogador == 6) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(133));
+					}
+					else if (quemeojogador == 7) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(138));
+					}
+					else if (quemeojogador == 8) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(145));
+					}
+					else if (quemeojogador == 9) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(150));
+					}
+					else if (quemeojogador == 10) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(155));
+					}
+
 					hug = CreateCompatibleDC(hdc);
 					SelectObject(hug, m);//pintar com o flsh a correr
-					TransparentBlt(hdc, xup - 40, yup, 66, 130, hug, 0, 0, 66, 130, RGB(255, 255, 255));
-					Sleep(148);//esperar um pouco
-					BitBlt(hdc, xup - 40, yup, 66, 130, auxdc, 0, 0, SRCCOPY);//pintar com chão
-					BitBlt(hdc, xupantigo, yup + 75, 150, 150, auxdc, 0, 0, SRCCOPY);
-				}
-				else if (xup<xupantigo) {//o boneco anda para esquerda 
-					m = LoadBitmap(hInstance, MAKEINTRESOURCE(183));
-					hug = CreateCompatibleDC(hdc);
-					SelectObject(hug, m);//pintar com o flsh a correr
-					TransparentBlt(hdc, xupantigo, yup, 66, 130, hug, 0, 0, 66, 130, RGB(255, 255, 255));
-					Sleep(152);//esperar um pouco
-					BitBlt(hdc, xupantigo, yup, 66, 130, auxdc, 0, 0, SRCCOPY);//pintar com chão
-					BitBlt(hdc, xupantigo - 75, yup + 75, 150, 150, auxdc, 0, 0, SRCCOPY);
+
+					if (quemeojogador == 6) {
+						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 7) {
+						TransparentBlt(hdc, 450 - 30, 330, 156, 96, hug, 0, 0, 156, 96, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 156, 96, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450 - 25, 330, 156, 96, auxdc, 0, 0, SRCCOPY);
+
+						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 8) {
+						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 9) {
+						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 10) {
+						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+					}
+					irparaadireita = 0;//repor
 
 				}
-				else if (yup>yupantigo) {// o boneco anda para baixo
-					m = LoadBitmap(hInstance, MAKEINTRESOURCE(183));
+				else if (irparaesquerda==1) {//o boneco anda para esquerda 
+					if (quemeojogador == 6) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(134));
+					}
+					else if (quemeojogador == 7) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(139));
+					}
+					else if (quemeojogador == 8) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(146));
+					}
+					else if (quemeojogador == 9) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(151));
+					}
+					else if (quemeojogador == 10) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(156));
+					}
+
 					hug = CreateCompatibleDC(hdc);
 					SelectObject(hug, m);//pintar com o flsh a correr
-					TransparentBlt(hdc, xup, yupantigo + 30, 66, 130, hug, 0, 0, 66, 130, RGB(255, 255, 255));
-					Sleep(140);//esperar um pouco
-					BitBlt(hdc, xup, yupantigo + 30, 66, 130, auxdc, 0, 0, SRCCOPY);//pintar com chão
-					BitBlt(hdc, xup - 30, yupantigo + 75, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+					if (quemeojogador == 6) {
+						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 7) {
+						TransparentBlt(hdc, 450 - 30, 330, 74, 101, hug, 0, 0, 74, 101, RGB(255, 255, 255));
+						Sleep(152);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 74, 101, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 8) {
+						TransparentBlt(hdc, 450 - 30, 330, 75, 111, hug, 0, 0, 75, 111, RGB(255, 255, 255));
+						Sleep(152);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																					   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 9) {
+						TransparentBlt(hdc, 450 - 30, 330, 100, 106, hug, 0, 0, 100, 106, RGB(255, 255, 255));
+						Sleep(140);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																						 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+
+
+					}
+					else if (quemeojogador == 10) {
+						TransparentBlt(hdc, 450 - 30, 330, 80, 107, hug, 0, 0, 80, 107, RGB(255, 255, 255));
+						Sleep(152);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 80, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+
+					}
+					irparaesquerda = 0;//repor
+
 				}
-				else if (yup<yupantigo) {//o boneco anda para cima
-					m = LoadBitmap(hInstance, MAKEINTRESOURCE(183));
+				else if (irparabaixo==1) {// o boneco anda para baixo 330>330
+					if (quemeojogador == 6) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(133));
+					}
+					else if (quemeojogador == 7) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(141));
+					}
+					else if (quemeojogador == 8) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(145));
+					}
+					else if (quemeojogador == 9) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(150));
+					}
+					else if (quemeojogador == 10) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(155));
+					}
+
 					hug = CreateCompatibleDC(hdc);
 					SelectObject(hug, m);//pintar com o flsh a correr
-					TransparentBlt(hdc, xup, yup + 30, 66, 130, hug, 0, 0, 66, 130, RGB(255, 255, 255));
-					Sleep(140);//esperar um pouco
-					BitBlt(hdc, xup, yup + 30, 66, 130, auxdc, 0, 0, SRCCOPY);//pintar com chão
-					BitBlt(hdc, xup - 50, yup + 75, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+					if (quemeojogador == 6) {
+						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 7) {
+						TransparentBlt(hdc, 450, 330 + 30, 96, 156, hug, 0, 0, 96, 156, RGB(255, 255, 255));
+						Sleep(140);//esperar um pouco
+						BitBlt(hdc, 450, 330 + 30, 96, 156, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450, 330 + 78, 96, 156, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 8) {
+						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 9) {
+						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+									//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 10) {
+						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+					}
+					irparabaixo = 0;//repor
+
+				}
+				else if (irparacima==1) {//o boneco anda para cima 330<330
+
+					if (quemeojogador == 6) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(133));
+					}
+					else if (quemeojogador == 7) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(140));
+					}
+					else if (quemeojogador == 8) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(145));
+					}
+					else if (quemeojogador == 9) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(150));
+					}
+					else if (quemeojogador == 10) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(155));
+					}
+
+					hug = CreateCompatibleDC(hdc);
+					SelectObject(hug, m);//pintar com o flsh a correr
+
+					if (quemeojogador == 6) {
+						TransparentBlt(hdc, 450 - 30, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 65, 98, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 7) {
+						TransparentBlt(hdc, 450, 330 + 30, 96, 156, hug, 0, 0, 96, 142, RGB(255, 255, 255));
+						Sleep(140);//esperar um pouco
+						BitBlt(hdc, 450, 330 + 83, 300, 300, auxdc, 0, 0, SRCCOPY);//pintar com chão
+						BitBlt(hdc, 450, 330 + 23, 300, 300, auxdc, 0, 0, SRCCOPY);
+
+						//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 8) {
+						TransparentBlt(hdc, 450 - 30, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 84, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 9) {
+						TransparentBlt(hdc, 450 - 30, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+																				   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 10) {
+						TransparentBlt(hdc, 450 - 30, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
+						Sleep(148);//esperar um pouco
+						BitBlt(hdc, 450 - 30, 330, 77, 99, auxdc, 0, 0, SRCCOPY);//pintar com chão
+
+					//repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+					}
+					irparacima = 0; //repor
+
 				}
 				else if (ataque == 1) {//jogador ataca
-					m = LoadBitmap(hInstance, MAKEINTRESOURCE(183));
-					hug = CreateCompatibleDC(hdc);
-					SelectObject(hug, m);//desenhar o boneco a dar um murro
-					TransparentBlt(hdc, xup, yup, 66, 130, hug, 0, 0, 66, 130, RGB(255, 255, 255));
-					Sleep(192);//esperar um pouco
-					BitBlt(hdc, xup, yup, 66, 130, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
-					BitBlt(hdc, xup - 40, yup + 40, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão
-					ataque = 0;//voltar a por o ataque a 0
 
-					//voltar a desenhar normal que é feito fora do ciclo
+					if (quemeojogador == 6) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(135));
+					}
+					else if (quemeojogador == 7) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(141));
+					}
+					else if (quemeojogador == 8) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(146));
+					}
+					else if (quemeojogador == 9) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(151));
+					}
+					else if (quemeojogador == 10) {
+						m = LoadBitmap(hInstance, MAKEINTRESOURCE(156));
+					}
+
+					hug = CreateCompatibleDC(hdc);
+					SelectObject(hug, m);//pintar com o flsh a correr
+
+					if (quemeojogador == 6) {
+						TransparentBlt(hdc, 450, 330, 92, 85, hug, 0, 0, 92, 85, RGB(255, 255, 255));
+						Sleep(192);//esperar um pouco
+						BitBlt(hdc, 450, 330, 92, 85, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						ataque = 0;//voltar a por o ataque a 0
+
+								   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 60, 105, hug, 0, 0, 60, 105, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 7) {
+						TransparentBlt(hdc, 450, 330, 115, 106, hug, 0, 0, 115, 106, RGB(255, 255, 255));
+						Sleep(192);//esperar um pouco
+						BitBlt(hdc, 450, 330, 115, 106, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						ataque = 0;//voltar a por o ataque a 0
+
+								   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 69, 111, hug, 0, 0, 69, 111, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 8) {
+						TransparentBlt(hdc, 450, 330, 71, 107, hug, 0, 0, 71, 107, RGB(255, 255, 255));
+						Sleep(192);//esperar um pouco
+						BitBlt(hdc, 450, 330, 71, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						ataque = 0;//voltar a por o ataque a 0
+
+								   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 114, 106, hug, 0, 0, 114, 106, RGB(255, 255, 255));
+					}
+					else if (quemeojogador == 9) {
+						TransparentBlt(hdc, 450, 330, 132, 117, hug, 0, 0, 132, 117, RGB(255, 255, 255));
+						Sleep(152);//esperar um pouco
+						BitBlt(hdc, 450, 330, 150, 150, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						ataque = 0;//voltar a por o ataque a 0
+
+								   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 92, 122, hug, 0, 0, 92, 122, RGB(255, 255, 255));
+
+					}
+					else if (quemeojogador == 10) {
+						TransparentBlt(hdc, 450, 330, 87, 107, hug, 0, 0, 87, 107, RGB(255, 255, 255));
+						Sleep(192);//esperar um pouco
+						BitBlt(hdc, 450, 330, 87, 107, auxdc, 0, 0, SRCCOPY);//pintar com chão, a imagem é maior
+						ataque = 0;//voltar a por o ataque a 0
+
+								   //repintar
+						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+						auxdc = CreateCompatibleDC(hdc);
+						SelectObject(auxdc, mp);
+						TransparentBlt(hdc, 450, 330, 66, 115, hug, 0, 0, 66, 115, RGB(255, 255, 255));
+					}
+
+					//voltar a desenhar normal que é feito fora do ciclo - vai ser feito aqui agora
+					//----------------------bitmaps para os jogadores numero fazer daqui
 				}
-				//guardar os valores antigos de x e y
-				xupantigo = xup;
-				yupantigo = yup;
+				
 				Sleep(12); //pequena pausa
 
 				DeleteDC(hug);
 				
-				//boneco principal já feito em cima tenho que alterar
-				m = LoadBitmap(hInstance, MAKEINTRESOURCE(182));
-				hug = CreateCompatibleDC(hdc);
-				SelectObject(hug, m);
-				TransparentBlt(hdc, xup, yup, 129, 130, hug, 0, 0, 129, 130, RGB(255, 255, 255));
-				DeleteDC(hug);
 
 				//fazer retangulo e cenas
 				Rectangle(hdc, 1052, 0, 1360, 450);
@@ -769,17 +1183,67 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				hdctexto = GetDC(hWnd);
 				TextOut(hdctexto, 1056, 150, TEXT("Batman: "), _tcslen(TEXT("Batman: ")));
 
-				//DrawText(hdc, nq, 20, &poss, DT_CENTER);
-
-				//WriteConsoleOutputCharacter(hdctexto, msg, strlen(msg), co, &dwe);
-				//TextOut(hdctexto, 1022, 190, TextArray, _tcslen(TextArray));
+				
 				ReleaseDC(hWnd, hdctexto);
-				break;
-
 			}
 
+		break;
+		case WM_KEYDOWN:
+			//Imprimir
+			//hdc = GetDC(hwnd);
+			//TextOut(hdc, 450, 330, TEXT("&"), _tcslen(TEXT("&")));
 
-	 }
+			//ydown += 10;
+			//		ReleaseDC(hwnd, hdc);
+			if (wParam == VK_UP) {
+				//330 -= 55;
+				irparacima = 1;
+				_tcscpy_s(Comando, 256, (TEXT("move cima")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+			if (wParam == VK_DOWN) {
+				//330 += 55;
+				irparabaixo = 1;
+				_tcscpy_s(Comando, 256, (TEXT("move baixo")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+			if (wParam == VK_RIGHT) {
+				//450 += 75;
+				irparaadireita = 1;
+				_tcscpy_s(Comando, 256, (TEXT("move direita")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+			if (wParam == VK_LEFT) {
+				//450 -= 75;
+				irparaesquerda = 1;
+				_tcscpy_s(Comando, 256, (TEXT("move esquerda")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+			if (wParam == VK_SPACE) {//atacar
+				ataque = 1;
+				_tcscpy_s(Comando, 256, (TEXT("ataca")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+			if (wParam == VK_SHIFT) {//pedra
+				ataque = 1;
+				_tcscpy_s(Comando, 256, (TEXT("pedra mao")));
+				//Comando[_tcslen(Comando) - 1] = '\0';
+				res.ID_Cliente = ID_Cliente;
+				Envia(Comando);
+			}
+
+			InvalidateRect(hWnd, NULL, FALSE); //por o 1 a false para deixar de sintilar
+			break;
 
 // Restantes mensagens têm processamento default
 	default:
@@ -850,150 +1314,6 @@ BOOL CALLBACK DialogAutenticacao(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lP
 	return 0;
 
 }
-BOOL CALLBACK DialogProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam) 
-{
-	int i;				// Index da List Box
-	TCHAR str[TAM];		// Buffer para strings
-
-	switch(messg) 
-	{
-// ************************************************************
-// Inicialização da Dialog Box
-// WM_INITDIALOG ocorre quando a Dialog Box é instanciada:
-// Inicializar a Dialog Box preenchendo a List Box com os nomes
-// dos clientes, seleccionar o primeiro e colocá-lo na Edit Box
-// ************************************************************
-		case WM_INITDIALOG:
-/*  Preencher List Box
-	LONG SendDlgItemMessage(
-		HWND hDlg,      // handle of dialog box
-		int nIDDlgItem, // identifier of control
-		UINT Msg,       // message to send
-		WPARAM wParam,  // first message parameter
-		LPARAM lParam   // second message parameter	
-Mensagens comuns:	
-		LB_ADDSTRING	Adicionar a string apontada por lParam à LB (wParam não é usado)
-		LB_GETCURSEL	Retorna o index do item seleccionado
-		LB_SETCURSEL	Seleccionar o item de index wParam
-		LB_FINDSTRING	Encontrar a string lParam a partir do index	wParam
-		LB_SELECTSTRING	Igual a "findstring" mas selecciona o item se o encontrar
-		LB_GETTEXT		Obter texto em lParam o item de index wParam				   
-*/
-			for (i=0; i<NUM; i++)
-				SendDlgItemMessage(hWnd, IDC_LIST1, LB_ADDSTRING, 0, (LPARAM) lista[i].nome);
-
-			// Seleccionar o item 0 da List Box
-			SendDlgItemMessage(hWnd, IDC_LIST1, LB_SETCURSEL, 0, 0);
-
-/* Mostrar item 0 da LB na Edit Box	
-	BOOL SetDlgItemText(
-		HWND hDlg,         // handle of dialog box
-		int nIDDlgItem,    // identifier of control
-		LPCTSTR lpString   // text to set	
-*/
-// Como a ListBox está ordenada alfabeticamente, é preciso ler o primeiro
-// nome que nela figura, e que pode não coincidir com o primeiro elemento
-// da lista "lista[0].nome"
-			ActualizaEditBox(hWnd);
-			SetDlgItemText(hWnd, IDC_EDIT1, TEXT("inserir login ççç"));
-			SendDlgItemMessage(hWnd, IDC_LIST1, LB_ADDSTRING, 0, (LPARAM)TEXT("Olá"));
-			SendDlgItemMessage(hWnd, IDC_LIST1, LB_ADDSTRING, 0, (LPARAM)TEXT("Açúcar"));
-			return 1;
-
-// ************************************************************
-// Comandos provenientes dos controlos que a Dialog Box contém:
-// wParam 
-//		The high-order word specifies the notification code if the message is from a control. 
-//		If the message is from an accelerator, this value is 1. 
-//		If the message is from a menu, this value is zero. 
-//		The low-order word specifies the identifier of the menu item, control, or accelerator. 
-// lParam 
-//		Handle to the control sending the message if the message is from a control. 
-// 		Otherwise, this parameter is NULL. 
-// ************************************************************
-		case WM_COMMAND:
-			switch(LOWORD(wParam)) 
-			{
-// ************************************************************
-// Duplo click na List Box ou Botão Seleccionar: Seleccionar e mostrar na Edit Box
-				
-				case IDC_LIST1:
-					if (HIWORD(wParam)==LBN_DBLCLK)	//Clique Duplo
-						ConfirmarItemSeleccionado(hWnd);
-					
-					ActualizaEditBox(hWnd);
-					break;
-
-				case IDSELECCIONAR:
-					ConfirmarItemSeleccionado(hWnd);
-					return 1;
-// ************************************************************
-// Clicou no OK: Processo análogo ao anterior
-				case IDOK:
-					SetDlgItemText(hWnd, IDOK, TEXT("Premido"));
-					ConfirmarItemSeleccionado(hWnd);
-					return 1;
-// ************************************************************
-// Clicou Procurar: Procurar o texto da Edit Box na List Box
-				case IDPROCURAR:
-/* Obter texto da Edit Box (o texto fica em "str")
-	UINT GetDlgItemText(
-		HWND hDlg,       // handle of dialog box
-		int nIDDlgItem,  // identifier of control
-		LPTSTR lpString, // address of buffer for text
-		int nMaxCount    // maximum size of string			
-*/
-					GetDlgItemText(hWnd, IDC_EDIT1, str, 80);
-					// Procurar o texto "str" na List Box e se encontrar selecciona-o
-					i = (int) SendDlgItemMessage(hWnd, IDC_LIST1, LB_SELECTSTRING, 0, (LPARAM) str);
-
-					if (i!=LB_ERR) 
-						//Se encontrou actualizar edit box com o nome completo
-						ActualizaEditBox(hWnd);
-									
-					else
-						// Se não encontrou, mostrar mensagem "não encontrado"						
-						MessageBox(hWnd, str,TEXT("Registo Inexistente"), MB_OK);
-					
-					return 1;
-// ***********************************************************
-// Clicou no Close 
-				case IDCCLOSE:
-					EndDialog(hWnd, 0);
-					return 1;
-			}
-		}	
-	return 0;
-}
-
-// ******************************************************************
-// Função "ConfirmarItemSeleccionado":
-// Mostrar numa dialog box clicnte escolhido na ListBox e confirmá-lo
-// Se sim, mostrar nome numa Edit Box
-// ******************************************************************
-void ConfirmarItemSeleccionado(HWND hw) {
-	int i;				// Index da ListBox
-	int res;			// Resultados (comparações, MessageBox ou outros)
-	TCHAR str[TAM];		// Buffer de mensagens
-
-	// Obter o indice da ficha seleccionada na LB 
-	i = (int) SendDlgItemMessage(hw, IDC_LIST1, LB_GETCURSEL, 0, 0);
-
-	// Mostrar uma caixa de mensagem com a ficha e confirmar 
-// NOTA: Como a lista está por ordem alfabética (diferente da da lista
-//		 a partir da qual foi preenchida) é preciso procurar na lista
-//		 o nome actualmente seleccionado na List Box
-	SendDlgItemMessage(hw, IDC_LIST1, LB_GETTEXT, i, (LPARAM) str);
-	res=1;
-	i=0;
-	while (res) {
-		res=_tcscmp(str, lista[i].nome);		// Devolve 0 quando strings iguais
-		i++;
-	}
-	_stprintf_s(str, TAM / sizeof(TCHAR),  TEXT("NOME:\t%s\nBI:\t%u\nSALDO:\t%ld"), 
-	        lista[i-1].nome, lista[i-1].bi, lista[i-1].saldo);
-	MessageBox(hw, str, TEXT("Dados do Cliente"), MB_OK|MB_ICONQUESTION);
-}
 
 // ******************************************************************
 // Função "ActualizaEditBox":
@@ -1012,33 +1332,15 @@ void ActualizaEditBox(HWND hw)	{
 	SetDlgItemText(hw, IDC_EDIT1, str);								
 }
 
-BOOL CALLBACK DialogUtilizadores(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam){
-	int i;
-//	HWND hImageCtl;
-	switch (messg){
-	case WM_CLOSE:
-		EndDialog(hWnd, 0);
-		return 1;
-
-	case WM_INITDIALOG:
-		for (i = 0; i < NUM; i++){
-			SendDlgItemMessage(hWnd, IDC_LIST1, LB_ADDSTRING, 0, (LPARAM)logins[i]);
-		}
-		/*hImageCtl = GetDlgItem(hWnd, ID_FOTO);
-		SendMessage(hWnd, STM_SETIMAGE, ID_FOTO, (LPARAM)hImage);*/
-		return 1;
-	}
-	return 0;
-}
-
 int Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 
 	HANDLE hpipelocal = (HANDLE)param;
-	DWORD n;
+	DWORD n, p;
 	BOOL ret;
-	int i = 0, resp;
+	int i = 0, retorn;
 	TCHAR buf[256];
 	TCHAR frase[256];
+	
 
 	//autenticação do utilizador - nome e pass 
 
@@ -1046,27 +1348,27 @@ int Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 		//_tprintf(TEXT("[Autenticação - coloque o nome]: "));
 		//fflush(stdin);
 		//nom[_tcslen(nom) - 1] = '\0';
-		wcscpy_s(Comando, 25, nom);
+		wcscpy_s(Comando, 256, nom);
 		//_fgetts(Comando, 256, nom);
-		//Comando[_tcslen(Comando) - 1] = '\0';
 		wcscpy_s(nome, 25, Comando);
 		res.ID_Cliente = ID_Cliente;
 		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
 
 		//pa[_tcslen(pa) - 1] = '\0';
-		wcscpy_s(Comando, 25, pa);
+		wcscpy_s(Comando, 256, pa);
 		//_fgetts(Comando, 256, pa);
-		//Comando[_tcslen(Comando) - 1] = '\0';
 		wcscpy_s(pass, 25, Comando);
 		res.ID_Cliente = ID_Cliente;
-		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &n, NULL);
+		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &p, NULL);
 
-		ReadFile(hpipelocal, &resp, sizeof(resp), &n, NULL);
-		if (resp == 0) {
+		//resp=ReadFile(hpipelocal, &resp, sizeof(resp), &n, NULL);
+		/*if (resp == 0) {
 			//_tprintf(TEXT("[Servidor] Essa conta já esta em uso! Entre com outra conta\n"));
-			MessageBox(hnd, TEXT("Intruduza uma conta valida"), TEXT("Sem sucesso"), MB_OK);
+			MessageBox(hnd, TEXT("Intruduza uma conta valida mas isro é assim"), TEXT("Sem sucesso"), MB_OK);
 			
-		}
-		return resp;
+		}*/
+
+		retorn = resp;
+		return retorn;
 	//} while (resp != 1);
 }

@@ -276,11 +276,11 @@ DWORD WINAPI Recebe(LPVOID param) {
 	TCHAR buf[256];
 	TCHAR frase[256];
 	
-
-
+	
+	
 		ReadFile(hpipelocal, buf, sizeof(buf), &n, NULL);
 		buf[n / sizeof(TCHAR)] = '\0';
-
+	
 		while (1) {
 
 
@@ -382,6 +382,17 @@ BOOL CALLBACK DialogJogar(HWND hWnd, UINT messg, WPARAM wp, LPARAM lParam)
 		if (LOWORD(wp) == IDOK) {
 			//jogar o jogo aparecer bitmaps
 			_tcscpy_s(Comando, 256, (TEXT("jogar")));
+			//Comando[_tcslen(Comando) - 1] = '\0';
+			res.ID_Cliente = ID_Cliente;
+			Envia(Comando);
+
+			//voltar ao menu
+			EndDialog(hWnd, 1);
+			return TRUE;
+		}
+		if (LOWORD(wp) == IDC_BUTTONENTRAR) {
+			//jogar o jogo aparecer bitmaps
+			_tcscpy_s(Comando, 256, (TEXT("entrar jogo")));
 			//Comando[_tcslen(Comando) - 1] = '\0';
 			res.ID_Cliente = ID_Cliente;
 			Envia(Comando);
@@ -742,10 +753,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 
 						DeleteDC(auxdc);
-						posiyy++;
+						posixx++;
 
 					}
-					posixx++;
+					posiyy++;
+					posixx = 0;
 				}
 
 
@@ -1360,15 +1372,15 @@ int Autenticacao(HWND hnd, LPVOID param, TCHAR nom[25], TCHAR pa[25]) {
 		wcscpy_s(pass, 25, Comando);
 		res.ID_Cliente = ID_Cliente;
 		WriteFile(hPipe, Comando, _tcslen(Comando) * sizeof(TCHAR), &p, NULL);
-
-		//resp=ReadFile(hpipelocal, &resp, sizeof(resp), &n, NULL);
-		/*if (resp == 0) {
+	
+		//ReadFile(hpipelocal, &retorn, sizeof(retorn), &n, NULL);
+		//if (retorn == 0) {
 			//_tprintf(TEXT("[Servidor] Essa conta já esta em uso! Entre com outra conta\n"));
-			MessageBox(hnd, TEXT("Intruduza uma conta valida mas isro é assim"), TEXT("Sem sucesso"), MB_OK);
+			//MessageBox(hnd, TEXT("Intruduza uma conta valida mas isro é assim"), TEXT("Sem sucesso"), MB_OK);
 			
-		}*/
+		//}
 
-		retorn = resp;
+		retorn = 1;
 		return retorn;
 	//} while (resp != 1);
 }

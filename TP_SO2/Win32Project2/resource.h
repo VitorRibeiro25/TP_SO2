@@ -85,6 +85,7 @@
 #define IDC_BUTTONPRE                   1027
 #define IDC_EDITXRAN                    1028
 #define IDC_EDITYRAN                    1029
+#define IDC_BUTTONENTRAR                1030
 #define IDR_ACCELERATOR1                7000
 #define IDR_MENU1                       7001
 #define IDI_ICON1                       7002
@@ -106,7 +107,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        179
 #define _APS_NEXT_COMMAND_VALUE         40012
-#define _APS_NEXT_CONTROL_VALUE         1030
+#define _APS_NEXT_CONTROL_VALUE         1031
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

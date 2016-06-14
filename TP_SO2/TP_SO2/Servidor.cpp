@@ -477,8 +477,13 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s iniciou o jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int Posx = 1 + (rand() % m->getLinhas());
-					int Posy = 1 + (rand() % m->getColunas());
+					int Posx;
+					int Posy;
+					do {
+						Posx = 1 + (rand() % m->getLinhas());
+						Posy = 1 + (rand() % m->getColunas());
+					} while (m->VerificaParede(Posx,Posy) == true);
+
 					jog->setPosX(Posx);
 					jog->setPosY(Posy);
 					m->NovoJogador(jog);
@@ -494,8 +499,13 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				if (client == utili[y].pipe) {
 					_tprintf(TEXT("[Servidor] O cliente %s juntou-se ao jogo\n\n"), utili[y].nome);
 					// fazer verificacao de paredes aqui - em falta
-					int x1 = 1 + (rand() % m->getLinhas());
-					int y1 = 1 + (rand() % m->getColunas());
+					int x1;
+					int y1;
+					do {
+						x1 = 1 + (rand() % m->getLinhas());
+						y1 = 1 + (rand() % m->getColunas());
+					} while (m->VerificaParede(x1, y1) == true);
+
 					jog->setPosX(x1);
 					jog->setPosY(y1);
 					m->NovoJogador(jog);
@@ -616,8 +626,9 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 		}
 		if (valorRetorno == -1) {
-			res.comandoErrado = false;
+			res.comandoErrado = true;
 			_tprintf(TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n"));
+			_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O jogo ainda nao foi criado ou iniciado\n")));
 		}
 
 		if (res.jogoCriado == true && res.jogoIniciado == true) {

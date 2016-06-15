@@ -7,16 +7,18 @@
 int _tmain(int argc, LPTSTR argv[]) {
 
 	Monstro *m;
-
+	cout << argc << endl;
 	TCHAR nome[TAM];
-	wcscpy_s(nome, argv[1]);
-	int linhas = _ttoi(argv[2]);
-	int colunas = _ttoi(argv[3]);
-	int n_casas = _ttoi(argv[4]);
+	cout << argv[1] << endl;
+	wcscpy_s(nome, argv[0]);
+	int linhas = _ttoi(argv[1]);
+	int colunas = _ttoi(argv[2]);
+	int n_casas = _ttoi(argv[3]);
 
+	cout << nome << endl;
 	m = new Monstro(nome, linhas, colunas);
 
-	m->mostraInfo();
+	//m->mostraInfo();
 
 	while (true) {
 		if (_tcscmp(nome, TEXT("Distraido")) == 0) {

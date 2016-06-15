@@ -4,6 +4,7 @@
 #include "Jogador.h"
 #include "Partilha.h"
 
+#define SIZE 256
 
 #define MAXCLIENTES 5
 
@@ -207,6 +208,7 @@ bool VerificaMonstro(int x, int y) {
 				}
 				else return false;
 			}
+			tcout << p[i*m->getColunas() + j].asMonstro();
 		}
 	}
 }
@@ -358,18 +360,22 @@ void MandaMonstro(TCHAR tipo[25])
 {
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
-	TCHAR args[TAM];
+	TCHAR args[SIZE];
 	int n_casas = 2;
 
 	tstringstream aux;
-	aux << TEXT(" ") << tipo << TEXT(" ") << m->getLinhas() << TEXT(" ") << m->getColunas() << TEXT(" ") << n_casas;
+	aux << tipo << TEXT(" ") << m->getLinhas() << TEXT(" ") << m->getColunas() << TEXT(" ") << n_casas;
+
+	tcout << aux.str() << endl;
 
 	wcscpy_s(args, (aux.str()).c_str());
-	ZeroMemory(&si, sizeof(si));
-	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
+	ZeroMemory(&si, sizeof(STARTUPINFO));
+	si.cb = sizeof(STARTUPINFO);
+	//ZeroMemory(&pi, sizeof(pi));
 
-	CreateProcess(CAMINHO, args, NULL, NULL, FALSE, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
+	tcout << args << endl;
+
+	CreateProcess(CAMINHO, args, NULL, NULL, 0, CREATE_NEW_CONSOLE, NULL, NULL, &si, &pi);
 }
 
 

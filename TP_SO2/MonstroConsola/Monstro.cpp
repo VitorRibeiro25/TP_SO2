@@ -32,12 +32,22 @@ Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
 		}
 	}
 
+	cout << nome << endl;
 	wcscpy_s(this->nome, nome);
+
+
+	cout << this->nome << endl;
 
 	this->linhas = linhas;
 	this->colunas = colunas;
 
 	ColocaMonstro();
+
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			cout << p[i*colunas + j].asMonstro();
+		}
+	}
 
 }
 
@@ -60,7 +70,14 @@ void Monstro::ColocaMonstro() {
 }
 
 void Monstro::mostraInfo() {
-	cout << "Posicao do monstro X:" << posX << " Y:" << posY;
+
+	for (int i = 0; i < linhas; i++) {
+		for (int j = 0; j < colunas; j++) {
+			cout << getPartilha(i, j).getParede();
+		}
+		cout << endl;
+	}
+	//cout << "Posicao do monstro X:" << posX << " Y:" << posY;
 }
 
 int Monstro::getPosX() {

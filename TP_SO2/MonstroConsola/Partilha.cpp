@@ -34,8 +34,10 @@ void Partilha::setJogador(int j) {
 	jogador = j;
 }
 
-void Partilha::setMonstro(TCHAR m[TAM]) {
+void Partilha::setMonstro(TCHAR *m) {
+	cout << m << endl;
 	wcscpy_s(monstro, m);
+	cout << monstro << endl;
 }
 
 void Partilha::setMutex(HANDLE m) {

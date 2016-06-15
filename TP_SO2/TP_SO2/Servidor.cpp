@@ -45,7 +45,6 @@ struct resposta
 	TCHAR comandoErr[256];
 	char nome[50];
 	int mapa[9][9];
-	int numero;
 };
 
 
@@ -177,7 +176,6 @@ void Autenticacao(LPVOID param) {
 			}
 			
 			_tprintf(TEXT("[Servidor] Login com sucesso\n"));
-			res.numero = 1;
 			p = 1;
 			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
 
@@ -189,8 +187,11 @@ void Autenticacao(LPVOID param) {
 		else {
 			_tprintf(TEXT("[Servidor] O cliente %d tentou logar-se com uma conta que já esta ativa! Movimento bloqueado\n"), numero);
 			p = 0;
-			res.numero = 0;
-			WriteFile(clientes[numero], &res, sizeof(res), 0, NULL);
+			p = 1;
+			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
+
+			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce não esta ligado ao servidor\n")));
+			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 		}
 
 	} while(existe!=0);
@@ -399,7 +400,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 		sub1 = TEXT("");
 		sub2 = TEXT("");
 		ValidarCmd = -1;
-		_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado ao servidor\n\n")));
+		_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce esta ligado")));
 		Comando = "";
 		TipoComando = "";
 		sub1.clear();

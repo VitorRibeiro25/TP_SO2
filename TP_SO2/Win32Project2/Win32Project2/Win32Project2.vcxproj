@@ -196,6 +196,9 @@
     <Image Include="..\..\ClienteConsola\bitmapsbonecos\pchao.bmp" />
     <Image Include="..\..\ClienteConsola\bitmapsbonecos\pparede.bmp" />
     <Image Include="..\..\ClienteConsola\bitmapsbonecos\zfora.bmp" />
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons1.bmp" />
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons2.bmp" />
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons3.bmp" />
     <Image Include="..\bitmap1.bmp" />
     <Image Include="..\icon1.ico" />
   </ItemGroup>

@@ -158,6 +158,15 @@
     <Image Include="..\icon1.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons1.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons2.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\ClienteConsola\bitmapsbonecos\zzicons3.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Resources.rc">

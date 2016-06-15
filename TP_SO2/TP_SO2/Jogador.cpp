@@ -64,7 +64,6 @@ bool Jogador::adicionaPedra(Objeto *ob) {
 	for (int i = 0; i < obj.size(); i++) {
 		if (obj[i]->getNome() == "pedra") {
 			inc++;
-			n_pedras++;
 		}
 	}
 
@@ -96,6 +95,7 @@ void Jogador::retiraPedra() {
 		if (obj[i]->getNome() == "pedra") {
 			inc++;
 			obj.erase(obj.begin() + i);
+			n_pedras--;
 		}
 	};
 
@@ -120,6 +120,7 @@ void Jogador::ComeObjeto(Objeto *ob) {
 		if (adicionaPedra(ob) == true) {
 			// pedra adicionada ao vetor, primeiro verifica se tem o limite maximo que é 15.
 			obj.push_back(ob);
+			n_pedras++;
 		}
 		
 	}

@@ -13,7 +13,7 @@
 
 #define REGISTRY_KEY TEXT("Software\\TPSO2\\");
 
-#define CAMINHO TEXT("C:\\Users\\Vitor Ribeiro\\Documents\\GitHub\\TP_SO2\\TP_SO2\\Debug\\MonstroConsola.exe")
+#define CAMINHO TEXT("C:\\Users\\Asus\\Documents\\GitHub\\TP_SO2\\TP_SO2\\Debug\\MonstroConsola.exe")
 
 #define MUTEX_NAME TEXT("O servidor está a correr?")
 #define MUTEX_NAME2 TEXT("Mutex a funcionar?")
@@ -202,13 +202,12 @@ void Autenticacao(LPVOID param) {
 bool VerificaMonstro(int x, int y) {
 	for (int i = 0; i < m->getLinhas(); i++) {
 		for (int j = 0; j < m->getColunas(); j++) {
-			if (i == 1 && j == 1) {
+			if (i == x && j == y) {
 				if (p[i*m->getColunas() + j].asMonstro() == true) {
 					return true;
 				}
 				else return false;
 			}
-			tcout << p[i*m->getColunas() + j].asMonstro();
 		}
 	}
 }
@@ -479,7 +478,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					PartilhaMonstro();
 
 				}
-				MandaMonstro(TEXT("Bully"));
+				//MandaMonstro(TEXT("Bully"));
 			}
 			if (Comando == "ran") {
 				for (int y = 0; y < MAXCLIENTES; y++) {
@@ -617,6 +616,10 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 				res.comandoErrado = true;
 				jog->setPedra(true);
 				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador colocou uma pedra na mao\n")));
+			}
+			else if (jog->getPedra() == true) {
+				res.comandoErrado = true;
+				_tcscpy_s(res.comandoErr, 256, (TEXT("[Servidor] O Jogador já tem pedra na mao\n")));
 			}
 			else {
 				res.comandoErrado = true;

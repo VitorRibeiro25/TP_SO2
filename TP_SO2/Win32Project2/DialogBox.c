@@ -493,7 +493,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 	HWND h1, h2;
 	TCHAR nome2[25];
 	static HMENU hMenu = NULL;
-	static int ataque = 0, irparacima = 0, irparabaixo = 0, irparaesquerda = 0, irparaadireita = 0;
+	static int ataque = 0, irparacima = 0, irparabaixo = 0, irparaesquerda = 0, irparaadireita = 0, sacapedra = 0;
 
 	// Processamento das mensagens
 
@@ -618,7 +618,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);												//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(172));
 						auxdc = CreateCompatibleDC(hdc);
@@ -631,7 +631,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(169));
 						auxdc = CreateCompatibleDC(hdc);
@@ -644,7 +644,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(170));
 						auxdc = CreateCompatibleDC(hdc);
@@ -657,7 +657,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(171));
 						auxdc = CreateCompatibleDC(hdc);
@@ -671,12 +671,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);										//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP18));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
+						TransparentBlt(hdc, xu, yu, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
 
 					}
 					else if (res.mapa[posixx][posiyy] == 7) {//jog no mapa flash
@@ -684,13 +684,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
 						fundo = CreatePatternBrush(mp);
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
+						TransparentBlt(hdc, xu, yu, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
 
 					}
 					else if (res.mapa[posixx][posiyy] == 8) {//jog no mapa supermen
@@ -698,12 +698,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);												//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
+						TransparentBlt(hdc, xu, yu, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
 
 					}
 					else if (res.mapa[posixx][posiyy] == 9) {//jog no mapa arrow
@@ -711,12 +711,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
+						TransparentBlt(hdc, xu, yu, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
 
 					}
 					else if (res.mapa[posixx][posiyy] == 10) {//jog no mapa wonder woman
@@ -724,12 +724,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);											//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
+						TransparentBlt(hdc, xu, yu, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 
 					}
 					else if (res.mapa[posixx][posiyy] == 11) {//monstro
@@ -737,7 +737,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
 						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
-																			//---desenhar chão
+						DeleteDC(auxdc);												//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(167));
 						auxdc = CreateCompatibleDC(hdc);
@@ -753,6 +753,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 
 					DeleteDC(auxdc);
+					DeleteDC(hug);
 					posixx++;
 
 				}
@@ -850,6 +851,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 				}
 				irparaadireita = 0;//repor
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
 
 			}
 			else if (irparaesquerda == 1) {//o boneco anda para esquerda 
@@ -938,6 +942,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 				}
 				irparaesquerda = 0;//repor
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
 
 			}
 			else if (irparabaixo == 1) {// o boneco anda para baixo 330>330
@@ -1023,7 +1030,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 				}
 				irparabaixo = 0;//repor
-
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
 			}
 			else if (irparacima == 1) {//o boneco anda para cima 330<330
 
@@ -1110,6 +1119,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 					TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
 				}
 				irparacima = 0; //repor
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
 
 			}
 			else if (ataque == 1) {//jogador ataca
@@ -1202,15 +1214,108 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 				//voltar a desenhar normal que é feito fora do ciclo - vai ser feito aqui agora
 				//----------------------bitmaps para os jogadores numero fazer daqui
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
+			}
+			else if (sacapedra == 1) {//jogador saca uma pedra
+
+				if (quemeojogador == 6) {
+					m = LoadBitmap(hInstance, MAKEINTRESOURCE(133));
+				}
+				else if (quemeojogador == 7) {
+					m = LoadBitmap(hInstance, MAKEINTRESOURCE(138));
+				}
+				else if (quemeojogador == 8) {
+					m = LoadBitmap(hInstance, MAKEINTRESOURCE(145));
+				}
+				else if (quemeojogador == 9) {
+					m = LoadBitmap(hInstance, MAKEINTRESOURCE(150));
+				}
+				else if (quemeojogador == 10) {
+					m = LoadBitmap(hInstance, MAKEINTRESOURCE(155));
+				}
+
+				hug = CreateCompatibleDC(hdc);
+				SelectObject(hug, m);//pintar com o flsh a correr
+
+				if (quemeojogador == 6) {
+					BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					TransparentBlt(hdc, 450, 330, 65, 98, hug, 0, 0, 65, 98, RGB(255, 255, 255));
+					Sleep(148);//esperar um pouco
+					BitBlt(hdc, 450 - 30, 330, 65, 98, auxchao, 0, 0, SRCCOPY);//pintar com chão
+
+																			   //repintar
+					mp = LoadBitmap(hInstance, MAKEINTRESOURCE(132));
+					auxdc = CreateCompatibleDC(hdc);
+					SelectObject(auxdc, mp);
+					TransparentBlt(hdc, 450, 330, 60, 105, auxdc, 0, 0, 60, 105, RGB(255, 255, 255));
+				}
+				else if (quemeojogador == 7) {
+					BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					TransparentBlt(hdc, 450, 330, 156, 96, hug, 0, 0, 156, 96, RGB(255, 255, 255));
+					Sleep(148);//esperar um pouco
+					BitBlt(hdc, 450 - 30, 330, 156, 96, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					BitBlt(hdc, 450 - 25, 330, 156, 96, auxchao, 0, 0, SRCCOPY);
+
+					//repintar
+					mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
+					auxdc = CreateCompatibleDC(hdc);
+					SelectObject(auxdc, mp);
+					TransparentBlt(hdc, 450, 330, 69, 111, auxdc, 0, 0, 69, 111, RGB(255, 255, 255));
+				}
+				else if (quemeojogador == 8) {
+					BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					TransparentBlt(hdc, 450, 330, 84, 99, hug, 0, 0, 84, 99, RGB(255, 255, 255));
+					Sleep(148);//esperar um pouco
+					BitBlt(hdc, 450 - 30, 330, 84, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
+
+																			   //repintar
+					mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
+					auxdc = CreateCompatibleDC(hdc);
+					SelectObject(auxdc, mp);
+					TransparentBlt(hdc, 450, 330, 114, 106, auxdc, 0, 0, 114, 106, RGB(255, 255, 255));
+				}
+				else if (quemeojogador == 9) {
+					BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					TransparentBlt(hdc, 450, 330, 88, 114, hug, 0, 0, 88, 114, RGB(255, 255, 255));
+					Sleep(148);//esperar um pouco
+					BitBlt(hdc, 450 - 30, 330, 150, 150, auxchao, 0, 0, SRCCOPY);//pintar com chão
+
+																				 //repintar
+					mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
+					auxdc = CreateCompatibleDC(hdc);
+					SelectObject(auxdc, mp);
+					TransparentBlt(hdc, 450, 330, 92, 122, auxdc, 0, 0, 92, 122, RGB(255, 255, 255));
+
+				}
+				else if (quemeojogador == 10) {
+					BitBlt(hdc, 450, 330, 125, 125, auxchao, 0, 0, SRCCOPY);//pintar com chão
+					TransparentBlt(hdc, 450, 330, 77, 99, hug, 0, 0, 77, 99, RGB(255, 255, 255));
+					Sleep(148);//esperar um pouco
+					BitBlt(hdc, 450 - 30, 330, 77, 99, auxchao, 0, 0, SRCCOPY);//pintar com chão
+
+																			   //repintar
+					mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
+					auxdc = CreateCompatibleDC(hdc);
+					SelectObject(auxdc, mp);
+					TransparentBlt(hdc, 450, 330, 66, 115, auxdc, 0, 0, 66, 115, RGB(255, 255, 255));
+				}
+				sacapedra = 0;
+				DeleteDC(auxdc);
+				DeleteDC(hug);
+				DeleteDC(auxchao);
 			}
 
+
 			Sleep(12); //pequena pausa
-			DeleteDC(auxchao);
+			DeleteDC(auxdc);
 			DeleteDC(hug);
+			DeleteDC(auxchao);
 
 
 			//fazer retangulo e cenas
-			Rectangle(hdc, 1075, 0, 1360, 450);
+			Rectangle(hdc, 995, 0, 1360, 595);
 
 			int vidad = 10;
 			//boneco, icon do jogo
@@ -1218,35 +1323,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				m = LoadBitmap(hInstance, MAKEINTRESOURCE(136));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);
-				TransparentBlt(hdc, 1083, 0, 83, 87, hug, 0, 0, 83, 87, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1000, 0, 83, 87, hug, 0, 0, 83, 87, RGB(255, 255, 255));
 			}
 			else if (quemeojogador == 7) {
 				m = LoadBitmap(hInstance, MAKEINTRESOURCE(143));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);
-				TransparentBlt(hdc, 1083, 0, 134, 127, hug, 0, 0, 134, 127, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1000, 0, 134, 127, hug, 0, 0, 134, 127, RGB(255, 255, 255));
 			}
 			else if (quemeojogador == 8) {
 				m = LoadBitmap(hInstance, MAKEINTRESOURCE(148));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);
-				TransparentBlt(hdc, 1083, 0, 117, 119, hug, 0, 0, 117, 119, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1000, 0, 117, 119, hug, 0, 0, 117, 119, RGB(255, 255, 255));
 			}
 			else if (quemeojogador == 9) {
 				m = LoadBitmap(hInstance, MAKEINTRESOURCE(153));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);//desenhar o icon do boneco
-				TransparentBlt(hdc, 1022, 0, 110, 110, hug, 0, 0, 110, 110, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1000, 0, 110, 110, hug, 0, 0, 110, 110, RGB(255, 255, 255));
 			}
 			else if (quemeojogador == 10) {
 				m = LoadBitmap(hInstance, MAKEINTRESOURCE(158));
 				hug = CreateCompatibleDC(hdc);
 				SelectObject(hug, m);
-				TransparentBlt(hdc, 1083, 0, 113, 118, hug, 0, 0, 113, 118, RGB(255, 255, 255));
+				TransparentBlt(hdc, 1000, 0, 113, 118, hug, 0, 0, 113, 118, RGB(255, 255, 255));
 			}
 
-
-
+			DeleteDC(hug);
+			DeleteDC(auxchao);
 			DeleteDC(auxdc);
 			DeleteDC(hdc);
 			EndPaint(hWnd, &pt);
@@ -1256,49 +1361,72 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 			if (quemeojogador == 6) {
 
-				TextOut(hdctexto, 1086, 150, TEXT("Jogador 1- Batman: "), _tcslen(TEXT("Jogador 1- Batman: ")));
+				TextOut(hdctexto, 1000, 135, TEXT("Jogador 1- Batman: "), _tcslen(TEXT("Jogador 1- Batman: ")));
 			}
 			else if (quemeojogador == 7) {
 
-				TextOut(hdctexto, 1086, 150, TEXT("Jogador 2- Flash: "), _tcslen(TEXT("Jogador 2-Flash: ")));
+				TextOut(hdctexto, 1000, 135, TEXT("Jogador 2- Flash: "), _tcslen(TEXT("Jogador 2-Flash: ")));
 			}
 			else if (quemeojogador == 8) {
 
-				TextOut(hdctexto, 1086, 150, TEXT("Jogador 3- Supermen: "), _tcslen(TEXT("Jogador 3- Supermen: ")));
+				TextOut(hdctexto, 1000, 135, TEXT("Jogador 3- Supermen: "), _tcslen(TEXT("Jogador 3- Supermen: ")));
 			}
 			else if (quemeojogador == 9) {
 
-				TextOut(hdctexto, 1086, 150, TEXT("Jogador 4- Arrow: "), _tcslen(TEXT("Jogador 4- Arrow: ")));
+				TextOut(hdctexto, 1000, 135, TEXT("Jogador 4- Arrow: "), _tcslen(TEXT("Jogador 4- Arrow: ")));
 			}
 			else if (quemeojogador == 10) {
 
-				TextOut(hdctexto, 1086, 150, TEXT("Jogador 5- Wonder woman: "), _tcslen(TEXT("Jogador 5- Wonder woman: ")));
+				TextOut(hdctexto, 1000, 135, TEXT("Jogador 5- Wonder woman: "), _tcslen(TEXT("Jogador 5- Wonder woman: ")));
 			}
-			TextOut(hdctexto, 1086, 175, TEXT("Vida-> "), _tcslen(TEXT("Vida:  ")));
+			int paramet, adcion = 0, adcion2=0, adcion3 = 0, mudadelinha1=160, mudadelinha2=240;
+
+			TextOut(hdctexto, 1000, 160, TEXT("Vida-> "), _tcslen(TEXT("Vida:  ")));
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(179)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1125, 175, 19, 20, hug, 0, 0, 19, 20, RGB(255, 255, 255));
+			
+			for (paramet = 0; paramet < res.vida; paramet++) {
+				if (paramet==14 || paramet==28) {
+					mudadelinha1 = mudadelinha1 + 21;
+					adcion = 0;
+				}
+				TransparentBlt(hdc, 1038 + adcion, mudadelinha1, 19, 20, hug, 0, 0, 19, 20, RGB(255, 255, 255));
+				adcion = adcion + 23;
+				
+			}
 
-			TextOut(hdctexto, 1086, 200, TEXT("Pedras-> "), _tcslen(TEXT("Pedras:  ")));
+			TextOut(hdctexto, 1000, 240, TEXT("Pedras-> "), _tcslen(TEXT("Pedras:  ")));
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(180)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1143, 200, 19, 17, hug, 0, 0, 19, 17, RGB(255, 255, 255));
+			for (paramet = 0; paramet < res.pedras; paramet++) {
+				if (paramet == 12 || paramet == 26) {
+					mudadelinha2 = mudadelinha2 + 21;
+					adcion2 = 0;
+				}
+				TransparentBlt(hdc, 1055 + adcion2, mudadelinha2, 19, 17, hug, 0, 0, 19, 17, RGB(255, 255, 255));
+				adcion2 = adcion2 + 23;
+			}
 
-			TextOut(hdctexto, 1086, 225, TEXT("Pontuação-> "), _tcslen(TEXT("Pontuação:  ")));
+			TextOut(hdctexto, 1000, 320, TEXT("Pontuação-> "), _tcslen(TEXT("Pontuação:  ")));
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(181)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1166, 225, 18, 17, hug, 0, 0, 18, 17, RGB(255, 255, 255));
+			for (paramet = 0; paramet < res.pontuacao; paramet++) {
+				TransparentBlt(hdc, 1060 + adcion3, 320, 18, 17, hug, 0, 0, 18, 17, RGB(255, 255, 255));
+				adcion3 = adcion3 + 23;
+			}
+			adcion = 0;
 
 			DeleteDC(hug);
 
-			TextOut(hdctexto, 1086, 280, TEXT("Instruções: "), _tcslen(TEXT("Instruções:  ")));
-			TextOut(hdctexto, 1086, 295, TEXT("Comandos:: SETAS para andar "), _tcslen(TEXT("Comandos-> SETAS para andar")));
-			TextOut(hdctexto, 1086, 310, TEXT("ESPAÇO para atacar"), _tcslen(TEXT("ESPAÇO para atacar")));
-			TextOut(hdctexto, 1086, 325, TEXT("SHIFT para por pedra na mão "), _tcslen(TEXT("SHIFT para por pedra na mão ")));
-			TextOut(hdctexto, 1086, 380, res.frase, 16*sizeof(TCHAR));
+			TextOut(hdctexto, 1000, 440, TEXT("Instruções: "), _tcslen(TEXT("Instruções:  ")));
+			TextOut(hdctexto, 1000, 460, TEXT("Comandos:: SETAS para andar "), _tcslen(TEXT("Comandos-> SETAS para andar")));
+			TextOut(hdctexto, 1000, 480, TEXT("ESPAÇO para atacar"), _tcslen(TEXT("ESPAÇO para atacar")));
+			TextOut(hdctexto, 1000, 500, TEXT("SHIFT para por pedra na mão "), _tcslen(TEXT("SHIFT para por pedra na mão ")));
+			TextOut(hdctexto, 1000, 565, res.frase, 15 * sizeof(TCHAR));
+
 			ReleaseDC(hWnd, hdctexto);
 		}
 
@@ -1350,7 +1478,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			Envia(Comando);
 		}
 		if (wParam == VK_SHIFT) {//pedra
-			ataque = 1;
+			sacapedra = 1;
 			_tcscpy_s(Comando, 256, (TEXT("pedra mao")));
 			//Comando[_tcslen(Comando) - 1] = '\0';
 			res.ID_Cliente = ID_Cliente;

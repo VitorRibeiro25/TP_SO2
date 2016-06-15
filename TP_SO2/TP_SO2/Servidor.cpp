@@ -297,9 +297,9 @@ void FazerMapa(Jogador *jog) {
 	}// a res vai ficar com o mapa
 	}*/
 
-	for (int ij = -6; ij <=6; ij++) {
-		for (int ji = -6; ji <= 6; ji++) {
-			_tprintf(TEXT("%d "), res.mapa[ij + 6][ji + 6]);
+	for (int ij = -4; ij <=4; ij++) {
+		for (int ji = -4; ji <= 4; ji++) {
+			_tprintf(TEXT("%d "), res.mapa[ij + 4][ji + 4]);
 		}
 		_tprintf(TEXT("\n"));
 	}
@@ -473,6 +473,7 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 					PartilhaMonstro();
 
 				}
+				MandaMonstro(TEXT("Bully"));
 			}
 			if (Comando == "ran") {
 				for (int y = 0; y < MAXCLIENTES; y++) {

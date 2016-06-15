@@ -81,7 +81,7 @@ void Mapa::NovoJogador(Jogador *jog) {
 
 void Mapa::NovoObjeto(int x, int y) {
 
-	int aux = rand() % 5;
+	int aux = rand() % 15;
 
 	if (aux == 0) {
 		ob = new Objeto(x, y);

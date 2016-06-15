@@ -44,13 +44,13 @@ Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
 void Monstro::ColocaMonstro() {
 
 	srand(time(NULL));
-	int x, y;
-	x = 1 + (rand() % linhas);
-	y = 1 + (rand() % colunas);
-	/*do {
+	int x,y;
 
+	do {
+		x = 1 + (rand() % linhas);
+		y = 1 + (rand() % colunas);
 
-	} while (getPartilha(x, y).getParede()  || getPartilha(x, y).asMonstro());*/
+	} while (getPartilha(x, y).getParede());
 
 	getPartilha(x, y).setMonstro(nome);
 	id_m++;

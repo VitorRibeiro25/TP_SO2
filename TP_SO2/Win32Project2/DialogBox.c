@@ -322,6 +322,7 @@ DWORD WINAPI Recebe(LPVOID param) {
 			}
 
 			if (res.jogoCriado == TRUE && res.jogoIniciado == TRUE) {
+				InvalidateRect(pararecebe, NULL, FALSE);
 				/*_tcscpy_s(buf, 256, "Vida do Jogador: ");
 				wcscat_s(buf, 256, res.vida);
 				_tcscpy_s(buf, 256, "\n Pontuacao do Jogador: ");
@@ -332,7 +333,7 @@ DWORD WINAPI Recebe(LPVOID param) {
 				//jogo = 2;
 			}
 			if (flag == 1 && flag2 == 1) {
-				jogo = 1;
+				InvalidateRect(pararecebe, NULL, FALSE);
 				/*_tprintf(TEXT("[Servidor] O seu mapa:\n"));
 				for (int ij = 0; ij < 13; ij++) {
 				for (int ji = 0; ji < 13; ji++) {
@@ -594,29 +595,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			int quemeojogador = (res.mapa[4][4]);
 
 			int posixx = 0, posiyy = 0;
-			for (int xu = 0; xu <= 975; xu += 108) { //108
-				for (int yu = 0; yu <= 715; yu += 79) {//79
+			for (int xu = 0; xu < 975; xu += 109) { //108
+				for (int yu = 0; yu < 715; yu += 80) {//79
 													   //ver que tipo de objeto
 
 					if (res.mapa[posixx][posiyy] == 0) {//chão
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 
 					}
 					else if (res.mapa[posixx][posiyy] == 1) {//parede
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(174));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //parede
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //parede
 
 					}
 					else if (res.mapa[posixx][posiyy] == 2) {//vitamina
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(172));
@@ -629,7 +630,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(169));
@@ -642,7 +643,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(170));
@@ -655,7 +656,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(171));
@@ -669,7 +670,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(IDB_BITMAP18));
@@ -682,7 +683,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(137));
@@ -696,7 +697,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(144));
@@ -709,7 +710,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(149));
@@ -722,7 +723,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(154));
@@ -735,7 +736,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						BitBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, SRCCOPY); //chão
+						BitBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, SRCCOPY); //chão
 																			//---desenhar chão
 
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(167));
@@ -747,7 +748,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 						mp = LoadBitmap(hInstance, MAKEINTRESOURCE(175));
 						auxdc = CreateCompatibleDC(hdc);
 						SelectObject(auxdc, mp);
-						TransparentBlt(hdc, xu, yu, 108, 79, auxdc, 0, 0, 108, 79, RGB(255, 255, 255));//para fora
+						TransparentBlt(hdc, xu, yu, 109, 80, auxdc, 0, 0, 109, 80, RGB(255, 255, 255));//para fora
 					}
 
 
@@ -758,6 +759,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 				posiyy++;
 				posixx = 0;
 			}
+			DeleteDC(auxdc);
 			DeleteDC(hug);
 
 			mc = LoadBitmap(hInstance, MAKEINTRESOURCE(173));
@@ -1208,7 +1210,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 
 
 			//fazer retangulo e cenas
-			Rectangle(hdc, 1082, 0, 1360, 450);
+			Rectangle(hdc, 1075, 0, 1360, 450);
 
 			int vidad = 10;
 			//boneco, icon do jogo
@@ -1276,22 +1278,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT messg, WPARAM wParam, LPARAM lParam)
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(179)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1092, 175, 19, 20, hug, 0, 0, 19, 20, RGB(255, 255, 255));
+			TransparentBlt(hdc, 1125, 175, 19, 20, hug, 0, 0, 19, 20, RGB(255, 255, 255));
 
 			TextOut(hdctexto, 1086, 200, TEXT("Pedras-> "), _tcslen(TEXT("Pedras:  ")));
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(180)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1092, 200, 19, 17, hug, 0, 0, 19, 17, RGB(255, 255, 255));
+			TransparentBlt(hdc, 1143, 200, 19, 17, hug, 0, 0, 19, 17, RGB(255, 255, 255));
 
 			TextOut(hdctexto, 1086, 225, TEXT("Pontuação-> "), _tcslen(TEXT("Pontuação:  ")));
 			m = LoadBitmap(hInstance, MAKEINTRESOURCE(181)); //boneco da vida
 			hug = CreateCompatibleDC(hdc);
 			SelectObject(hug, m);
-			TransparentBlt(hdc, 1092, 225, 18, 17, hug, 0, 0, 18, 17, RGB(255, 255, 255));
+			TransparentBlt(hdc, 1166, 225, 18, 17, hug, 0, 0, 18, 17, RGB(255, 255, 255));
 
 			DeleteDC(hug);
 
+			TextOut(hdctexto, 1086, 280, TEXT("Instruções: "), _tcslen(TEXT("Instruções:  ")));
+			TextOut(hdctexto, 1086, 295, TEXT("Comandos:: SETAS para andar "), _tcslen(TEXT("Comandos-> SETAS para andar")));
+			TextOut(hdctexto, 1086, 310, TEXT("ESPAÇO para atacar"), _tcslen(TEXT("ESPAÇO para atacar")));
+			TextOut(hdctexto, 1086, 325, TEXT("SHIFT para por pedra na mão "), _tcslen(TEXT("SHIFT para por pedra na mão ")));
+			TextOut(hdctexto, 1086, 380, res.frase, 16*sizeof(TCHAR));
 			ReleaseDC(hWnd, hdctexto);
 		}
 

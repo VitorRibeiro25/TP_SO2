@@ -97,7 +97,7 @@ tstring Engenho::PosicaoJogador(Jogador *j) {
 	tstringstream aux;
 
 
-	aux << TEXT("[Servidor] O jogador encontra-se atualmente na posicao [x,y]: [") << j->getPosX() << "][" << j->getPosY() << "]" << "\n";
+	aux << TEXT("Esta na posicao [x,y]: [") << j->getPosX() << "][" << j->getPosY() << "]" << "\n";
 
 
 	return aux.str();

@@ -1,4 +1,4 @@
-﻿Build started 15/06/2016 12:03:16.
+﻿Build started 15/06/2016 15:59:19.
      1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Servidor.cpp
@@ -13,7 +13,7 @@
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(451): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(452): warning C4018: '<': signed/unsigned mismatch
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(453): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
-     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(646): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(647): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(383): warning C4101: 'frase': unreferenced local variable
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(384): warning C4101: 'aux': unreferenced local variable
      1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(391): warning C4101: 'pStr2': unreferenced local variable
@@ -33,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.21
+Time Elapsed 00:00:01.14

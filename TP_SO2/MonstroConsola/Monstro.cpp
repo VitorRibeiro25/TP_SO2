@@ -4,9 +4,6 @@ int Monstro::id_m = 0;
 
 Monstro::Monstro(TCHAR nome[TAM], int linhas, int colunas) {
 
-	int x = 1 + (rand() % linhas);
-	int y = 1 + (rand() % colunas);
-
 	hMapFile = OpenFileMapping(FILE_MAP_ALL_ACCESS, FALSE, TEXT("ObjetodePartilha"));
 
 	if (hMapFile == NULL)
@@ -48,12 +45,12 @@ void Monstro::ColocaMonstro() {
 
 	srand(time(NULL));
 	int x, y;
+	x = 1 + (rand() % linhas);
+	y = 1 + (rand() % colunas);
+	/*do {
 
-	do {
 
-		x = 1 + (rand() % linhas);
-		y = 1 + (rand() % colunas);
-	} while (getPartilha(x, y).getParede() || getPartilha(x, y).asMonstro());
+	} while (getPartilha(x, y).getParede()  || getPartilha(x, y).asMonstro());*/
 
 	getPartilha(x, y).setMonstro(nome);
 	id_m++;
@@ -94,7 +91,7 @@ Partilha Monstro::getPartilha(int x, int y) {
 	if (x < 0 || x > linhas || y < 0 || y > colunas) {
 		return Partilha();
 	}
-	else p[x * colunas + y];
+	else return p[x * colunas + y];
 }
 	
 void Monstro::setPosX(int x) {

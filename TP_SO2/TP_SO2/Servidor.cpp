@@ -200,7 +200,7 @@ void Autenticacao(LPVOID param) {
 bool VerificaMonstro(int x, int y) {
 	for (int i = 0; i < m->getLinhas(); i++) {
 		for (int j = 0; j < m->getColunas(); j++) {
-			if (x == i && y == j) {
+			if (i == 1 && j == 1) {
 				if (p[i*m->getColunas() + j].asMonstro() == true) {
 					return true;
 				}
@@ -484,7 +484,6 @@ DWORD WINAPI ThreadLeituraEscritaInfo(LPVOID param) {
 
 				}
 			}
-			MandaMonstro(TEXT("Bully"));
 		}
 		if (valorRetorno == 2) {
 			res.jogoIniciado = true;

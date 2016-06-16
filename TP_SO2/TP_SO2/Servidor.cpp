@@ -188,11 +188,7 @@ void Autenticacao(LPVOID param) {
 		else {
 			_tprintf(TEXT("[Servidor] O cliente %d tentou logar-se com uma conta que já esta ativa! Movimento bloqueado\n"), numero);
 			p = 0;
-			p = 1;
 			WriteFile(clientes[numero], &p, sizeof(p), 0, NULL);
-
-			_tcscpy_s(buf, 256, (TEXT("[Servidor] Voce não esta ligado ao servidor\n")));
-			WriteFile(clientes[numero], buf, _tcslen(buf) * sizeof(TCHAR), &n, NULL);
 		}
 
 	} while(existe!=0);

@@ -1,6 +1,25 @@
-﻿Build started 15/06/2016 22:31:24.
+﻿Build started 16/06/2016 01:25:40.
      1>Project "C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\TP_SO2\TP_SO2.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Servidor.cpp
+         Servidor.cpp
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(18): warning C4005: 'MUTEX_NAME': macro redefinition
+         c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\partilha.h(4): note: see previous definition of 'MUTEX_NAME'
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(147): warning C4101: 'value': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(148): warning C4101: 'pStr': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(396): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(414): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(451): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(452): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(453): warning C4018: '<': signed/unsigned mismatch
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(454): warning C4244: 'argument': conversion from 'wchar_t' to 'char', possible loss of data
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(652): warning C4805: '==': unsafe mix of type 'BOOL' and type 'bool' in operation
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(384): warning C4101: 'frase': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(385): warning C4101: 'aux': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(392): warning C4101: 'pStr2': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(383): warning C4101: 'pass': unreferenced local variable
+     1>c:\users\asus\documents\github\tp_so2\tp_so2\tp_so2\servidor.cpp(209): warning C4715: 'VerificaMonstro': not all control paths return a value
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.exe" /INCREMENTAL /NOLOGO Kernel32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Asus\Documents\GitHub\TP_SO2\TP_SO2\Debug\TP_SO2.lib" /MACHINE:X86 Debug\CelulaMapa.obj
          Debug\Engenho.obj
          Debug\Jogador.obj
@@ -14,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.76
+Time Elapsed 00:00:03.97
